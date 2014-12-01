@@ -1,0 +1,946 @@
+.types a {
+    display: none !important;
+}
+
+div.types:before {
+    content:url("/site/documentation/en-US/images/types.png") !important;
+    z-index: -999 !important;
+}
+
+div.types {
+    display: inline !important;
+    position: absolute;
+    right: 5px;
+    padding: 0px !important;
+    margin: 0px !important;
+    margin-top: -18px !important;
+    color: black !important;
+}
+
+div.types:hover:before {
+    content:"" !important;
+    z-index: 999 !important;
+}
+
+div.types:hover {
+    background: none !important;
+    background-color: #f5f5f5 !important;
+    border: 1px solid #aaaaaa !important;
+    z-index: 999 !important;
+    padding-top: .5em !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    padding-bottom: .5em !important;
+    margin-top: -15px !important;
+    right: 7px !important;
+}
+
+.types:hover a,
+.current .types:hover a {
+    position: relative !important;
+    display: block !important;
+    color: #666666 !important;
+    padding-top: .5em !important;
+    z-index: 10 !important;
+}
+
+.current div.types:hover {
+    color: #666666 !important;
+    background-color: #ccddee !important;
+}
+
+.types:hover a:hover,
+.current .types:hover a:hover {
+    color:#000000!important;
+}
+
+a.product, a.version {
+    display: none !important;
+}
+
+span.book {
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+	padding-top: 2px !important;
+	padding-bottom: 2px !important;
+}
+
+.rhel {
+    background-image: url("en-US/images/rhel6-bg.png");
+    background-color: #333333;
+}
+
+.rhev {
+    background-image: url("en-US/images/rhev3-bg.png");
+    background-color: #333333;
+}
+
+.jboss {
+    background-image: url("en-US/images/jboss-bg.png");
+    background-color: #333333;
+}
+.cf {
+    background-image: url("en-US/images/cf-bg.png");
+    background-color: #333333;
+}
+
+#main-top,
+#main-top .wrapi,
+#breadcrumbs {
+	background-color: #343434\9;
+}
+
+#main .outgoing {
+    background-image: none;
+    margin-right: 0px;
+    z-index: 0;
+}
+
+#main .active .outgoing {
+    margin-right: -1px;
+}
+
+#breadcrumbs {
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -o-transition: all .25s ease;
+    -ms-transition: all .25s ease;
+    transition: all .25s ease;
+    -webkit-transition-delay: 2s;
+    -moz-transition-delay: 2s;
+    -o-transition-delay: 2s;
+    -ms-transition-delay: 2s;
+    transition-delay: 2s;
+}
+
+body:hover #breadcrumbs {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    -ms-transition: none;
+    transition: none;
+}
+
+body[dir="rtl"] #breadcrumbs {
+    right: 0;
+}
+
+#breadcrumbs a {
+    color: #d9d9d9;
+}
+
+#book_menu > div,
+#product_menu > div,
+#version_menu > div {
+    background: url("/chrome_themes/umbra/g/bg_breadcrumb.png") no-repeat scroll 100% 0 rgba(0, 0, 0, 0);
+    color: #D9D9D9;
+    display: inline-block;
+    margin: 0 12px 0 0;
+    padding: 0 20px 0 0;
+}
+
+#product_menu a, #book_menu a, #version_menu a, #book_lang_menu a, #book_format_menu a, #lang_menu_2 a {
+    background-image: none !important;
+    padding: 0 16px 0 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    text-decoration: none !important;
+    line-height: 1.5em !important;
+    white-space: pre;
+}
+
+#product_menu_list a {
+    font-size: 100% !important;
+/*     height: auto;*/
+}
+
+#book_lang_menu div, #book_format_menu div, #lang_menu_2 div  {
+    color: #d9d9d9 !important;
+}
+
+#breadcrumbs ul {
+    list-style: none outside none !important;
+    margin: 0px;
+    padding: 0px;
+    min-width: 100%;
+    text-indent: 16px;
+}
+
+#breadcrumbs ul li:first-child {
+    border-top: 1px solid #797979;
+    margin-top: 0;
+}
+
+#breadcrumbs ul a:hover {
+    background: #757575 !important; /* invert hover/menu colors to match breadcrumb in Portal */
+    color: #FFF !important;
+}
+
+/*narrower lists in nav for smaller screens */
+@media (max-height: 640px) {
+    #product_menu a{ font-size: .85em !important; }
+}
+
+/*smaller nav for smaller screens */
+@media (max-width: 900px) {
+    #breadcrumbs { font-size: .75em !important; }
+}
+
+#breadcrumbs div:hover, #book_lang_menu:hover, #book_lang_menu:hover > div, #book_format_menu:hover > div, #book_format_menu:hover {
+    background: transparent !important;
+}
+
+#product_menu ul, #book_menu ul, #version_menu ul, #lang_menu_2 ul {
+    position: absolute !important;
+    max-height: 700px;
+}
+
+#breadcrumbs ul {
+    top: 34px !important;
+}
+
+#product_menu ul,
+#version_menu ul,
+#book_menu ul {
+    margin-left: -23px !important;
+}
+
+#book_lang_menu, #lang_menu_2, #book_format_menu, #lang_menu_list {
+    right: 0;
+}
+
+#lang_menu_label {
+    position: relative !important;
+    padding-right: 5px;
+    float: right;
+}
+
+#product_menu_list,
+#version_menu_list,
+#book_menu_list,
+#book_lang_menu_list,
+#lang_menu_list,
+#book_format_menu_list {
+    background-color: #666 !important;
+    border-top: 1px solid #494949 !important; /* color of the bottom edge of breadcrumb bar */
+}
+
+#breadcrumbs li:first-child {
+    border-top: 1px solid #797979;
+}
+
+#lang_menu_2 ul, #book_lang_menu ul {
+    min-width: 145px !important;
+}
+
+#breadcrumbs li.untranslated span {
+    background-image: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-decoration: none !important;
+    text-indent: 0;
+}
+
+.main_content {
+    background: rgb(255, 255, 255);
+    line-height: 140%;
+}
+
+/* fancy product header graphics */
+.splash .article .titlepage {
+    height: 150px;
+    margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+    background: #be171c url(/webassets/avalon/g/bg_product-default-graphic2.png) no-repeat 0 0;
+}
+.splash .titlepage > div {
+    background: #be171c url(/webassets/avalon/g/g_product-default-graphic.png) no-repeat 100% 0;
+    height: 150px;
+    width: 100%;
+    z-index: 1;
+}
+.splash .titlepage h1 {
+    /* overrides from h1 above */
+    background: none !important;
+    text-align: left;
+    padding: 0 !important;
+    /* end overrides */
+    color: white;
+    font-size: 30px;
+    line-height: .9em;
+    margin: 0;
+    position: absolute;
+    left: 30px;
+    bottom: 40px;
+    text-transform: uppercase;
+}
+
+.splash .para {
+    background-color: #DDDDDD;
+    font-size: 16px;
+    padding: 1em;
+    margin: 2em;
+    -moz-border-radius:11px;
+    -webkit-border-radius:11px;
+    border-radius: 11px;
+}
+/* end fancy headers */
+
+.product_bottom_box {
+    background: white;
+}
+
+.document_links a {
+    margin-right: 10px !important;
+    font-size: 100%;
+    font-variant: small-caps;
+}
+
+.version_bottom_box {
+    background: white;
+}
+
+.bottom_products .product_title {
+   padding-top: 20px; 
+}
+
+.threeCol {
+    display: block;
+    padding: 10px 0 10px 13px;
+    position: relative;
+}
+
+#leftColumn {
+    float: left;
+    padding-left: 10px;
+    width: 32%;
+}
+
+#centerColumn {
+    float: left;
+    width: 32%;
+}
+
+#rightColumn {
+    margin-left: 66%;
+    padding-left: 11px;
+}
+
+.bottom_versions .product_title span {
+    background-color: transparent;
+}
+
+.bottom_versions .product_title span a {
+    color: #3E464C !important;
+    font-size: 25px !important;
+    text-decoration: none !important;
+}
+
+.bottom_versions .untranslated span {
+    left: 0;
+    line-height: 0;
+    display: inline; 
+}
+
+/* Remove global.css messages styling. */
+#main div.section div.warning { background-color: transparent; border-bottom: 1px solid #aaaaaa; }
+
+/* Styles from Chrome's docs.css */
+a:link, a:visited, .docnav a:link, .docnav a:visited {
+    border-bottom: 0;
+    color: #06C;
+    }
+
+a:hover, a:active, .docnav a:hover, .docnav a:active {
+    color: #03C;
+    text-decoration: underline;
+    }
+
+blockquote {
+    margin-left: 40px;
+    margin-right: 40px;
+    }
+
+body {
+    border: none;
+    background-color: transparent;
+    font-size: small;
+    color: black;
+    margin: 0 auto;
+    padding: 0;
+    max-width: none;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+body.toc_embeded {
+    margin-left: auto;
+}
+
+/* Add watermark back for drafts inside #main (class of draft) */
+.draft #main > div.book,
+.draft #main > div.article,
+.draft #main > div.set,
+.draft #main > div.preface,
+.draft #main > div.chapter,
+.draft #main > div.section,
+.draft #main > div.appendix,
+.draft #main > div.part,
+.draft #main > div.index  {
+    background-image: url(https://access.redhat.com/site/documentation/common/en-US/images/watermark-draft.png);
+    background-repeat: repeat-y;
+    background-position: center top;
+}
+
+#footerWrap, #footerWrap div, #header, #header div, #navPrimary, #navPrimary div {
+    line-height: 1;
+}
+
+#footerWrap img, #header img {
+    margin: 0;
+}
+
+#footerWrap li, #header li, #navPrimary li {
+    line-height: 1;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+#footerWrap ul, #header ul, #navPrimary ul {
+    list-style-image: none;
+}
+
+#navPrimary .mega dd {
+    padding-bottom: 0;
+}
+
+h1, h2, h3, h4, h5, h1 + h2 {
+    padding: 0;
+}
+
+hr {
+    background-color: transparent;
+}
+
+#main ol {
+    margin: 1em 0;
+    padding: 0 0 0 40px;
+}
+
+#main ol ol {
+    margin: 0;
+}
+
+#main ul.docnav {
+    background-color: transparent;
+    box-shadow: none;
+    height: 32px;
+    line-height: auto;
+    /*margin: 30px auto 1em;*/
+    padding: 0;
+    position: static;
+    width: 100%;
+}
+
+#main ul.docnav.top {
+    padding-top: 20px;
+    margin-bottom: -10px !important;
+}
+
+#main ul.docnav.bottom {
+    padding-bottom: 20px;
+}
+
+#main #title + ul.docnav {
+    margin-top: 0;
+    height: 46px;
+}
+
+#main ul.docnav li.home {
+    display: none;
+}
+
+#main ul.docnav li.next a strong, #main ul.docnav li.previous a strong, #main ul.docnav .home {
+    color: #06c;
+    padding: .3em 36px .3em 0;
+}
+
+#main ul.docnav li.previous a strong {
+    padding-left: 36px;
+    padding-right: 0;
+}
+
+#navPrimary .mega dl {
+    margin-left: 0;
+}
+
+.producttitle {
+    line-height: 1;
+}
+
+#title {
+    display: none;
+}
+
+.toc dt {
+    margin-top: 0;
+}
+/*
+    Custom styles
+*/
+
+/* Prevents the breadcrumbs from displaying a different colour when hovering */
+.breadcrumb:hover {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+/* Fix for width and shadowing */
+#main > .book,
+#main > .article,
+#main > .set,
+#main > .preface,
+#main > .chapter,
+#main > .section,
+#main > .appendix,
+#main > .part,
+#main > .index {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 45em;
+    /*margin-top: 40px;*/
+    /*margin-bottom:4em;*/
+    padding: 3em;
+    background-color: white;
+    font-size: 1.2em;
+    /*line-height: 1.7em;*/
+}
+
+.docnav {
+    z-index: auto;
+    position: static;
+    transition: all 0 ease 0 !important;
+    -webkit-transition: all 0 ease 0 !important;
+    -moz-transition: all 0 ease 0 !important;
+    -o-transition: all 0 ease 0 !important;
+    -ms-transition: all 0 ease 0 !important;
+    background-color: transparent;
+    color: #000;
+    box-shadow: none;
+    box-sizing: content-box !important;
+    border-radius: .5em .5em 0 0 !important;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+}
+
+.docnav.top {
+    padding-top: 10px;
+    /*padding-bottom: 60px;*/
+}
+
+.docnav.bottom {
+   padding-top: 0px;
+   padding-bottom: 20px; 
+}
+
+.docnav li {
+    display: inline-block !important;
+}
+
+.doctoc {
+    padding-top: 3px !important;
+}
+
+.pageSelect {
+    background: transparent;
+    padding: 3px 0;
+    border: 1px solid #ccc;
+    max-width: 80%;
+}
+
+select {
+    -webkit-appearance: menulist;
+    box-sizing: border-box;
+    -webkit-box-align: center;
+    border-image: initial;
+    white-space: pre;
+    -webkit-rtl-ordering: logical;
+    color: black;
+    cursor: default;
+    margin: 0em;
+    border-radius: 0px;
+}
+
+#main ul.docnav li.next a strong, #main ul.docnav li.previous a strong, #main ul.docnav li.next a:hover, #main ul.docnav li.previous a:hover {
+    color: #06c;
+}
+
+#nodocnav {
+    /*margin-bottom: 40px;*/
+}
+
+.menu span a, #doc_menu span a {
+    color: white;
+}
+
+/* Remove global.css messages styling. */
+#main div.section div.warning { 
+    background-color: transparent; border-bottom: 1px solid #aaaaaa;
+}
+
+#main .rf-msgs > .rf-msgs-wrn, #main div.warning, #main table tr.warning {
+    background-color: inherit;
+}
+
+#main .rf-msgs > .rf-msgs-wrn, #main div.warning {
+    border-color: #aaaaaa;
+}
+
+/* Fix for CSS issue in chroming caused by Common brand's menu.css setting all images to display: block */
+#header img, #bottomBar img {
+    display: inline;
+}   
+
+/* Other styles from Chrome's docs.css */
+a:link, a:visited, .docnav a:link, .docnav a:visited {
+    border-bottom: 0;
+    color: #06C;
+}
+
+a:hover, a:active, .docnav a:hover, .docnav a:active {
+    color: #03C;
+    text-decoration: underline;
+}
+
+blockquote {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+#breadcrumbs {
+    color: #d9d9d9;
+    margin: 0;
+    padding: 0;
+}
+
+#footerWrap, #footerWrap div, #header, #header div, #navPrimary, #navPrimary div {
+    line-height: 1;
+}
+
+#footerWrap img, #header img {
+    margin: 0;
+}
+
+#footerWrap li, #header li, #navPrimary li {
+    line-height: 1;https://mojo.redhat.com/docs/DOC-969238
+    margin-bottom: 0;
+}
+
+#footerWrap ul, #header ul, #navPrimary ul {
+    list-style-image: none;
+}
+
+#navPrimary .mega dd {
+    padding-bottom: 0;
+}
+
+h1, h2, h3, h4, h5, h1 + h2 {
+    padding: 0;
+}
+
+hr {
+    background-color: transparent;
+}
+
+a.outgoing {
+    padding: 0;
+}
+
+.bottom_versions {
+    background-color: white;
+/*    float: left;*/
+    line-height: 1.3em;
+    min-width: 70%;
+    padding: 0px !important;
+    position: relative;
+}
+
+body[dir="rtl"] .bottom_versions {
+    float: right;
+    padding: 10px 40px 40px !important;
+}
+.books {
+    float: left;
+    width: calc(90% - 200px);
+    margin-left: 1em;
+}
+
+.version_bottom_box .books {
+    width: 90%;
+}
+.version_bottom_box .bottom_versions {
+    width: 100%;
+}
+
+.books div.group {
+    margin-top: 2em;
+
+}
+.books div.group:first-child {
+    margin-top: 0em;
+
+}
+
+.books .titles {
+    float: left;
+    max-width: 40em;
+    width: 100%;
+    font-weight: bold;
+}
+
+.product_bottom_box .bottom_versions {
+    display: block;
+    width: 100%;
+}
+
+.prod-nav {
+    float: left;
+    max-width: 15.5em;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+    margin: 1em;
+    margin-top: 0px;
+    padding: 1em;
+}
+
+.bottom_versions_list_label {
+    margin-bottom: 1em;
+    margin-top: 2em;
+}
+
+.bottom_versions_list_label:first-child {
+    margin-top: 0em;
+}
+
+.bottom_versions_list {
+}
+
+.menu .bottom_versions_list span,
+.bottom_versions_list .group a {
+    background-color: transparent;
+    color: black;
+    display: inline-block;
+    left: -20px;
+    font-size: 120%;
+    line-height: 1.5em;
+    padding: 0px 0.5em;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+    text-indent: 0px;
+    font-weight: normal;
+    cursor: pointer;
+    margin-top: 0.3em;
+}
+
+.menu .bottom_versions_list span.active {
+    background-color: #AAA;
+    border: 1px solid #D9D9D9;
+    color: #D9D9D9;
+}
+
+.bottom_versions_list .group {
+	float: left;
+}
+.bottom_versions_list .group span{
+	display: none;
+}
+.bottom_versions_list .group span:first-child{
+	display: inline;
+}
+
+.books .group span {
+    line-height: 1.3em;
+}
+
+.bottom_versions .group span:first-child{
+    font-size: 175%;
+    font-weight: bold;
+}
+
+.bottom_books {
+	max-width: none;
+	min-width: none;
+	display: block;
+	float: none;
+	height: auto;
+	padding: 0px;
+	margin-top: 1em;
+	padding-bottom: 1em;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.bottom_books a {
+	font-size: 14px;
+        line-height: 16px;
+	margin: 0em !important;
+	display: inline-block;
+	z-index: 0;
+/*	width: 100% */
+}
+
+.bottom_books .formats a {
+	font-size: 13px;
+	padding-right: 0.3em;
+}
+
+.bottom_books .subtitle {
+	line-height: 1.2em;
+	margin-left: 0px;
+	color: #333;
+	font-weight: normal;
+}
+
+/* /End: Styles from Chrome's docs.css */
+
+#left-menu {
+    display: inline-block;
+    position: absolute;
+    right: 1em;
+}
+
+/* less than 960px wide */
+@media screen and (max-width: 960px) {
+body,
+.wrapu {
+    min-width: 0;
+}
+#header, .wrapi {
+    min-width: 0;
+    width: 100%;
+}
+#book_menu {
+    padding-right: 17em;
+}
+}
+
+@media screen and (max-width: 765px) {
+#header {
+    height: 144px;
+}
+#navPrimary.v2 li a {
+    border-bottom: 1px solid #303030;
+}
+#navPrimary.v2 ul {
+    width: calc(100vw);
+}
+#navPrimary.v2 .navbar-inner {
+-webkit-border-radius: 0;
+   -moz-border-radius: 0;
+        border-radius: 0;
+}
+}
+
+@media screen and (max-width: 580px) {
+#header {
+    height: 194px;
+}
+
+#navPrimary.v2 ul {
+    height: 92px;
+}
+
+}
+
+
+@font-face {
+    font-family: "portalicons";
+    font-style: normal;
+    font-weight: normal;
+    src: url("/webassets/avalon/f/portalicons.eot?#iefix") format("embedded-opentype"),
+	url("/webassets/avalon/f/portalicons.ttf") format("truetype"), 
+	url("/webassets/avalon/f/portalicons.svg#portalicons") format("svg");
+}
+
+.formats {
+/*
+        border:1px solid #dedede;
+-webkit-border-radius: 4px;
+   -moz-border-radius: 4px;
+        border-radius: 4px;
+        padding: 0.1em 0.5em;
+*/
+        position:absolute;      
+        right:0;
+	margin-top: -0.5em;
+}
+/*
+.formats:before {
+        font-family: "portalicons" !important;
+        content: "d \e600";
+}
+.formats:hover:before {
+        content: "";
+}
+.formats:hover {
+        background-color:white;
+        padding: 1em;
+	z-index: 10;
+}
+.formats:hover a {
+      display:list-item !important;
+      list-style-type:none;
+}
+
+.bottom_books {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.formats:hover a:hover {
+    background-color: #efefef;
+}
+*/
+
+.dropdown-menu {
+   min-width: 8em !important;
+}
+.dropdown-menu a{
+   padding-right: 1em !important;
+}
+
+.group h1 {
+	margin-bottom: 0.3em !important;
+}
+
+#main .dropdown-menu {
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    -moz-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    background-clip: padding-box;
+}
+.open .dropdown-menu-right {
+    left: auto;
+    right: 0;
+}
+ 
+#main .btn-cog {
+    padding: 3px 9px;
+    line-height: 14px;
+    background: none;
+    border-color: #ccc;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+

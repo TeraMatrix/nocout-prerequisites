@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html id="ie8" lang="en-US"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html class=" social-js" lang="en-US"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8"><div class="fit-vids-style">­<style>               .fluid-width-video-wrapper {                 width: 100%;                              position: relative;                       padding: 0;                            }                                                                                   .fluid-width-video-wrapper iframe,        .fluid-width-video-wrapper object,        .fluid-width-video-wrapper embed {           position: absolute;                       top: 0;                                   left: 0;                                  width: 100%;                              height: 100%;                          }                                       </style></div><script async="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/cbgapi.loaded_1"></script><script async="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/cbgapi.loaded_0"></script><script src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(t,n,e){function r(e){if(!n[e]){var o=n[e]={exports:{}};t[e][0].call(o.exports,function(n){var o=t[e][1][n];return r(o?o:n)},o,o.exports)}return n[e].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<e.length;o++)r(e[o]);return r}({D5DuLP:[function(t,n){function e(t,n){var e=r[t];return e?e.apply(this,n):(o[t]||(o[t]=[]),void o[t].push(n))}var r={},o={};n.exports=e,e.queues=o,e.handlers=r},{}],handle:[function(t,n){n.exports=t("D5DuLP")},{}],G9z0Bl:[function(t,n){function e(){var t=l.info=NREUM.info;if(t&&t.agent&&t.licenseKey&&t.applicationID&&p&&p.body){l.proto="https"===f.split(":")[0]||t.sslForHttp?"https://":"http://",i("mark",["onload",a()]);var n=p.createElement("script");n.src=l.proto+t.agent,p.body.appendChild(n)}}function r(){"complete"===p.readyState&&o()}function o(){i("mark",["domContent",a()])}function a(){return(new Date).getTime()}var i=t("handle"),u=window,p=u.document,s="addEventListener",c="attachEvent",f=(""+location).split("?")[0],l=n.exports={offset:a(),origin:f,features:[]};p[s]?(p[s]("DOMContentLoaded",o,!1),u[s]("load",e,!1)):(p[c]("onreadystatechange",r),u[c]("onload",e)),i("mark",["firstbyte",a()])},{handle:"D5DuLP"}],loader:[function(t,n){n.exports=t("G9z0Bl")},{}]},{},["G9z0Bl"]);</script>
+		<meta name="viewport" content="width=device-width">
+
+		<link rel="profile" href="http://gmpg.org/xfn/11">
+		<link rel="pingback" href="http://mike-hostetler.com/xmlrpc.php">
+		<title>Rsync with a non-standard ssh port | Mike Hostetler</title>
+														<link rel="author" href="https://plus.google.com/u/0/110378703860917601584/">
+													<script type="text/javascript">
+					var _gaq = _gaq || [];
+					_gaq.push(['_setAccount', 'UA-338512-18']);
+					_gaq.push(['_trackPageview']);
+
+					(function() {
+						var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+						ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+						var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+					})();
+				</script>
+									<link rel="alternate" type="application/rss+xml" title="Mike Hostetler » Feed" href="http://mike-hostetler.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Mike Hostetler » Comments Feed" href="http://mike-hostetler.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Mike Hostetler » Rsync with a non-standard ssh port Comments Feed" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/feed/">
+<link rel="stylesheet" id="digg-digg-css" href="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/diggdigg-style.css" type="text/css" media="screen">
+<link rel="stylesheet" id="social_comments-css" href="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/comments.css" type="text/css" media="screen">
+<link rel="stylesheet" id="standard-activity-tabs-css" href="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/widget_004.css" type="text/css" media="all">
+<link rel="stylesheet" id="gcse-widget-css" href="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/widget_005.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-ad-300x250-widget-css" href="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/widget_003.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-ad-125x125-widget-css" href="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/widget_007.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-ad-468x60-css" href="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/widget.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-personal-image-widget-css" href="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/widget_002.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-influence-css" href="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/widget_006.css" type="text/css" media="all">
+<link rel="stylesheet" id="bootstrap-css" href="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/bootstrap.css" type="text/css" media="all">
+<link rel="stylesheet" id="bootstrap-responsive-css" href="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/bootstrap-responsive.css" type="text/css" media="all">
+<link rel="stylesheet" id="standard-css" href="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/style.css" type="text/css" media="all">
+<script type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/jquery.js"></script>
+<script type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/jquery-migrate.js"></script>
+<script type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/bootstrap.js"></script>
+<script type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/jquery_002.js"></script>
+<script type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/md5.js"></script>
+<script type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/theme.js"></script>
+<script type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/theme_002.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://mike-hostetler.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://mike-hostetler.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Google Chart API" href="http://mike-hostetler.com/blog/2007/12/07/google-chart-api/">
+<link rel="next" title="Parenthood Update, Refresh Denver talk rescheduled, jQuery" href="http://mike-hostetler.com/blog/2007/12/19/parenthood-update-refresh-denver-talk-rescheduled-jquery/">
+<link rel="canonical" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/">
+<link rel="shortlink" href="http://mike-hostetler.com/?p=254">
+<link rel="image_src" href=""><!-- All in one Favicon 4.3 --><link rel="icon" href="http://mike-hostetler.com/wp-content/uploads/2012/10/mh-favicon.png" type="image/png">
+	<style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_close_icon:active{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_loader{background-color:#f2f2f2;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #3b5998;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{max-height:590px;min-height:590px;max-width:500px;min-width:500px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;left:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #29447e;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f2f2f2;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}
+.fbpluginrecommendationsbarleft,.fbpluginrecommendationsbarright{position:fixed !important;bottom:0;z-index:999}.fbpluginrecommendationsbarleft{left:10px}.fbpluginrecommendationsbarright{right:10px}</style></head>
+	<body data-twttr-rendered="true" class="single single-post postid-254 single-format-standard">
+
+		
+		
+					<div id="menu-above-header" class="menu-navigation navbar navbar-fixed-top">
+				<div class="navbar-inner ">
+					<div class="container">
+
+						<a href="http://mike-hostetler.com/" class="header-nav-logo"><img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/mh-logo-sm.png" alt="Mike Hostetler logo" height="30" width="67"></a>
+
+						<a class="btn btn-navbar" data-toggle="collapse" data-target=".above-header-nav-collapse">
+						  <span class="icon-bar"></span>
+						  <span class="icon-bar"></span>
+						  <span class="icon-bar"></span>
+						</a>
+
+						<div class="nav-collapse above-header-nav-collapse">
+							<div class="menu-header-container"><ul id="menu-main-menu" class="nav nav-menu menu"><li class=" menu-item menu-item-type-post_type menu-item-object-page"><a href="http://mike-hostetler.com/blog/" title="Blog">Blog</a></li><li class=" menu-item menu-item-type-post_type menu-item-object-page"><a href="http://mike-hostetler.com/about/" title="About">About</a></li><li class=" menu-item menu-item-type-post_type menu-item-object-page"><a href="http://mike-hostetler.com/contact/" title="Contact">Contact</a></li></ul></div>
+						</div><!-- /.nav-collapse -->
+
+																			<div id="social-networking" class="clearfix">
+								<ul class="nav social-icons clearfix"><li><a href="http://twitter.com/mikehostetler" class="fademe" target="_blank"><img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/twitter.png" alt=""></a></li><li><a href="http://www.linkedin.com/in/mikehostetler" class="fademe" target="_blank"><img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/linkedin.png" alt=""></a></li><li><a href="http://plus.google.com/110378703860917601584/posts" class="fademe" target="_blank"><img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/google_plus.png" alt=""></a></li><li><a href="http://pinterest.com/mikehostetler/" class="fademe" target="_blank"><img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/pinterest.png" alt=""></a></li><li><a href="http://github.com/mikehostetler/" class="fademe" target="_blank"><img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/octocat-icon.png" alt=""></a></li><li><a href="http://feeds.feedburner.com/mikehostetler-rss" class="fademe" target="_blank"><img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/rss.png" alt=""></a></li></ul>
+
+							</div><!-- /#social-networking -->
+						
+					</div> <!-- /container -->
+				</div><!-- /navbar-inner -->
+			</div> <!-- /#menu-above-header -->
+		
+		
+			<div id="header" class="imageless">
+				<div id="head-wrapper" class="container clearfix">
+
+					
+																<div id="hgroup" class="clearfix no-logo">
+
+																	<div id="logo">
+
+																				
+											<p id="site-title">
+
+																								
+													<a href="http://mike-hostetler.com/" title="Mike Hostetler" rel="home">Mike Hostetler</a>
+												
+											</p> <!-- /#site-title -->
+
+										
+																															<p><small id="site-description"></small></p>
+										
+									</div><!-- /#logo -->
+								
+																									<div id="header-widget">
+										<div id="search-2" class="header-widget widget widget_search"><form role="search" method="get" id="searchform" action="http://mike-hostetler.com/"><input placeholder="Search..." name="s" id="s" type="text"></form></div>									</div><!-- /#header-widget -->
+								
+						</div><!-- /#hgroup -->
+					
+														</div><!-- /#head-wrapper -->
+			</div><!-- /#header -->
+
+			
+<div id="wrapper">
+	<div class="container">
+		<div class="row">
+
+			
+			<div id="main" class="span8 clearfix" role="main">
+				
+				<div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><ul class="breadcrumb"><li class="home-breadcrumb"><a href="http://mike-hostetler.com/" itemprop="url"><span itemprop="title">Home</span></a><span class="divider">/</span></li><li><a href="" itemprop="url"><span itemprop="title"></span></a></li><li class="active">Rsync with a non-standard ssh port</li></ul></div>				
+				
+<div id="post-254" class="post-254 post type-post status-publish format-standard hentry tag-jquery tag-rsync tag-ssh tag-system-administration post format-standard clearfix">
+
+	<div class="post-header clearfix">
+
+				 
+		<div class="title-wrap clearfix">
+												<h1 class="post-title entry-title">Rsync with a non-standard ssh port</h1>	
+										<div class="post-header-meta">
+													<span class="the-time updated">December 8, 2007</span>
+													<span class="the-comment-link">—&nbsp;<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comments" title="Comment on Rsync with a non-standard ssh port">34 Comments</a></span>
+							</div><!-- /.post-header-meta -->
+		</div><!-- /.title-wrap -->
+
+	</div> <!-- /.post-header -->
+
+	<div id="content-254" class="entry-content clearfix">
+					<a id="dd_start"></a><p>While doing some work on the <a href="http://jquery.com/plugins">JQuery Plugins</a>
+ site today, I needed to use rsync over ssh.  The ssh daemon on the 
+remote server runs on a non-standard port, and all the port related 
+options to rsync only change settings if you’re running the 
+rsync-daemon.</p>
+<p>After some searching, the man page of rsync finally offered a solution:</p>
+<p><code><br>
+# rsync -avz -e "ssh -p $portNumber" user@remoteip:/path/to/files/ /local/path/<br>
+</code></p>
+<p>Passing the port parameter to ssh with the -e option worked like a charm.  <img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/icon_smile.gif" alt=":-)" class="wp-smiley"> </p>
+<p>This is why Unix rocks.</p>
+<p></p>
+<a id="dd_end"></a><script type="text/javascript">var dd_offset_from_content = 40;var dd_top_offset_from_content = 80;var dd_override_start_anchor_id = "";var dd_override_top_offset = "";</script><script type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/diggdigg-floating-bar.js"></script><script type="text/javascript"> jQuery(document).ready(function($) { window.setTimeout('loadTwitter_254()',1000); }); </script><script type="text/javascript"> function loadTwitter_254(){ jQuery(document).ready(function($) { $('.dd-twitter-254').remove();$.getScript('http://platform.twitter.com/widgets.js'); }); }</script>					</div><!-- /.entry-content -->
+	
+	<div class="post-meta clearfix">
+
+			<div class="meta-date-cat-tags pull-left">
+			
+													<span class="the-category">In Uncategorized</span>								
+													<span class="the-tags"><a href="http://mike-hostetler.com/blog/tag/jquery/" rel="tag">jquery</a>, <a href="http://mike-hostetler.com/blog/tag/rsync/" rel="tag">rsync</a>, <a href="http://mike-hostetler.com/blog/tag/ssh/" rel="tag">ssh</a>, <a href="http://mike-hostetler.com/blog/tag/system-administration/" rel="tag">system administration</a></span>								
+			</div><!-- /meta-date-cat-tags -->
+			
+			<div class="meta-comment-link pull-right">
+				<a class="pull-right post-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/" title="permalink "><img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/icn-permalink.png" alt="permalink "></a>
+							</div><!-- /meta-comment-link -->
+
+	</div><!-- /.post-meta -->
+
+</div> <!-- /#post- -->	
+																		
+							
+																						<div id="author-box" class="well clearfix">
+									<div class="author-box-image">
+										<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/c3b8ee747a5cfdd9552f9481a9dbadb2.png" class="avatar avatar-96 photo" height="96" width="96">									</div><!-- /.author-box-image -->
+									<h4 class="author-box-name">Mike Hostetler</h4>
+									<p>
+										<a class="author-link author-posts-url" href="http://mike-hostetler.com/blog/author/mikehostetler/" title="Mike Hostetler Posts">Posts</a>
+										
+																		
+																			<a class="author-link icn-twitter" href="http://twitter.com/mikehostetler/" title="Twitter" target="_blank">Twitter</a>
+									
+																			<a class="author-link icn-facebook" href="https://facebook.com/mike.hostetler/" title="Facebook" target="_blank">Facebook</a>
+																		
+																			<a class="author-link icn-gplus" href="https://plus.google.com/u/0/110378703860917601584/" title="Google+" target="_blank">Google+</a>
+																		
+									</p>
+									Entrepreneur &amp; Technologist. Formerly @appendTo. Passionate
+ about #DistributedWork, the @ModernWebHQ, #Leadership and helping 
+others succeed.								</div><!-- /.author-box -->						
+														
+														
+							
+
+	<div id="single-post-nav">
+		<ul class="pager">
+		
+						
+							<li class="previous">
+					<span class="previous-page"><a href="http://mike-hostetler.com/blog/2007/12/07/google-chart-api/" rel="prev" title="Google Chart API"><i class="icon-chevron-left"></i>&nbsp;Google Chart API</a></span>				</li>
+						
+							<li class="next">
+				<span class="no-previous-page-link next-page"><a href="http://mike-hostetler.com/blog/2007/12/19/parenthood-update-refresh-denver-talk-rescheduled-jquery/" rel="next" title="Parenthood Update, Refresh Denver talk rescheduled, jQuery">&nbsp;Parenthood Update, Refresh...<i class="icon-chevron-right"></i></a></span>				</li>
+					</ul>	
+	</div><!-- /#single-post-nav -->
+
+							
+							<div id="social">
+		<div class="social-post">
+		<div id="loading" style="display:none">
+			<input id="reload_url" value="http://mike-hostetler.com/index.php?social_controller=auth&amp;social_action=reload_form&amp;redirect_to=http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/&amp;post_id=254" type="hidden">
+			Logging In...		</div>
+										<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Profile <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#respond" style="display:none;">cancel</a></small></h3>
+									<form action="http://mike-hostetler.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+						<div class="social-sign-in-links social-clearfix">
+		<a class="social-twitter social-imr social-login comments" href="http://mike-hostetler.com/index.php?social_controller=auth&amp;social_action=authorize&amp;key=twitter&amp;post_id=254" id="twitter_signin" target="_blank">Sign in with Twitter</a>
+		<a class="social-facebook social-imr social-login comments" href="http://mike-hostetler.com/index.php?social_controller=auth&amp;social_action=authorize&amp;key=facebook&amp;post_id=254" id="facebook_signin" target="_blank">Sign in with Facebook</a>
+	</div>
+<div class="social-divider">
+	<span>or</span>
+</div>
+																				<p class="social-input-row social-input-row-author"><label for="author" class="social-label">Name</label><input id="author" name="author" class="social-input" required="required" type="text"></p>
+<p class="social-input-row social-input-row-email"><label for="email" class="social-label">Email</label><input id="email" name="email" class="social-input" required="required" type="text"><small class="social-help">Not published</small></p>
+<p class="social-input-row social-input-row-url"><label for="url" class="social-label">Website</label><input id="url" name="url" class="social-input" type="text"></p>
+												<p class="social-input-row social-input-row-comment"><label for="comment" class="social-label">Comment</label><textarea id="comment" name="comment" class="social-input" required="required"></textarea></p>												<p class="form-submit">
+							<input name="submit" id="submit" value="Post It" type="submit">
+							<input name="comment_post_ID" value="254" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+<input id="use_twitter_reply" name="use_twitter_reply" value="0" type="hidden"><input id="in_reply_to_status_id" name="in_reply_to_status_id" value="" type="hidden">						</p>
+						<div id="commentform-extras"><p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" value="e6e4e6836d" type="hidden"></p><script type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/form.js"></script>
+<p style="display: none;"></p></div>					<input id="ak_js" name="ak_js" value="1407904948864" type="hidden"></form>
+							</div><!-- #respond -->
+				</div>
+	<div id="social-tabs-comments">
+				<ul class="social-nav social-clearfix">
+			<li class="social-all social-tab-main social-current-tab"><a href="#" rel="social-all"><span>34 Replies</span></a></li>
+			<li class="social-wordpress"><a href="#" rel="wordpress"><span>32 Comments</span></a></li>
+			<li class="social-twitter"><a href="#" rel="social-twitter"><span>0 Tweets</span></a></li>
+			<li class="social-facebook"><a href="#" rel="social-facebook"><span>0 Facebook</span></a></li>
+			<li class="social-pingback"><a href="#" rel="social-pingback"><span>2 Pingbacks</span></a></li>
+		</ul>
+
+		<!-- panel items -->
+		<div id="social-comments-tab-all" class="social-tabs-panel social-tabs-first-panel">
+			<div id="comments" class="social-comments">
+				<div class="social-last-reply-when">Last reply was July 20, 2013</div><div class="cf-clearfix"></div>				<ol class="social-commentlist">
+				<li class="wordpress even thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-234">
+<div class="social-comment-inner social-clearfix" id="comment-234">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/4dcb32865969d5b342c5de56ddd7c81f.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">ikke</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-234" class="social-posted-when" target="_blank">May 10, 2008</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thanks for this….. Had the same problem, now the same solution <img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/icon_smile.gif" alt=":-)" class="wp-smiley"> </p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=234#respond" onclick='return addComment.moveForm("comment-234", "234", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-234 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-235">
+<div class="social-comment-inner social-clearfix" id="comment-235">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/f4fadd715df7e2a0c0f129d7c4c6b2f6.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Daniel</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-235" class="social-posted-when" target="_blank">November 12, 2008</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Wonderful… just what I was looking for…</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=235#respond" onclick='return addComment.moveForm("comment-235", "235", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-235 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-236">
+<div class="social-comment-inner social-clearfix" id="comment-236">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/f3e232ee129f31366b9e744d1e7ca942.jpeg" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Anonymous</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-236" class="social-posted-when" target="_blank">December 19, 2008</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thank you. This is why google rocks… “rsync ssh non standard port”. You helped a lot. Thanks for posting.</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=236#respond" onclick='return addComment.moveForm("comment-236", "236", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-236 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-237">
+<div class="social-comment-inner social-clearfix" id="comment-237">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/ad516503a11cd5ca435acc9bb6523536_002.png" class="avatar avatar-40 photo avatar-default" height="40" width="40"><cite class="social-fn fn">Colin-uk.com &amp;raquo; Blog Archive &amp;raquo; Rsync tips</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-237" class="social-posted-when" target="_blank">February 22, 2010</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>[...] <a href="http://amountaintop.com/rsync-non-standard-ssh-port" rel="nofollow">http://amountaintop.com/rsync-non-standard-ssh-port</a> [...]</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=237#respond" onclick='return addComment.moveForm("comment-237", "237", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-237 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-238">
+<div class="social-comment-inner social-clearfix" id="comment-238">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/7c0e6e0cba4bc312005402d1d1b27b6d.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">ling</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-238" class="social-posted-when" target="_blank">April 26, 2010</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thanks a lot for this, just what I needed <img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/icon_wink.gif" alt=";)" class="wp-smiley"> </p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=238#respond" onclick='return addComment.moveForm("comment-238", "238", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-238 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-291">
+<div class="social-comment-inner social-clearfix" id="comment-291">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/998cf49cb262cdfcdd0c9712de874601.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Leonardo Gregory Brunnet</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-291" class="social-posted-when" target="_blank">April 10, 2011</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thank you for the tip. It is always hard to grep solutions on man pages.</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=291#respond" onclick='return addComment.moveForm("comment-291", "291", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-291 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-292">
+<div class="social-comment-inner social-clearfix" id="comment-292">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/bacfbd45f6b54183f16737b78178fc47.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Tendydon</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-292" class="social-posted-when" target="_blank">May 3, 2011</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thanks a lot I was also wondering how</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=292#respond" onclick='return addComment.moveForm("comment-292", "292", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-292 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-293">
+<div class="social-comment-inner social-clearfix" id="comment-293">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/932758c09753975a358bae3186881bc0.jpeg" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Leon Nardella</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-293" class="social-posted-when" target="_blank">May 14, 2011</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thank you very much!<br>
+I had been losing my hair after this one!</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=293#respond" onclick='return addComment.moveForm("comment-293", "293", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-293 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-302">
+<div class="social-comment-inner social-clearfix" id="comment-302">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/2d5b6bc0c49a36e22dd2cb4e08664f00.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Cristobal</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-302" class="social-posted-when" target="_blank">May 19, 2011</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>&nbsp;Gracias.</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=302#respond" onclick='return addComment.moveForm("comment-302", "302", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-302 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-306">
+<div class="social-comment-inner social-clearfix" id="comment-306">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/ffd6f08e7ba4db1450d3dfb1abbe50b0.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Guillermo</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-306" class="social-posted-when" target="_blank">August 1, 2011</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>That was indeed useful. </p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=306#respond" onclick='return addComment.moveForm("comment-306", "306", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-306 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-307">
+<div class="social-comment-inner social-clearfix" id="comment-307">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/086599fe294ec03d3e83b6d25721d4ec.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Jpenguin</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-307" class="social-posted-when" target="_blank">August 3, 2011</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Cool useful!</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=307#respond" onclick='return addComment.moveForm("comment-307", "307", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-307 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-308">
+<div class="social-comment-inner social-clearfix" id="comment-308">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/5e7220af691609568d8e92b4d795e002.jpeg" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn"><a href="http://dldx.org/" rel="external nofollow" class="url">Durand</a></cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-308" class="social-posted-when" target="_blank">August 7, 2011</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thanks a lot!</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=308#respond" onclick='return addComment.moveForm("comment-308", "308", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-308 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-311">
+<div class="social-comment-inner social-clearfix" id="comment-311">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/db77db4067e47b6d0306331dcbe39ede.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Marklar</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-311" class="social-posted-when" target="_blank">September 2, 2011</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Anyone know how to get this to work on Windows?</p>
+<p>I installed cwRSync on Windows. &nbsp;I tried the command, but when 
+/local/path is C:something it gives an error about both directories 
+being remote. &nbsp;Any ideas?</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=311#respond" onclick='return addComment.moveForm("comment-311", "311", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-311 -->
+<ul class="social-children">
+<li class="wordpress odd alt depth-2 social-comment social-clearfix social-wordpress" id="li-comment-312">
+<div class="social-comment-inner social-clearfix" id="comment-312">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/d0f6815aa0e7ec7c9199db00d6ab2bfa.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">synack</cite><span class="social-replied social-imr">replied:</span>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-312" class="social-posted-when" target="_blank">September 29, 2011</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Here is the comman fro the script that I use to backup my windows
+ workstation to&nbsp;and offite linux box -&nbsp; rsync -avzO -e “ssh -p
+ 6883″ –delete /cygdrive/c/data c 
+%bkupuser%@bs01.g33k2.com:~/backups/daily01</p>
+<p>You have to used the /cygdrive/ when refering to&nbsp;local drives with cygwin tools.</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=312#respond" onclick='return addComment.moveForm("comment-312", "312", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-312 -->
+</li><!-- #comment-## -->
+</ul>
+</li>
+<!-- #comment-## -->
+<li class="wordpress even thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-313">
+<div class="social-comment-inner social-clearfix" id="comment-313">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/ad516503a11cd5ca435acc9bb6523536_002.png" class="avatar avatar-40 photo avatar-default" height="40" width="40"><cite class="social-fn fn"><a href="http://twitter.com/OndrejJombik" rel="external nofollow" class="url">Ondrej Jombík</a></cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-313" class="social-posted-when" target="_blank">October 10, 2011</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thanks man, this was exactly I was looking for! <img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/icon_smile.gif" alt=":-)" class="wp-smiley">  </p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=313#respond" onclick='return addComment.moveForm("comment-313", "313", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-313 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-317">
+<div class="social-comment-inner social-clearfix" id="comment-317">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/d00ea036111227788e9a1bfc15d1cb62.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Pete</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-317" class="social-posted-when" target="_blank">January 10, 2012</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Ditto!!!</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=317#respond" onclick='return addComment.moveForm("comment-317", "317", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-317 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-319">
+<div class="social-comment-inner social-clearfix" id="comment-319">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/8dead64cd2fd27abeabcb20fb9f67930.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Joe</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-319" class="social-posted-when" target="_blank">March 6, 2012</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thanks!</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=319#respond" onclick='return addComment.moveForm("comment-319", "319", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-319 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-320">
+<div class="social-comment-inner social-clearfix" id="comment-320">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/3a9eb6a693f924724acadeb3563cf390.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Guug</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-320" class="social-posted-when" target="_blank">March 23, 2012</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Well done! <img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/icon_smile.gif" alt=":)" class="wp-smiley">  </p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=320#respond" onclick='return addComment.moveForm("comment-320", "320", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-320 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-321">
+<div class="social-comment-inner social-clearfix" id="comment-321">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/72a2ea91821db836aca105bf57980155.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Geno</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-321" class="social-posted-when" target="_blank">March 27, 2012</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>thanks a ton!</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=321#respond" onclick='return addComment.moveForm("comment-321", "321", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-321 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-323">
+<div class="social-comment-inner social-clearfix" id="comment-323">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/59c3b8fcb48963395770a72dcd35a9ae.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Expresso Viva</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-323" class="social-posted-when" target="_blank">April 11, 2012</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>god job<br>
+thx lots</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=323#respond" onclick='return addComment.moveForm("comment-323", "323", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-323 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-327">
+<div class="social-comment-inner social-clearfix" id="comment-327">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/ee9efb1456b12d74218212449f8bbb7d.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">jon</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-327" class="social-posted-when" target="_blank">July 4, 2012</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>thank you…you saved me a whole lot of time</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=327#respond" onclick='return addComment.moveForm("comment-327", "327", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-327 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-328">
+<div class="social-comment-inner social-clearfix" id="comment-328">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/69d349fe6bb03b0cb773e4d8c8939e8d.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Adam</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-328" class="social-posted-when" target="_blank">July 23, 2012</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Just to verify, will this login to an ssh shell before staring 
+any rsync traffic? &nbsp;I want to make sure the rsync is encrypted both
+ directions before doing this to a remote server, i.e. it’s encrypted 
+when I switch SRC/DEST:<br>
+rsync -avz -e “ssh -p $portNumber” /local/path/&nbsp;user@remoteip:/path/to/files/</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=328#respond" onclick='return addComment.moveForm("comment-328", "328", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-328 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-289">
+<div class="social-comment-inner social-clearfix" id="comment-289">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/172aa2f4de8f115721310db31e730921.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">dave</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-289" class="social-posted-when" target="_blank">October 17, 2012</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>The post that keeps on giving. Thanks!</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=289#respond" onclick='return addComment.moveForm("comment-289", "289", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-289 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-339">
+<div class="social-comment-inner social-clearfix" id="comment-339">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/d440ee412410bca931b50b9d714d8a3c.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">John Goodwin</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-339" class="social-posted-when" target="_blank">November 16, 2012</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>&nbsp;And another vote of thanks! Trying to backup all my data 
+from my PC to my new HP N40L microserver and I fell at the first hurdle.
+ A quick Google search and I found this. I pass on my thanks, cheers.</p>
+<p>John G</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=339#respond" onclick='return addComment.moveForm("comment-339", "339", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-339 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-356">
+<div class="social-comment-inner social-clearfix" id="comment-356">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/ee41beda79b87f126d44c0cf30c6e2e4.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Alexey Moseyev</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-356" class="social-posted-when" target="_blank">January 9, 2013</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thank you! </p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=356#respond" onclick='return addComment.moveForm("comment-356", "356", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-356 -->
+</li><!-- #comment-## -->
+<li class="pingback odd alt thread-even depth-1 social-comment social-clearfix social-pingback" id="li-comment-357">
+<div class="social-comment-inner social-clearfix" id="comment-357">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<cite class="social-fn fn"><a href="http://samsonasik.wordpress.com/2013/01/26/rsync-synchronize-local-with-shared-hosting/" rel="external nofollow" class="url">Rsync : Synchronize local with shared hosting « Welcome to Abdul Malik Ikhsan's Blog</a></cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-pingback">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-357" class="social-posted-when" target="_blank">January 26, 2013</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>[...] : Image : <a href="http://www.haykranen.nl/wp-content/uploads/2008/05/timemachine.jpg" rel="nofollow">http://www.haykranen.nl/wp-content/uploads/2008/05/timemachine.jpg</a> Source : 1. <a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/" rel="nofollow">http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/</a> 2. [...]</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=357#respond" onclick='return addComment.moveForm("comment-357", "357", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-357 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-374">
+<div class="social-comment-inner social-clearfix" id="comment-374">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/463014219e8b9d30524f35055b57d001.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">escapefromthebluebedroom</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-374" class="social-posted-when" target="_blank">March 20, 2013</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Excellent, exactly what I was looking for!</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=374#respond" onclick='return addComment.moveForm("comment-374", "374", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-374 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-377">
+<div class="social-comment-inner social-clearfix" id="comment-377">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/3585b19a12c1c5b5e9ab2aca0b57b3c9.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Lee Burchett</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-377" class="social-posted-when" target="_blank">April 24, 2013</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thanks. This is just what I was looking for.</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=377#respond" onclick='return addComment.moveForm("comment-377", "377", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-377 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-378">
+<div class="social-comment-inner social-clearfix" id="comment-378">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/ad516503a11cd5ca435acc9bb6523536_002.png" class="avatar avatar-40 photo avatar-default" height="40" width="40"><cite class="social-fn fn"><a href="http://twitter.com/dragibus" rel="external nofollow" class="url">NO</a></cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-378" class="social-posted-when" target="_blank">May 2, 2013</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thanks / Saved my “night” …</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=378#respond" onclick='return addComment.moveForm("comment-378", "378", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-378 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-380">
+<div class="social-comment-inner social-clearfix" id="comment-380">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/a88403de32a7f8e5e2479bb4e344f5da.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">AsherBond</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-380" class="social-posted-when" target="_blank">May 13, 2013</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>I had a feeling I should have specified the port first. Helpful. – Asher Bond</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=380#respond" onclick='return addComment.moveForm("comment-380", "380", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-380 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-381">
+<div class="social-comment-inner social-clearfix" id="comment-381">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/786286c5ee764173321fa9a3af1e6174.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">thirdnormal</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-381" class="social-posted-when" target="_blank">May 17, 2013</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thank you. This worked perfectly for me.</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=381#respond" onclick='return addComment.moveForm("comment-381", "381", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-381 -->
+</li><!-- #comment-## -->
+<li class="wordpress odd alt thread-even depth-1 social-comment social-clearfix social-wordpress" id="li-comment-382">
+<div class="social-comment-inner social-clearfix" id="comment-382">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/2dc5e2d9b9f1a58679f1d934238ba574.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Raul Montagne</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-382" class="social-posted-when" target="_blank">May 22, 2013</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>Thank you! just what I was looking for!</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=382#respond" onclick='return addComment.moveForm("comment-382", "382", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-382 -->
+</li><!-- #comment-## -->
+<li class="wordpress even thread-odd thread-alt depth-1 social-comment social-clearfix social-wordpress" id="li-comment-386">
+<div class="social-comment-inner social-clearfix" id="comment-386">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/5c149bfae37ec372ed4a244ab6d355c0.png" class="avatar avatar-40 photo" height="40" width="40"><cite class="social-fn fn">Cristóbal Vio</cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-wordpress">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-386" class="social-posted-when" target="_blank">June 25, 2013</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>thx!!</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=386#respond" onclick='return addComment.moveForm("comment-386", "386", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-386 -->
+</li><!-- #comment-## -->
+<li class="pingback odd alt thread-even depth-1 social-comment social-clearfix social-pingback" id="li-comment-390">
+<div class="social-comment-inner social-clearfix" id="comment-390">
+	<div class="social-comment-header">
+		<div class="social-comment-author vcard">
+			<cite class="social-fn fn"><a href="http://www.naidoo.com.au/rsync-with-a-non-standard-ssh-port-mike-hostetler/" rel="external nofollow" class="url">Rsync with a non-standard ssh port – Mike Hostetler | Pork Belly</a></cite>		</div>
+		<!-- .comment-author .vcard -->
+		<div class="social-comment-meta social-comment-meta-pingback">
+			<span class="social-posted-from">
+								<span>View</span>
+							</span>
+			<a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/#comment-390" class="social-posted-when" target="_blank">July 20, 2013</a>
+		</div>
+	</div>
+	<div class="social-comment-body">
+				<p>[...] Rsync with a non-standard ssh port – Mike Hostetler. [...]</p>
+	</div>
+			<div class="social-actions entry-meta">
+		<a class="comment-reply-link" href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/?replytocom=390#respond" onclick='return addComment.moveForm("comment-390", "390", "respond", "254")'>Reply</a>	</div>
+		<!-- .reply -->
+</div><!-- #comment-390 -->
+</li><!-- #comment-## -->
+				</ol>
+							</div>
+		</div>
+			</div>
+	<!-- #Comments Tabs -->
+	</div>
+	
+							
+					 	
+							</div><!-- /#main -->
+			
+							<div id="sidebar" class="span4">
+		
+	<div id="standard-personal-image-2" class="widget personal-image">		<div class="standard-pi-pic">
+		
+							<a href="http://mike-hostetler.com/">
+					
+			
+			<img src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/BlackShirt-75dpi-450x300.png" alt="">
+	
+			
+							</a>
+					</div><!-- /.standard-pi-pic -->
+		
+					<p class="standard-pi-bio">Entrepreneur &amp; Technologist. 
+Formerly @appendTo. Passionate about #DistributedWork, the @ModernWebHQ,
+ #Leadership and helping others succeed.</p>
+				
+	</div><div id="standard-activity-tabs-2" class="widget standard-activity-tabs"><div class="tabbed-widget widget"><div class="tab-inner"><ul class="nav nav-tabs tab-count-3"><li class="active"><a href="#recent" data-toggle="tab">Recent</a></li><li><a href="#popular" data-toggle="tab">Popular</a></li><li><a href="#pop-comments" data-toggle="tab">Comments</a></li></ul><div class="tab-content"><div class="tab-pane active" id="recent"><ul class="latest-posts"><li class="clearfix"><div class="latest-meta"><a href="http://mike-hostetler.com/blog/2014/07/15/why-i-handed-off-my-growing-profitable-startup-to-my-leadership-team/" rel="nofollow">Why I handed off my growing, profitable startup to my Leadership Team</a><span class="latest-date">July 15, 2014</span></div></li><li class="clearfix"><div class="latest-meta"><a href="http://mike-hostetler.com/blog/2014/06/02/how-much-of-the-world-will-software-eat/" rel="nofollow">How much of the world will software eat?</a><span class="latest-date">June 2, 2014</span></div></li><li class="clearfix"><div class="latest-meta"><a href="http://mike-hostetler.com/blog/2013/11/18/maker-time/" rel="nofollow">Maker Time</a><span class="latest-date">November 18, 2013</span></div></li></ul></div><div id="popular" class="tab-pane"><ul class="popular-posts"><li class="clearfix"><div class="latest-meta"><a href="http://mike-hostetler.com/blog/2007/09/25/iphone-wifi-not-working-reset-your-network-settings/" rel="nofollow">iPhone Wifi not working?  Reset your network...</a><span class="latest-date">97 comments since September 25, 2007</span></div></li><li class="clearfix"><div class="latest-meta"><a href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/" rel="nofollow">Rsync with a non-standard ssh port</a><span class="latest-date">34 comments since December 8, 2007</span></div></li><li class="clearfix"><div class="latest-meta"><a href="http://mike-hostetler.com/blog/2007/10/10/error-1604-when-upgrading-your-iphone-version-111/" rel="nofollow">Error 1604 when upgrading your iPhone to vers...</a><span class="latest-date">23 comments since October 10, 2007</span></div></li></ul></div><div id="pop-comments" class="tab-pane"><ul class="latest-comments"><li class="clearfix"><a class="latest-comment-tn fademe" href="http://mike-hostetler.com/blog/2014/07/15/why-i-handed-off-my-growing-profitable-startup-to-my-leadership-team/" rel="nofollow"><img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/74b9a417143ef1fa0d35b296bc225ace.png" class="avatar avatar-50 photo" height="50" width="50"></a><div class="comment-meta"><div class="comment-meta-author">Douglas Neiner</div><div class="comment-meta-comment"><a href="http://mike-hostetler.com/blog/2014/07/15/why-i-handed-off-my-growing-profitable-startup-to-my-leadership-team/#comment-447" rel="nofollow">Hey Mike, it was neat to see your perspe...</a></div></div></li><li class="clearfix"><a class="latest-comment-tn fademe" href="http://mike-hostetler.com/blog/2013/11/12/the-third-way/" rel="nofollow"><img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/ad516503a11cd5ca435acc9bb6523536.png" class="avatar avatar-50 photo avatar-default" height="50" width="50"></a><div class="comment-meta"><div class="comment-meta-author">We Need More Lazy Managers</div><div class="comment-meta-comment"><a href="http://mike-hostetler.com/blog/2013/11/12/the-third-way/#comment-401" rel="nofollow">[…] companies like&nbsp;Github&nbsp;and&nbsp;V...</a></div></div></li><li class="clearfix"><a class="latest-comment-tn fademe" href="http://mike-hostetler.com/blog/2013/08/30/why-does-the-software-community-matter/" rel="nofollow"><img alt="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/8f5edb575ab335b97624161725617465.png" class="avatar avatar-50 photo" height="50" width="50"></a><div class="comment-meta"><div class="comment-meta-author">l_diaz85</div><div class="comment-meta-comment"><a href="http://mike-hostetler.com/blog/2013/08/30/why-does-the-software-community-matter/#comment-400" rel="nofollow">Recently I was REALLY low on money and d...</a></div></div></li></ul></div></div><!-- /.tab-content --></div><!-- /.tab-inner --></div><!-- /.tabbed-widget --></div><div id="aktt-widget-2" class="widget aktt-widget"><h4 class="Twitter Tools widget-title">Recent Tweets</h4><div class="aktt_tweets">
+	<ul>
+		<li>
+Six Habits of Highly Empathic People <a href="http://j.mp/Y0CDd7">j.mp/Y0CDd7</a> <a href="http://twitter.com/1/status/499236393143791617" class="aktt_tweet_time">12 hours ago</a>
+</li>
+		<li>
+My Secret to Getting Rid of Burnout Permanently <a href="http://j.mp/Y0tzVn">j.mp/Y0tzVn</a> <a href="http://twitter.com/1/status/499231381780963329" class="aktt_tweet_time">12 hours ago</a>
+</li>
+		<li>
+“You become what you think about.” – Napoleon Hill <a href="http://twitter.com/1/status/499226369596088321" class="aktt_tweet_time">13 hours ago</a>
+</li>
+	</ul>
+</div>
+	<p class="aktt_more_updates"><a href="http://twitter.com/mikehostetler">Follow Me on Twitter</a></p>
+	<p class="aktt_credit">Powered by <a href="http://crowdfavorite.com/wordpress/plugins/twitter-tools/">Twitter Tools</a></p>
+</div><div id="archives-2" class="widget widget_archive"><h4 class="Archives widget-title">Archives</h4>		<ul>
+	<li><a href="http://mike-hostetler.com/blog/2014/07/">July 2014</a>&nbsp;(1)</li>
+	<li><a href="http://mike-hostetler.com/blog/2014/06/">June 2014</a>&nbsp;(1)</li>
+	<li><a href="http://mike-hostetler.com/blog/2013/11/">November 2013</a>&nbsp;(3)</li>
+	<li><a href="http://mike-hostetler.com/blog/2013/08/">August 2013</a>&nbsp;(1)</li>
+	<li><a href="http://mike-hostetler.com/blog/2013/05/">May 2013</a>&nbsp;(1)</li>
+	<li><a href="http://mike-hostetler.com/blog/2013/02/">February 2013</a>&nbsp;(2)</li>
+	<li><a href="http://mike-hostetler.com/blog/2012/11/">November 2012</a>&nbsp;(4)</li>
+	<li><a href="http://mike-hostetler.com/blog/2012/05/">May 2012</a>&nbsp;(1)</li>
+	<li><a href="http://mike-hostetler.com/blog/2011/05/">May 2011</a>&nbsp;(3)</li>
+	<li><a href="http://mike-hostetler.com/blog/2010/09/">September 2010</a>&nbsp;(1)</li>
+	<li><a href="http://mike-hostetler.com/blog/2010/05/">May 2010</a>&nbsp;(1)</li>
+	<li><a href="http://mike-hostetler.com/blog/2010/04/">April 2010</a>&nbsp;(2)</li>
+	<li><a href="http://mike-hostetler.com/blog/2010/03/">March 2010</a>&nbsp;(1)</li>
+	<li><a href="http://mike-hostetler.com/blog/2008/12/">December 2008</a>&nbsp;(1)</li>
+	<li><a href="http://mike-hostetler.com/blog/2008/06/">June 2008</a>&nbsp;(5)</li>
+	<li><a href="http://mike-hostetler.com/blog/2008/03/">March 2008</a>&nbsp;(8)</li>
+	<li><a href="http://mike-hostetler.com/blog/2008/02/">February 2008</a>&nbsp;(2)</li>
+	<li><a href="http://mike-hostetler.com/blog/2008/01/">January 2008</a>&nbsp;(2)</li>
+	<li><a href="http://mike-hostetler.com/blog/2007/12/">December 2007</a>&nbsp;(5)</li>
+	<li><a href="http://mike-hostetler.com/blog/2007/11/">November 2007</a>&nbsp;(4)</li>
+	<li><a href="http://mike-hostetler.com/blog/2007/10/">October 2007</a>&nbsp;(9)</li>
+	<li><a href="http://mike-hostetler.com/blog/2007/09/">September 2007</a>&nbsp;(5)</li>
+	<li><a href="http://mike-hostetler.com/blog/2007/08/">August 2007</a>&nbsp;(5)</li>
+	<li><a href="http://mike-hostetler.com/blog/2007/07/">July 2007</a>&nbsp;(5)</li>
+	<li><a href="http://mike-hostetler.com/blog/2007/06/">June 2007</a>&nbsp;(2)</li>
+	<li><a href="http://mike-hostetler.com/blog/2007/05/">May 2007</a>&nbsp;(12)</li>
+	<li><a href="http://mike-hostetler.com/blog/2007/04/">April 2007</a>&nbsp;(33)</li>
+	<li><a href="http://mike-hostetler.com/blog/2007/03/">March 2007</a>&nbsp;(18)</li>
+	<li><a href="http://mike-hostetler.com/blog/2007/02/">February 2007</a>&nbsp;(5)</li>
+	<li><a href="http://mike-hostetler.com/blog/2006/12/">December 2006</a>&nbsp;(3)</li>
+	<li><a href="http://mike-hostetler.com/blog/2006/10/">October 2006</a>&nbsp;(8)</li>
+	<li><a href="http://mike-hostetler.com/blog/2006/07/">July 2006</a>&nbsp;(1)</li>
+	<li><a href="http://mike-hostetler.com/blog/2006/06/">June 2006</a>&nbsp;(6)</li>
+	<li><a href="http://mike-hostetler.com/blog/2006/05/">May 2006</a>&nbsp;(6)</li>
+	<li><a href="http://mike-hostetler.com/blog/2006/04/">April 2006</a>&nbsp;(6)</li>
+	<li><a href="http://mike-hostetler.com/blog/2006/03/">March 2006</a>&nbsp;(19)</li>
+	<li><a href="http://mike-hostetler.com/blog/2006/02/">February 2006</a>&nbsp;(8)</li>
+	<li><a href="http://mike-hostetler.com/blog/2006/01/">January 2006</a>&nbsp;(2)</li>
+	<li><a href="http://mike-hostetler.com/blog/2005/12/">December 2005</a>&nbsp;(3)</li>
+	<li><a href="http://mike-hostetler.com/blog/2005/11/">November 2005</a>&nbsp;(1)</li>
+	<li><a href="http://mike-hostetler.com/blog/2005/09/">September 2005</a>&nbsp;(1)</li>
+	<li><a href="http://mike-hostetler.com/blog/2005/08/">August 2005</a>&nbsp;(4)</li>
+	<li><a href="http://mike-hostetler.com/blog/2005/07/">July 2005</a>&nbsp;(8)</li>
+	<li><a href="http://mike-hostetler.com/blog/2005/06/">June 2005</a>&nbsp;(3)</li>
+	<li><a href="http://mike-hostetler.com/blog/2005/05/">May 2005</a>&nbsp;(13)</li>
+	<li><a href="http://mike-hostetler.com/blog/2005/04/">April 2005</a>&nbsp;(21)</li>
+		</ul>
+</div></div><!-- /#sidebar -->
+							
+		</div> <!-- /row -->
+	</div><!-- /container -->
+</div><div class=" fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/FX-Xf5fQjUk.html" style="border: medium none;" tabindex="-1" title="Facebook Cross Domain Communication Frame" aria-hidden="true" id="fb_xdm_frame_http" scrolling="no" allowtransparency="true" name="fb_xdm_frame_http" frameborder="0"></iframe><iframe src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/FX-Xf5fQjUk_002.html" style="border: medium none;" tabindex="-1" title="Facebook Cross Domain Communication Frame" aria-hidden="true" id="fb_xdm_frame_https" scrolling="no" allowtransparency="true" name="fb_xdm_frame_https" frameborder="0"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div></div> <!-- /#wrapper -->
+
+<div id="footer" class="clearfix">
+	
+												
+				<div id="sub-floor" class="clearfix">
+			<div class="container">
+				<div class="row-fluid">
+					<div class="span12">
+						<div id="footer-links">
+													</div><!-- /#footer-links -->			
+								
+						<div id="credit">
+														
+														
+								© 2014 <a href="http://mike-hostetler.com/">Mike Hostetler</a> — <a href="http://mike-hostetler.com/privacy-policy/">Privacy Policy</a> — <a href="http://standardtheme.com/?utm_source=standard-theme&amp;utm_medium=footer&amp;utm_content=wp-org&amp;utm_campaign=Standard%2BFooter" target="_blank">Standard</a> by <a href="http://8bit.io/?utm_source=standard-theme&amp;utm_medium=footer&amp;utm_content=wp-org&amp;utm_campaign=Standard%2BFooter" target="_blank">8BIT</a>														
+						</div><!-- /#credits -->
+					</div><!--/span12-->
+				</div><!-- /row -->
+			</div><!-- /.container -->
+		</div><!-- /#sub-floor -->
+	</div><!-- /#footer -->
+	<script type="text/javascript">
+/* <![CDATA[ */
+var Sociali18n = {"commentReplyTitle":"Post a Reply"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/social.js"></script>
+<script type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/comment-reply.js"></script>
+	<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"beacon-4.newrelic.com","licenseKey":"0714dafa77","applicationID":"4499854","transactionName":"MgdSYUoAVxFYWkMKDQtNcVZMCFYMFkpeDQUJBw==","queueTime":0,"applicationTime":1046,"ttGuid":"","agentToken":"","atts":"HkBRFwIaRB8=","errorBeacon":"bam.nr-data.net","agent":"js-agent.newrelic.com\/nr-411.min.js"}</script>
+<div class="dd_outer"><div style="width: 900px;" class="dd_inner"><div style="position: absolute; top: 426px; left: -95px; display: block;" id="dd_ajax_float"><div class="dd_button_v"><iframe style="width: 55px; height: 62px;" data-twttr-rendered="true" title="Twitter Tweet Button" class="twitter-share-button twitter-tweet-button twitter-share-button twitter-count-vertical" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/tweet_button.html" allowtransparency="true" scrolling="no" id="twitter-widget-0" frameborder="0"></iframe></div><div style="clear:left"></div><div class="dd_button_v"><script type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/button.js"></script><iframe src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/a.html" style="border: medium none; width: 55px; height: 62px;" class="buffer-button" scrolling="no" frameborder="0"></iframe></div><div style="clear:left"></div><div class="dd_button_v"><script gapi_processed="true" type="text/javascript" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/plusone.js"></script><div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 50px; height: 60px;"><iframe title="+1" data-gapiattached="true" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/fastbutton.html" name="I0_1407904948885" id="I0_1407904948885" vspace="0" tabindex="0" style="position: static; top: 0px; width: 50px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 60px;" scrolling="no" marginwidth="0" marginheight="0" hspace="0" frameborder="0" width="100%"></iframe></div></div><div style="clear:left"></div><div class="dd_button_v"><div fb-iframe-plugin-query="app_id=&amp;href=http%3A%2F%2Fmike-hostetler.com%2Fblog%2F2007%2F12%2F08%2Frsync-non-standard-ssh-port%2F&amp;locale=en_US&amp;sdk=joey&amp;type=box_count" fb-xfbml-state="rendered" data-type="box_count" data-href="http://mike-hostetler.com/blog/2007/12/08/rsync-non-standard-ssh-port/" class="fb-share-button fb_iframe_widget"><span style="vertical-align: bottom; width: 55px; height: 61px;"><iframe class="" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/share_button.html" style="border: medium none; visibility: visible; width: 55px; height: 61px;" title="fb:share_button Facebook Social Plugin" scrolling="no" allowtransparency="true" name="f2c0b3ee94efc6" frameborder="0" height="1000px" width="1000px"></iframe></span></div><script src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/FB.js" type="text/javascript"></script></div><div style="clear:left"></div></div></div></div><iframe tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;" src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/postmessageRelay.html" id="oauth2relay776043719" name="oauth2relay776043719"></iframe><script src="a_data/nr-411.js"></script><script src="Rsync%20with%20a%20non-standard%20ssh%20port%20%7C%20Mike%20Hostetler_files/0714dafa77" type="text/javascript"></script></body></html>

@@ -1,0 +1,1 @@
+/**/twttr.receiveCount({"count":92,"url":"http:\/\/www.tecmint.com\/monitor-apache-web-server-load-and-page-statistics\/"});

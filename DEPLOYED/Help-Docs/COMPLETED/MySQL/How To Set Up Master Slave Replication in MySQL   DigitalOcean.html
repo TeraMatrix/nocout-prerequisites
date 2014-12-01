@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<!-- saved from url=(0102)https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql#Setup -->
+<html class="m-pikabu-transitions m-pikabu-translate3d wf-proximanova-i4-active wf-proximanova-n1-active wf-proximanova-n3-active wf-proximanova-n4-active wf-proximanova-n6-active wf-proximanova-n7-active wf-active"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>How To Set Up Master Slave Replication in MySQL | DigitalOcean</title>
+
+<meta name="description" content="About MySQL replication MySQL replication is a process that allows you to easily maintain multiple copies of a MySQL data by having them copied automatically from a master to a slave database. This can helpful for many reasons including facilating a b">
+<meta name="keywords" content="MySQL">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="DigitalOcean">
+<meta name="twitter:creator" content="DigitalOcean">
+<meta name="twitter:title" content="How To Set Up Master Slave Replication in MySQL | DigitalOcean">
+<meta name="twitter:description" content="About MySQL replication MySQL replication is a process that allows you to easily maintain multiple copies of a MySQL data by having them copied automatically from a master to a slave database. This can helpful for many reasons including facilating a b">
+
+<meta name="og:title" content="How To Set Up Master Slave Replication in MySQL | DigitalOcean">
+<meta name="og:description" content="About MySQL replication MySQL replication is a process that allows you to easily maintain multiple copies of a MySQL data by having them copied automatically from a master to a slave database. This can helpful for many reasons including facilating a b">
+<meta name="og:site_name" content="DigitalOcean">
+<meta name="og:type" content="article">
+<meta property="og:image" content="https://www.digitalocean.com/assets/community/tags/mysql-3a705a431488d14b65aafe9bc8fd10bc.png">
+
+    <link href="https://www.digitalocean.com/assets/community/application-f0caa3a8cbaf692ad45bed88d788a6a1.css" media="all" rel="stylesheet">
+    <meta content="authenticity_token" name="csrf-param">
+<meta content="QotnK7zJZiepFbANBjm+cv8H5D4nS7skhGk59GBoiyQ=" name="csrf-token">
+    <script src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/5850.js" async="" type="text/javascript"></script><script id="twitter-wjs" async="" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/widgets.js"></script><script type="text/javascript" async="" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/ga.js"></script><script type="text/javascript" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/njm7orv.js"></script><style type="text/css"></style>
+    <style type="text/css">.tk-proxima-nova{font-family:"proxima-nova",sans-serif;}</style><link rel="stylesheet" href="https://use.typekit.net/c/50b211/proxima-nova:i4:n1:n3:n4:n6:n7.b5x:P:2,b5r:P:2,b5t:P:2,b5w:P:2,b5y:P:2,bBh:P:2/d?3bb2a6e53c9684ffdc9a99f31f5b2a62899645565aa1f5104fd11447bc130e85d0bf800dd7e5be2ca1fa880ef96d35b53f3ee1a2ee426c3675c4dcd74e924ab2822db99167d7e50952a4ac153e9c5a247c1cf85320efcc6034b3e357fc478799610360ab5553f9212151bed12fefc5f16c96a4f2e3b4f537c48460332bb35c3a9ab46ef0a594a18f7cae98513c4e010cfcc0dadad5a25146a3a8942f1e22e933a4c8e4779f88a47698d36d2ea7a8e5b15aeb2d98f8db6f51000a3d9a72a2da0304f8ed187c155d1b38e9334345828e010c2eba0fb5ca907dfc1c3301ce328e8b02961e8ca4c13867645a460d4377d595142aaf498d881431c38711da349120eedceb275846e3d5aa6e0fb3d7ed952c6e2424e853d7727bfc181cbd6eac90bf37495b6cd88ce2a5e0570cc2a87ecef2cf672afe39681b8c20adce9c79b8f3f5cb67d078ce3590240ccd1e8d9361c89e94a01a4a0ccdbacf7b4aea746efbfafe0844ae2b"><script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26573244-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+  /* <![CDATA[ */
+  var google_conversion_id = 1010666955;
+  var google_conversion_language = "en";
+  var google_conversion_format = "3";
+  var google_conversion_color = "ffffff";
+  var google_conversion_label = "g5d3CM2C9QIQy5v24QM";
+  var google_conversion_value = 0;
+  /* ]]> */
+</script>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <style>
+.m-pikabu-sidebar, 
+.m-pikabu-container {
+-webkit-transition: -webkit-transform 0.2s ease-in;
+-moz-transition: -moz-transform 0.2s ease-in;
+-ms-transition: -ms-transform 0.2s ease-in;
+-o-transition: -o-transform 0.2s ease-in;
+transition: transform 0.2s ease-in;
+}
+.m-pikabu-left-visible .m-pikabu-left {
+	width: 80%;
+}
+.m-pikabu-right-visible .m-pikabu-right {
+	width: 80%;
+}</style><script async="true" type="text/javascript" src="https://s.adroll.com/j/roundtrip.js"></script></head>
+  <body class="" style="" data-twttr-rendered="true">
+      <div id="table-of-contents" class="hide-on-pikabu tocify" style="display: block; bottom: 0px; position: fixed;">
+  <h3 id="toc-trigger">
+    <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql#">
+      Contents
+      <span class="icon-navicon"></span>
+    </a>
+  </h3>
+<ul id="tocify-header0" class="tocify-header" style="display: none;"><li class="tocify-item" data-unique="Setup" style="cursor: pointer;"><a>Setup</a></li></ul><ul id="tocify-header1" class="tocify-header" style="display: none;"><li class="tocify-item" data-unique="StepOne—ConfiguretheMasterDatabase" style="cursor: pointer;"><a>Step One—Configure the Master Database</a></li></ul><ul id="tocify-header2" class="tocify-header" style="display: none;"><li class="tocify-item tocify-focus" data-unique="StepTwo—ConfiguretheSlaveDatabase" style="cursor: pointer;"><a>Step Two—Configure the Slave Database</a></li></ul><ul id="tocify-header3" class="tocify-header" style="display: none;"><li class="tocify-item" data-unique="SeeMore" style="cursor: pointer;"><a>See More</a></li></ul></div>
+
+
+
+    <div class="m-pikabu-viewport" style="width: auto;">
+      <div class="mobile-nav">
+  <div class="m-pikabu-sidebar m-pikabu-left m-pikabu-hidden">
+    <div class="account-buttons">
+    <div id="entrance">
+      <a class="button" href="https://www.digitalocean.com/community/auth/digitalocean" id="sign-up">Sign Up</a>
+      <a class="button" href="https://www.digitalocean.com/community/auth/digitalocean" id="log-in">Log In</a>
+    </div>
+</div>
+      
+    <a class="close-panel icon-close" href="javascript:void(0);"></a>
+
+    <form accept-charset="UTF-8" action="https://www.digitalocean.com/community/search" id="search" method="get"><div style="display:none"><input name="utf8" type="hidden" value="✓"></div>
+      <input id="query" name="query" placeholder="Search the community" type="text">
+
+      <button class="icon-btn" name="button" type="submit">
+        <span class="icon-arrow-down"></span>
+</button>
+
+
+</form>    
+    
+
+    <nav>
+  <ul>
+    <li><a href="https://www.digitalocean.com/community/tutorials">Tutorials</a></li>
+    <li><a href="https://www.digitalocean.com/community/questions">Questions</a></li>
+    <li><a href="https://www.digitalocean.com/community/projects">Projects</a></li>
+    <li><a href="https://www.digitalocean.com/community/tags">Tags</a></li>
+    <li class="mobile-nav-only"><a href="https://www.digitalocean.com/">Main Site</a></li>
+  </ul>
+</nav>
+
+  </div>
+</div>
+
+      <div class="m-pikabu-container"><div class="m-pikabu-overlay"></div>
+      	<header>
+  <div class="wrapper">
+    <a class="logo" href="https://www.digitalocean.com/community"></a>
+
+    <a class="m-pikabu-nav-toggle icon-navicon" data-role="left">
+      <span>Menu</span>
+    </a>
+
+    <div class="account-buttons">
+    <div id="entrance">
+      <a class="button" href="https://www.digitalocean.com/community/auth/digitalocean" id="sign-up">Sign Up</a>
+      <a class="button" href="https://www.digitalocean.com/community/auth/digitalocean" id="log-in">Log In</a>
+    </div>
+</div>
+    <nav>
+  <ul>
+    <li><a href="https://www.digitalocean.com/community/tutorials">Tutorials</a></li>
+    <li><a href="https://www.digitalocean.com/community/questions">Questions</a></li>
+    <li><a href="https://www.digitalocean.com/community/projects">Projects</a></li>
+    <li><a href="https://www.digitalocean.com/community/tags">Tags</a></li>
+    <li class="mobile-nav-only"><a href="https://www.digitalocean.com/">Main Site</a></li>
+  </ul>
+</nav>
+
+    <form accept-charset="UTF-8" action="https://www.digitalocean.com/community/search" data-remote="true" id="search" method="post"><div style="display:none"><input name="utf8" type="hidden" value="✓"></div>
+  <input id="query" name="query" placeholder="Search the community" type="text">
+  <input id="dropdown" name="dropdown" type="hidden" value="true">
+
+  <button class="icon-btn" name="button" type="submit">
+    <span class="icon-arrow-down"></span>
+</button>
+
+
+</form>
+  </div>
+</header>
+        
+
+        <div class="wrapper tutorial-single">
+          <div class="flash-container"></div>
+          
+
+
+
+<div class="section section-primary">
+  <div class="sidebar main-sidebar" data-sticky-sidebar="" data-sticky-content=".section-content">
+
+
+      <p class="sidebar-avatar">
+        
+      </p>
+
+      <p class="sidebar-author">Etel Sverdlov</p>
+
+
+    <p class="sidebar-date">
+        Published
+        Jul 25, 2012
+    </p>
+      <p class="sidebar-date updated-at">Updated Jun 10, 2014</p>
+
+    <p class="sidebar-difficulty">
+      <span class="difficulty-level Advanced">Advanced</span>
+    </p>
+
+
+    <ul class="social-sharing">
+  <li class="shareBtn sbMain">
+    <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql#">
+      <span class="sIcon icon-share"></span>  
+      SHARE
+    </a>
+  </li>
+  
+  <li class="shareBtn" id="sbTwitter">
+    <a href="http://twitter.com/share?text=How%20To%20Set%20Up%20Master%20Slave%20Replication%20in%20MySQL&url=https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql" target="_blank" title="Share on Twitter">
+      <span class="sIcon icon-bird"></span>  
+      TWEET
+    </a>
+  </li>
+
+  <li class="shareBtn" id="sbFacebook">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql" target="_blank" title="Share on Facebook">
+      <span class="sIcon icon-facebook-B"></span>
+      SHARE
+    </a>
+  </li>
+  <li class="shareBtn" id="sbGoogle">
+    <a href="https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql" target="_blank" title="Share on Google+">
+      <span class="sIcon icon-google-plus-B"></span>  
+      SHARE
+    </a>
+  </li>
+  <li class="shareBtn" id="sbYC">
+    <a href="https://news.ycombinator.com/submitlink?u=https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql&t=How%20To%20Set%20Up%20Master%20Slave%20Replication%20in%20MySQL" target="_blank" title="Submit to Hacker News">
+      <span class="sIcon icon-hacker-news"></span>  
+      SHARE
+    </a>
+  </li>
+</ul>
+  </div>
+
+  <div class="section-content content">
+
+    <h1 class="content-title">How To Set Up Master Slave Replication in MySQL</h1>
+
+    <div class="tut-meta">
+        <div class="content-tags">
+          <span class="meta-label">Tagged In: </span>
+          <a href="https://www.digitalocean.com/community/tags/mysql">MySQL</a>
+        </div>
+
+      <div class="feedable-info">
+          <span class="meta-label">Author:</span>
+          Etel Sverdlov
+          <span>•</span>
+
+          <span class="meta-label">Published:</span>
+          Jul 25, 2012
+
+          <span>•</span>
+          <span class="meta-label">Updated:</span>
+          Jun 10, 2014
+      </div>
+    
+      <ul class="social-sharing small-share">
+  <li class="shareBtn sbMain">
+    <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql#">
+      <span class="sIcon icon-share"></span>  
+      SHARE
+    </a>
+  </li>
+  
+  <li class="shareBtn" id="sbTwitter">
+    <a href="http://twitter.com/share?text=How%20To%20Set%20Up%20Master%20Slave%20Replication%20in%20MySQL&url=https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql" target="_blank" title="Share on Twitter">
+      <span class="sIcon icon-bird"></span>  
+      TWEET
+    </a>
+  </li>
+
+  <li class="shareBtn" id="sbFacebook">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql" target="_blank" title="Share on Facebook">
+      <span class="sIcon icon-facebook-B"></span>
+      SHARE
+    </a>
+  </li>
+  <li class="shareBtn" id="sbGoogle">
+    <a href="https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql" target="_blank" title="Share on Google+">
+      <span class="sIcon icon-google-plus-B"></span>  
+      SHARE
+    </a>
+  </li>
+  <li class="shareBtn" id="sbYC">
+    <a href="https://news.ycombinator.com/submitlink?u=https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql&t=How%20To%20Set%20Up%20Master%20Slave%20Replication%20in%20MySQL" target="_blank" title="Submit to Hacker News">
+      <span class="sIcon icon-hacker-news"></span>  
+      SHARE
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    
+
+    <div class="content-body tutorial-content">
+        <h3>About MySQL replication</h3>
+
+<p>MySQL replication is a process that allows you to easily maintain multiple copies of a MySQL data by having them copied automatically from a master to a slave database. This can helpful for many reasons including facilating a backup for the data,a way to analyze it without using the main database, or simply as a means to scale out.</p> 
+
+<p>This tutorial will cover a very simple example of mysql replication—one master will send information to a single slave. For the process to work you will need two IP addresses: one of the master server and and one of the slave.</p> 
+
+<p>This tutorial will use the following IP addresses:</p>
+
+<p>12.34.56.789- Master Database</p>
+<p>12.23.34.456- Slave Database</p>
+
+<div name="Setup" data-unique="Setup"></div><h2>Setup</h2>
+<p>This article assumes that you have user with sudo privileges and have MySQL installed. If you do not have mysql, you can install it with this command:</p>
+
+<pre>sudo apt-get install mysql-server mysql-client</pre>
+
+<div name="StepOne—ConfiguretheMasterDatabase" data-unique="StepOne—ConfiguretheMasterDatabase"></div><h2>Step One—Configure the Master Database</h2>
+
+<p>Open up the mysql configuration file on the master server.</p>
+
+<pre>sudo nano /etc/mysql/my.cnf</pre>
+
+<p>Once inside that file, we need to make a few changes.</p> 
+
+<p>The first step is to find the section that looks like this, binding the server to the local host:</p>
+
+<pre>bind-address            = 127.0.0.1</pre> 
+
+<p>Replace the standard IP address with the IP address of server.</p>
+
+<pre>bind-address            = 12.34.56.789 </pre>
+
+<p>The next configuration change refers to the server-id, located in the [mysqld] section. You can choose any number for this spot (it may just be easier to start with 1), but the number must be unique and cannot match any other server-id in your replication group. I’m going to go ahead and call this one 1.</p>
+
+<p>Make sure this line is uncommented.</p>
+
+<pre>server-id               = 1</pre>
+
+
+<p>Move on to the log_bin line. This is where the real details of the replication are kept. The slave is going to copy all of the changes that are registered in the log. For this step we simply need to uncomment the line that refers to log_bin:</p>
+
+<pre>log_bin                 = /var/log/mysql/mysql-bin.log</pre>
+
+<p>Finally, we need to designate the database that will be replicated on the slave server. You can include more than one database by repeating this line for all of the databases you will need.</p>
+ 
+<pre>binlog_do_db            = newdatabase</pre>
+
+<p>After you make all of the changes, go ahead and save and exit out of the configuration file.</p>
+
+<p>Refresh MySQL.</p>
+
+<pre>sudo service mysql restart</pre>
+
+<p>The next steps will take place in the MySQL shell, itself.</p> 
+
+<p>Open up the MySQL shell.</p>
+
+<pre>mysql -u root -p</pre>
+
+<p>We need to grant privileges to the slave. You can use this line to name your slave and set up their password. The command should be in this format:</p>
+
+<pre>GRANT REPLICATION SLAVE ON *.* TO 'slave_user'@'%' IDENTIFIED BY 'password';</pre>
+
+<p>Follow up with:</p>
+
+<pre>FLUSH PRIVILEGES;</pre>
+
+<p>The next part is a bit finicky. To accomplish the task you will need to open a <i>new window or tab</i> in addition to the one that you are already using a few steps down the line.</p> 
+
+<p>In <i>your current tab</i>  switch to “newdatabase”. </p>
+
+<pre>USE newdatabase;</pre> 
+
+<p>Following that, lock the database to prevent any new changes:</p>
+
+<pre>FLUSH TABLES WITH READ LOCK;</pre>
+
+<p>Then type in:</p>
+<pre>SHOW MASTER STATUS;</pre>
+
+<p>You will see a table that should look something like this:</p>
+
+<pre>mysql&gt; SHOW MASTER STATUS;
++------------------+----------+--------------+------------------+
+| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
++------------------+----------+--------------+------------------+
+| mysql-bin.000001 |      107 | newdatabase  |                  |
++------------------+----------+--------------+------------------+
+1 row in set (0.00 sec)</pre>
+
+
+<p>This is the position from which the slave database will start replicating. Record these numbers, they will come in useful later.</p>
+
+<p>If you make any new changes in the same window, the database will automatically unlock. For this reason, you should open the new tab or window and continue with the next steps there.</p> 
+
+<p>Proceeding the with the database still locked, export your database using mysqldump in the new window (make sure you are typing this command in the bash shell, not in MySQL).</p> 
+
+<pre>mysqldump -u root -p --opt newdatabase &gt; newdatabase.sql</pre>
+
+<p>Now, returning to your your original window, unlock the databases (making them writeable again). Finish up by exiting the shell.</p> 
+
+<pre>UNLOCK TABLES;</pre>
+<pre>QUIT;</pre>
+
+<p>Now you are all done with the configuration of the the master database.</p>
+
+
+<div name="StepTwo—ConfiguretheSlaveDatabase" data-unique="StepTwo—ConfiguretheSlaveDatabase"></div><h2>Step Two—Configure the Slave Database</h2>
+
+<p>Once you have configured the master database. You can put it aside for a while, and we will now begin to configure the slave database.</p> 
+
+<p>Log into your slave server, open up the MySQL shell and create the new database that you will be replicating from the master (then exit):</p>
+
+<pre>CREATE DATABASE newdatabase;</pre>
+<pre>EXIT;</pre>
+
+<p>Import the database that you previously exported from the master database.</p>  
+
+<pre>mysql -u root -p newdatabase &lt; /path/to/newdatabase.sql</pre>
+
+<p>Now we need to configure the slave configuration in the same way as we did the master:</p>
+
+<pre>sudo nano /etc/mysql/my.cnf</pre>
+
+<p>We have to make sure that we have a few things set up in this configuration. The first is the server-id. This number, as mentioned before needs to be unique. Since it is set on the default (still 1), be sure to change it’s something different.</p>
+
+<pre>server-id               = 2</pre>
+
+<p>Following that, make sure that your have the following three criteria appropriately filled out:</p>
+
+<pre>relay-log               = /var/log/mysql/mysql-relay-bin.log</pre>
+<pre>log_bin                 = /var/log/mysql/mysql-bin.log</pre>
+<pre>binlog_do_db            = newdatabase</pre>
+
+<p>You will need to add in the relay-log line: it is not there by default.
+Once you have made all of the necessary changes, save and exit out of the slave configuration file.</p>
+
+<p>Restart MySQL once again:</p>
+
+<pre>sudo service mysql restart</pre>
+
+<p>The next step is to enable the replication from within the MySQL shell.</p>
+
+<p>Open up the the MySQL shell once again and type in the following details, replacing the values to match your information:</p>
+
+<pre>CHANGE MASTER TO MASTER_HOST='12.34.56.789',MASTER_USER='slave_user', MASTER_PASSWORD='password', MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=  107;</pre>
+
+<p>This command accomplishes several things at the same time:</p>
+
+<ol><li>It designates the current server as the slave of our master server.</li> 
+<li>It provides the server the correct login credentials</li>
+<li>Last of all, it lets the slave server know where to start replicating from; the master log file and log position come from the numbers we wrote down previously.</li></ol>
+
+<p>With that—you have configured a master and slave server.</p> 
+
+<p>Activate the slave server:</p>
+
+<pre>START SLAVE;</pre>
+
+<p>You be able to see the details of the slave replication by typing in this command. The \G rearranges the text to make it more readable.</p>
+
+<pre>SHOW SLAVE STATUS\G</pre> 
+
+<p>If there is an issue in connecting, you can try starting slave with a command to skip over it:</p>
+
+<pre>SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1; SLAVE START; </pre>
+
+<p>All done.</p> 
+
+<div name="SeeMore" data-unique="SeeMore"></div><h2>See More</h2>
+
+<p>MySQL replication has a lot different options, and this was just a brief overview.</p>
+
+<p>If you have any further questions about the specific capabilities of MySQL, feel free to post your questions in our <a href="https://www.digitalocean.com/community/questions">Q&amp;A Forum</a> and we’ll be happy to answer them.</p> 
+
+<div class="author">By Etel Sverdlov</div>
+
+      <div class="clear"></div>
+      
+    </div>
+
+    <div class="content-primary-actions hidden">
+      <a class="share" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql#"><span class="icon-share"></span>Share Tutorial</a>
+      <a class="improve" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql#"><span class="icon-edit"></span>Improve Tutorial</a>
+      <a class="write" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql#"><span class="icon-edit"></span>Write Tutorial</a>
+    </div>
+
+    
+
+      <div class="related">
+    <h2>Related Tutorials</h2>
+
+    <ul>
+          <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-import-and-export-databases-and-reset-a-root-password-in-mysql">How To Import and Export Databases and Reset a Root Password in MySQL</a></li>
+          <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql">How To Create a New User and Grant Permissions in MySQL</a></li>
+          <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/a-basic-mysql-tutorial">A Basic MySQL Tutorial</a></li>
+          <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-apache-on-a-centos-7-server">How To Install and Secure phpMyAdmin with Apache on a CentOS 7 Server</a></li>
+          <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-a-centos-7-server">How To Install and Secure phpMyAdmin with Nginx on a CentOS 7 Server</a></li>
+    </ul>
+  </div>
+
+
+    <div class="content-comments">
+      <div class="comments-header">
+        <h4><span class="Comments">27 Comments</span></h4>
+      </div>
+      <div class="tutorial commentable" id="tutorial_114">
+  <div class="comments">
+  <ul class="response-list">
+      <li class="response   " id="comment_1081">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_1081" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="jason" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/9194c03f11cfe634558f26d759a28936" width="80">
+  </div>
+
+  <span class="response-name">jason</span>
+  
+  <span class="response-time">March  5, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">A few suggestions I would like to make in regards to this article:
+
+1) I think it should be mentioned that MySQL has the capabilities to bind to multiple IP addresses and that to take advantage of this feature, an additional "bind-address" line is required. 
+
+2) In the following section (regarding server-ids) you mentioned that this line has to be "uncommented" but I'm not sure all users will know that means that they have to remove the "#" preceding it if there is one (which there will be in the installed version of my.cnf. 
+
+3) In the section regarding the databases that they want to replicate, I believe it should be mentioned that leaving this line commented will result in all databases being replicated. In some, though admittedly rather rare situations, this is the desired behavior. This, too, will allow new databases to be replicated automatically without any additionally editing of the configuration files. 
+
+4) Some of the wording in the explanations is a bit awkward, specifically: "This is the position from which the slave database will start replicating. Record these numbers, they will come in useful later." This might be more grammatically correct if stated as "This is the file name and position that the master server is using for logging purposes. Make a note of these, as you will need to enter them later". 
+
+5) After the mysqldump step, there should be an additional step explaining how to send the newly created .sql file to the remote host. SCP would be the easiest way, in my opinion, to accomplish this. </div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_1081_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_1166">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_1166" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="himanshuchanda" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/5e8378b2515cf479a92033a4bbc4f3eb" width="80">
+  </div>
+
+  <span class="response-name">himanshuchanda</span>
+  
+  <span class="response-time">March 16, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Well, i just followed the steps as mentioned and everything went fine. But the changes in Master DB did not reflect in slave DB
+In my case, Master DB &amp; Slave DB resides on two different droplets. Where could i have gone wrong ?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_1166_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_1294">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_1294" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="nithin" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/4c37d00abe1bb21cc2503f440e8d4b7f" width="80">
+  </div>
+
+  <span class="response-name">nithin</span>
+  
+  <span class="response-time">April 11, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Nice post, works great. 
+It would be nice if you could extend this article to include how one would add additional slave servers to the setup, since most people following this would want to scale someday.
+</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_1294_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_1454">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_1454" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="manan728" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/8a5514d0f48230248ccf2e3972e60c5a" width="80">
+  </div>
+
+  <span class="response-name">manan728</span>
+  
+  <span class="response-time">May  6, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">This is a good link to add yet another slave and from my experience it works great.
+http://www.redips.net/mysql/add-new-slave/</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_1454_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_2218">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_2218" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="rutgergeelen" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/1ba5250f89d5de5ae7acd3f63d125084" width="80">
+  </div>
+
+  <span class="response-name">rutgergeelen</span>
+  
+  <span class="response-time">June 18, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">As a backup I would not recommended this approach. If data is corrupted, lost or deleted in the master that will be synced to the slave.  Restoring the slave to the master does not get you your data back.
+
+What I miss is the explanation how to use the slave for failover. If somebody could add that that would be helpful (at least for me)
+
+Ruter</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_2218_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_2920">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_2920" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="mikeg" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/78dee35023a6b4c84d2cfe6dde494910" width="80">
+  </div>
+
+  <span class="response-name">mikeg</span>
+  
+  <span class="response-time">July 26, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@Ruter
+
+Good point. What do you suggest?
+
+Thanks, Mike</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_2920_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_2990">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_2990" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="hlima" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/9e0b9462fd59417a8bc9b51a580e26c4" width="80">
+  </div>
+
+  <span class="response-name">hlima</span>
+  
+  <span class="response-time">July 30, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Great article !! 
+Just one comment from my experience : Use short short passwords to the replica user :) password like bKpGpJIQEm1KHhbEuf6zueTBvfW84mI6XYCcxaS2 WON'T work !! half of it works well, took me some hours checking everything before find it.
+</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_2990_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_3193">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_3193" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="hbokhoven" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/a4a9d7f4f5e2cdb96b6e22237853ed72" width="80">
+  </div>
+
+  <span class="response-name">hbokhoven</span>
+  
+  <span class="response-time">August  5, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Good starter, but I wonder: why are you running bin-logs on the slave?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_3193_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_3735">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_3735" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="rajmunees" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/b529383ea36b1ac3d646d8ca5524b108" width="80">
+  </div>
+
+  <span class="response-name">rajmunees</span>
+  
+  <span class="response-time">August 22, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">How often slave updated from master? Is it configurable?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_3735_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_3746">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_3746" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">August 22, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@Sahaya: I believe it's instant by default. It is configurable: http://alexalexander.blogspot.com/2013/03/mysql-slave-delay-how-to.html</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_3746_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_6508">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_6508" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="fof" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/c9c5160341b932f9f1fb40a905ef78c6" width="80">
+  </div>
+
+  <span class="response-name">fof</span>
+  
+  <span class="response-time">November 14, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">This works really well but I have had a problem where the server-id config variable set in the [mysqld] section of the my.cnf was not being picked up by mysql on restart. No matter what I set it to on the slave it would always be the default which is 0.
+
+When I ran "start-slave" I would get an error message..
+
+"The server is not configured as slave; fix in config file or with CHANGE MASTER TO"
+
+I ended up running the following command to give it a server-id of 2 before I could run start slave.
+
+set global server_id=2
+</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_6508_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_6691">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_6691" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="traio" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/4fde2dcf3aa5adc31e1d490126b6c86f" width="80">
+  </div>
+
+  <span class="response-name">traio</span>
+  
+  <span class="response-time">November 19, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">thanks for the excellent article. however, i could not get it to work, until i changed this on the slave:
+binlog_do_db = dbnae
+
+change to
+replicate_do_db = dbname</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_6691_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_7113">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_7113" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="matan" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/98eef3bef78a9314e7686f479aeef44b" width="80">
+  </div>
+
+  <span class="response-name">matan</span>
+  
+  <span class="response-time">December  4, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Thanks for the great article. What happens when a slave db is modified? Does it update the master which then in-turn updates any other slave dbs?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_7113_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_7129">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_7129" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">December  4, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@matan: The write will fail as it is not supposed to accept writes. You might want to check out master-master replication: <a href="https://www.digitalocean.com/community/articles/how-to-set-up-mysql-master-master-replication">https://www.digitalocean.com/community/articles/how-to-set-up-mysql-master-master-replication</a></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_7129_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_7806">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_7806" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="chris" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/5c7835403a947905f45c974d4e8afc22" width="80">
+  </div>
+
+  <span class="response-name">chris</span>
+  
+  <span class="response-time">December 26, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Works GREAT, thanks for the tutorial!</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_7806_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_9796">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_9796" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="kevin_thulin" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/0a96b7eff3e45767c001064026500b9b" width="80">
+  </div>
+
+  <span class="response-name">kevin_thulin</span>
+  
+  <span class="response-time">February  5, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Great tutorial, I am going to add a 1GB slave server where I will do my backups.
+
+Will the slave server slow down my prod/master server?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_9796_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_9921">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_9921" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">February  8, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@KiwoT: It shouldn't noticeably affect the master's performance.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_9921_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10616">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10616" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="m.kamran237" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/9e04201706676f277a9dd29e5e0d5dec" width="80">
+  </div>
+
+  <span class="response-name">m.kamran237</span>
+  
+  <span class="response-time">March  5, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">where do you set the tables from which it will copy from the master and also where do you set where you want to copy that data TO on the slave?
+
+</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10616_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10617">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10617" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="m.kamran237" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/9e04201706676f277a9dd29e5e0d5dec" width="80">
+  </div>
+
+  <span class="response-name">m.kamran237</span>
+  
+  <span class="response-time">March  5, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">so i have database called web1.0 which has a table called contacts. Then i have a different database on another server called web2.0. 
+
+i want to replicate everything contacts on web1.0 to web2.0
+
+how to do this pls?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10617_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10619">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10619" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">March  5, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@m.kamran237: As far as I know you can't do that. It has to be exactly the same, e.g. web1.0 gets replicated to web2.0. I'm not sure if you can choose which tables you want to be replicated or if it just replicates all of the database.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10619_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_11049">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_11049" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="ken" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/302cd019a42b626fc782121f76e638c5" width="80">
+  </div>
+
+  <span class="response-name">ken</span>
+  
+  <span class="response-time">March 21, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">If I'm going to have multiple slaves and web servers query the master, would it make more sense to do this:
+
+    bind-address            = 0.0.0.0
+
+And then in iptables:
+
+    iptables -A INPUT -p tcp -s 12.34.45.67 –dport 3306 -j ACCEPT
+    iptables -A INPUT -p tcp -s 23.45.67.78 –dport 3306 -j ACCEPT
+    iptables -A INPUT -p tcp -s 34.56.78.89 –dport 3306 -j ACCEPT
+    iptables -A INPUT -p tcp –dport 3306 -j DROP
+
+Adding a line for each IP I want to allow to connect to the master?
+
+    </div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_11049_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_12899">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_12899" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="support" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/28370698ba2dcb9c2f23e781b18a746f" width="80">
+  </div>
+
+  <span class="response-name">support</span>
+  
+  <span class="response-time">May  8, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Sometimes he stops updating.
+
+Restart the severs or restart the process doesn't always work.
+
+What to do? </div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_12899_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_13011">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_13011" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="nuitaynguyen" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/56b134e7487fdf75f75feab4334fd32a" width="80">
+  </div>
+
+  <span class="response-name">nuitaynguyen</span>
+  
+  <span class="response-time">May 13, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Hi all!
+master-slave (Server version: 5.6.11-enterprise-commercial-advanced-log MySQL Enterprise Server - Advanced Edition (Commercial))
+(test master- slave from Staging ok)
+document :https://www.digitalocean.com/community/articles/how-to-set-up-master-slave-replication-in-mysql
+ But i config PRODUCTION FAILED :(
+##########################
+bind-address = localIP
+log_bin = /var/log/mysql/mysql-bin.log
+binlog_do_db = dbpro
+###################
+
+when i restart mysql (master) error:
+Starting MySQL..The server quit without updating PID file ([FAILED]mysql/data/server_pro.com.pid).
+
+FIX:
+-ps aux | grep mysql --&gt; kill -9 ... 
+or -mv /etc/my.cnf /etc/my.cnf.backup 
+or -mv /var/lib/mysql/ib_logfile* /root/ 
+
+but it FAILED start
+&gt;&gt;&gt;&gt; http://linuxadministrator.pro/blog/?p=225
+please help me !
+
+log-err
+
+
+2014-05-12 12:38:37 8577 [Note] Giving 0 client threads a chance to die gracefully
+2014-05-12 12:38:37 8577 [Note] Event Scheduler: Purging the queue. 0 events
+2014-05-12 12:38:37 8577 [Note] Shutting down slave threads
+2014-05-12 12:38:37 8577 [Note] Forcefully disconnecting 0 remaining clients
+2014-05-12 12:38:37 8577 [Note] Binlog end
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'partition'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'ARCHIVE'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'BLACKHOLE'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_METRICS'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_CMP'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_LOCKS'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'INNODB_TRX'
+2014-05-12 12:38:37 8577 [Note] Shutting down plugin 'InnoDB'
+2014-05-12 12:38:37 8577 [Note] InnoDB: FTS optimize thread exiting.
+2014-05-12 12:38:37 8577 [Note] InnoDB: Starting shutdown...
+2014-05-12 12:38:39 8577 [Note] InnoDB: Shutdown completed; log sequence number 4943347270
+2014-05-12 12:38:39 8577 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2014-05-12 12:38:39 8577 [Note] Shutting down plugin 'CSV'
+2014-05-12 12:38:39 8577 [Note] Shutting down plugin 'MEMORY'
+2014-05-12 12:38:39 8577 [Note] Shutting down plugin 'MRG_MYISAM'
+2014-05-12 12:38:39 8577 [Note] Shutting down plugin 'MyISAM'
+2014-05-12 12:38:39 8577 [Note] Shutting down plugin 'sha256_password'
+2014-05-12 12:38:39 8577 [Note] Shutting down plugin 'mysql_old_password'
+2014-05-12 12:38:39 8577 [Note] Shutting down plugin 'mysql_native_password'
+2014-05-12 12:38:39 8577 [Note] Shutting down plugin 'binlog'
+2014-05-12 12:38:39 8577 [Note] /usr/sbin/mysqld: Shutdown complete
+
+140512 12:38:39 mysqld_safe mysqld from pid file /backup/mysql/data/server_pro.com.pid ended
+140512 12:38:40 mysqld_safe Starting mysqld daemon with databases from /backup/mysql/data
+2014-05-12 12:38:40 0 [Warning] option 'log_queries_not_using_indexes': boolean value '/backup/mysql/log/query-not-used-index.log' wasn't recognized. Set to OFF.
+2014-05-12 12:38:40 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+^G/usr/sbin/mysqld: File '/var/log/mysql/mysql-bin.index' not found (Errcode: 13 - Permission denied)
+2014-05-12 12:38:40 4031 [ERROR] Aborting
+
+2014-05-12 12:38:40 4031 [Note] Binlog end
+2014-05-12 12:38:40 4031 [Note] /usr/sbin/mysqld: Shutdown complete
+
+140512 12:38:40 mysqld_safe mysqld from pid file /backup/mysql/data/server_pro.com.pid ended
+140512 12:38:55 mysqld_safe Starting mysqld daemon with databases from /backup/mysql/data
+2014-05-12 12:38:56 0 [Warning] option 'log_queries_not_using_indexes': boolean value '/backup/mysql/log/query-not-used-index.log' wasn't recognized. Set to OFF.
+2014-05-12 12:38:56 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2014-05-12 12:38:56 4757 [Note] Plugin 'FEDERATED' is disabled.
+2014-05-12 12:38:56 7fd0079786f0 InnoDB: Warning: Using innodb_additional_mem_pool_size is DEPRECATED. This option may be rem
+oved in future releases, together with the option innodb_use_sys_malloc and with the InnoDB's internal memory allocator.
+2014-05-12 12:38:56 4757 [Note] InnoDB: The InnoDB memory heap is disabled
+2014-05-12 12:38:56 4757 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2014-05-12 12:38:56 4757 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2014-05-12 12:38:56 4757 [Note] InnoDB: Using Linux native AIO
+2014-05-12 12:38:56 4757 [Note] InnoDB: Using CPU crc32 instructions
+2014-05-12 12:38:56 4757 [Note] InnoDB: Initializing buffer pool, size = 2.9G
+2014-05-12 12:38:56 4757 [Note] InnoDB: Completed initialization of buffer pool
+2014-05-12 12:38:56 4757 [Note] InnoDB: Highest supported file format is Barracuda.
+2014-05-12 12:38:56 4757 [Note] InnoDB: 128 rollback segment(s) are active.
+2014-05-12 12:38:56 4757 [Note] InnoDB: Waiting for purge to start
+2014-05-12 12:38:56 4757 [Note] InnoDB: 5.6.11 started; log sequence number 4943347270
+2014-05-12 12:38:56 4757 [Note] RSA private key file not found: /backup/mysql/data//private_key.pem. Some authentication plugins will not work.
+2014-05-12 12:38:56 4757 [Note] RSA public key file not found: /backup/mysql/data//public_key.pem. Some authentication plugins will not work.
+2014-05-12 12:38:56 4757 [Note] Server hostname (bind-address): '*'; port: 3306
+2014-05-12 12:38:56 4757 [Note] IPv6 is available.
+2014-05-12 12:38:56 4757 [Note] - '::' resolves to '::';
+2014-05-12 12:38:56 4757 [Note] Server socket created on IP: '::'.
+2014-05-12 12:38:56 4757 [Note] Event Scheduler: Loaded 0 events
+2014-05-12 12:38:56 4757 [Note] /usr/sbin/mysqld: ready for connections.
+Version: '5.6.11-enterprise-commercial-advanced' socket: '/backup/mysql/mysql.sock' port: 3306 MySQL Enterprise Server - Advanced Edition (Commercial)
+2014-05-12 12:38:57 4757 [Warning] IP address 'x.x.x.13' could not be resolved: Name or service not known 
+
+</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_13011_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_13570">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_13570" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="umaimath" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/bad4da72b9052fca6439f1fbe81d0868" width="80">
+  </div>
+
+  <span class="response-name">umaimath</span>
+  
+  <span class="response-time">June  4, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Hi,
+
+I have set up master master replication as mentioned in your tutorial. Anytime if I restart mysql service, replication stops working because log file and position are getting changed. I have to run CHANGE MASTER TO MASTER_HOST command again to work replication properly.
+Is there anyway to permanently add log file and position anywhere?
+
+Thank you,
+Umaimath</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_13570_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_14484">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_14484" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="jeff" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/48974bffcf0842f8549bd4f73ceab00d" width="80">
+  </div>
+
+  <span class="response-name">jeff</span>
+  
+  <span class="response-time">June 29, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body "><p>Master-slave replication is meant for scalability purpose, not backup.  If you want to do a backup, write a small shell script to do a nightly mysqldump and archive it.</p></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_14484_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_14579">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_14579" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="david" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/bc2a4243f913b5025bd1c1541c633605" width="80">
+  </div>
+
+  <span class="response-name">david</span>
+  
+  <span class="response-time">July  2, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body "><p>Regarding binlog<em>do</em>db this article might be interesting. Be careful.</p>
+
+<p><a href="http://www.mysqlperformanceblog.com/2009/05/14/why-mysqls-binlog-do-db-option-is-dangerous/">why-mysqls-binlog-do-db-option-is-dangerou</a></p></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_14579_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_15009">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_15009" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="jeni" class="avatar avatar-small" height="80" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/7d6bac4fec92d34b994ac0ea187fa1f2" width="80">
+  </div>
+
+  <span class="response-name">jeni</span>
+  
+  <span class="response-time">July 15, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body "><p>One question on replication...<br>
+if i change slave database, it will affect to master table?</p></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_15009_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+  </ul>
+</div>
+
+
+  <div id="reply_anchor_tutorial_114"></div>
+
+    <div class="response no-avatar  response-form">
+  <div class="response-user-details">
+      <div class="flash notice log-in-notice"><a href="https://www.digitalocean.com/community/auth/digitalocean">Log In</a> to comment</div>
+  </div>
+
+  <div class="js-display-on-error flash error hidden"></div>
+  <form accept-charset="UTF-8" action="https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql/comments" class="content-form disabled-form" data-remote="true" id="new_comment" method="post"><div style="display:none"><input name="utf8" type="hidden" value="✓" disabled="disabled"></div>
+    <div class="meltdown_wrap" style="height: auto;"><div class="meltdown_topmargin"></div><div class="meltdown_bar"><div class="preview-header">Markdown Preview</div><ul class="meltdown_controls meltdown_controls_main"><li class="meltdown_control-bold meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Bold"><span unselectable="on">B</span></li><li class="meltdown_control-italics meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Italics"><span unselectable="on">I</span></li><li class="meltdown_control-h1 meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Header 1"><span unselectable="on">H1</span></li><li class="meltdown_control-h2 meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Header 2"><span unselectable="on">H2</span></li><li class="meltdown_control-h3 meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Header 3"><span unselectable="on">H3</span></li><li class="meltdown_control-ul meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Unordered List"><span unselectable="on">UL</span></li><li class="meltdown_control-ol meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Ordered List"><span unselectable="on">OL</span></li><li class="meltdown_control-link meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Link"><span unselectable="on">Link</span></li><li class="meltdown_control-code meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Code"><span unselectable="on">Code</span></li><li class="meltdown_control-highlight meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Highlight"><span unselectable="on">Highlight</span></li><li class="meltdown_control-table meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Table"><span unselectable="on">Table</span></li></ul><ul class="meltdown_controls meltdown_controls_preview"><li class="meltdown_control-preview meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Toggle Preview"><span>Preview</span></li></ul></div><div class="meltdown_editor-wrap"><div class="meltdown_editor-deco"><textarea class="js-comment-content meltdown_editor" data-markdown="true" id="comment_content" name="comment[content]" placeholder="Leave a comment..." disabled="disabled" style="overflow: hidden; word-wrap: break-word; resize: none; height: 120px;"></textarea></div></div><div class="meltdown_preview-wrap"><div class="meltdown_preview-wrap2"><div class="meltdown_preview-error-message">Could not load preview. <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql#">Try again</a></div><div class="meltdown_preview-loading-message">Loading preview...</div><div class="meltdown_preview content-body"></div></div></div><div class="meltdown_bottommargin"></div></div>
+
+    <button type="submit" id="submit-comment" data-disable-with="Submitting..." disabled="disabled">
+      Submit Comment
+      <span class="icon-arrow-right"></span>
+    </button>
+</form></div>
+</div>
+    </div>
+
+    <div id="creative-commons">
+      <div class="inner">
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/88x31.png"></a><br>This work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+      </div>
+    </div>
+  </div>
+</div>
+      	</div>
+
+      	<footer id="footer">
+  <div class="wrapper">
+    <div id="column-main" class="footer-column">
+
+      <a class="cloud-icon" href="https://www.digitalocean.com/"></a>
+
+      <div id="copyright">
+
+        Copyright © 2014<br>
+        DigitalOcean ™ Inc.
+      </div>
+      <a href="http://nytm.org/made-in-nyc/" id="made-in-ny">Proudly Made in NY</a>
+
+      <div id="privacy">
+        <a href="https://www.digitalocean.com/legal/terms/">Terms, Privacy, &amp; Copyright</a>
+        <a href="https://www.digitalocean.com/security/">Security</a>
+      </div>
+
+    </div>
+
+    <div id="column-product" class="footer-column">
+      <h3>Product</h3>
+      <ul>
+        <li><a href="https://www.digitalocean.com/pricing/">Pricing</a></li>
+        <li><a href="https://www.digitalocean.com/features/control-panel/">Features</a></li>
+        <li><a href="https://www.digitalocean.com/customers/">Customers</a></li>
+        <li><a href="https://www.digitalocean.com/features/one-click-apps/">One-Click Apps</a></li>
+        <li><a href="https://developers.digitalocean.com/">API</a></li>
+      </ul>
+    </div>
+
+    <div id="column-company" class="footer-column">
+      <h3>Company</h3>
+      <ul>
+        <li><a href="https://www.digitalocean.com/company/about/">About Us</a></li>
+        <li><a href="https://www.digitalocean.com/company/blog/">Blog</a></li>
+        <li><a href="https://www.digitalocean.com/company/careers/">Jobs</a></li>
+        <li><a href="https://www.digitalocean.com/company/press/">Press</a></li>
+        <li><a href="https://www.digitalocean.com/company/logos-and-badges/">Logos &amp; Badges</a></li>
+        <li><a href="https://www.digitalocean.com/company/events/">Events</a></li>
+        <li><a href="https://www.digitalocean.com/company/contact/" target="_blank">Contact</a></li>
+      </ul>
+    </div>
+
+    <div id="column-help" class="footer-column">
+      <h3>Help</h3>
+      <ul>
+        <li><a href="https://www.digitalocean.com/help/">Knowledgebase</a></li>
+        <li><a href="https://www.digitalocean.com/help/getting-started/setting-up-your-server/">Getting Started</a></li>
+        <li><a href="https://digitalocean.uservoice.com/forums/136585-digitalocean" target="_blank">Feedback</a></li>
+        <li><a href="https://www.digitalocean.com/referral-program/">Referral Program</a></li>
+        <li><a href="https://status.digitalocean.com/" target="_blank">Network Status</a></li>
+        <li><a href="https://www.digitalocean.com/help/">FAQ</a></li>
+      </ul>
+    </div>
+
+    <div id="column-community" class="footer-column">
+      <h3>Community</h3>
+      <ul>
+        <li><a href="https://www.digitalocean.com/community">Dashboard</a></li>
+        <li><a href="https://www.digitalocean.com/community/overview">Overview</a></li>
+        <li><a href="https://www.digitalocean.com/community/tutorials">Tutorials</a></li>
+        <li><a href="https://www.digitalocean.com/community/questions">Questions</a></li>
+        <li><a href="https://www.digitalocean.com/community/projects">Projects</a></li>
+        <li><a href="https://www.digitalocean.com/community/tutorials/digitalocean-community-article-suggestions-and-ideas">Tutorial Suggestions</a></li>
+        <li><a href="https://www.digitalocean.com/community/get-paid-to-write">Get Paid to Write</a></li>
+      </ul>
+    </div>
+
+    <div id="column-connect" class="footer-column">
+      <h3>Connect</h3>
+      <ul>
+        <li class="twitter"><a href="https://twitter.com/digitalocean" target="_blank">Twitter</a></li>
+        <li class="facebook"><a href="https://www.facebook.com/DigitalOceanCloudHosting" target="_blank">Facebook</a></li>
+        <li class="linkedin"><a href="http://www.linkedin.com/company/digitalocean" target="_blank">LinkedIn</a></li>
+        <li class="google"><a href="https://plus.google.com/+Digitalocean/posts" target="_blank">Google+</a></li>
+        <li class="instagram"><a href="http://instagram.com/thedigitalocean" target="_blank">Instagram</a></li>
+        <li class="meetup"><a href="http://www.meetup.com/DigitalOcean_Community/" target="_blank">Meetup</a></li>
+      </ul>
+    </div>
+
+    <div id="droplet-count">
+      <span class="count">2,224,955</span> Droplets Launched
+    </div>
+  </div>
+</footer>
+
+      </div>
+    </div>
+
+    <script src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/application-68a9a038abde16abd3d5e0d7e9329050.js"></script>
+    
+    <script type="text/javascript" src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/conversion.js">
+</script><img height="1" width="1" border="0" alt="" src="https://www.googleadservices.com/pagead/conversion/1010666955/?random=1407501535875&cv=7&fst=1407501535875&num=1&fmt=3&value=0&label=g5d3CM2C9QIQy5v24QM&bg=ffffff&hl=en&guid=ON&eid=317150504&u_h=900&u_w=1440&u_ah=818&u_aw=1440&u_cd=24&u_his=1&u_tz=330&u_java=true&u_nplug=14&u_nmime=71&frm=0&url=https%3A//www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql&ref=https%3A//www.google.com/"><script src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/saved_resource"></script>
+<noscript>
+&lt;div style="display:hidden;position:absolute;top:-1000px;"&gt;
+&lt;img height="1" width="1" style="border-style:none;" alt="" src="https://www.googleadservices.com/pagead/conversion/1010666955/?value=0&amp;amp;label=g5d3CM2C9QIQy5v24QM&amp;amp;guid=ON&amp;amp;script=0"/&gt;
+&lt;/div&gt;
+</noscript>
+<script src="./How To Set Up Master Slave Replication in MySQL   DigitalOcean_files/oct.js" type="text/javascript"></script>
+<script type="text/javascript">twttr.conversion.trackPid('l4etp');</script>
+<noscript>
+&lt;img height="1" width="1" style="display:none;" alt="" src="https://analytics.twitter.com/i/adsct?txn_id=l4etp&amp;p_id=Twitter" /&gt;
+&lt;img height="1" width="1" style="display:none;" alt="" src="//t.co/i/adsct?txn_id=l4etp&amp;p_id=Twitter" /&gt;
+</noscript>
+
+<script>
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+<script type="text/javascript">
+  adroll_adv_id = "S4BPDI4QWNB57PEKEZSLIP";
+  adroll_pix_id = "4IDGVTPEAFC4TM2QKYNQ53";
+  (function () {
+  var oldonload = window.onload;
+  window.onload = function(){
+     __adroll_loaded=true;
+     var scr = document.createElement("script");
+     var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+     scr.setAttribute('async', 'true');
+     scr.type = "text/javascript";
+     scr.src = host + "/j/roundtrip.js";
+     ((document.getElementsByTagName('head') || [null])[0] ||
+      document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+     if(oldonload){oldonload()}};
+  }());
+</script>
+<script>
+  setTimeout(function(){var a=document.createElement("script");
+  var b=document.getElementsByTagName("script")[0];
+  a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0020/5850.js?"+Math.floor(new Date().getTime()/3600000);
+  a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+</script>
+  
+<textarea tabindex="-1" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px; padding: 0px; box-sizing: content-box; word-wrap: break-word; overflow: hidden; -webkit-transition: none; transition: none; height: 0px !important; min-height: 0px !important; font-family: proxima-nova, sans-serif; font-size: 18px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; word-spacing: 0px; text-indent: 0px; line-height: normal; width: 743px;" class="autosizejs" id="autosizejs"></textarea></body></html>

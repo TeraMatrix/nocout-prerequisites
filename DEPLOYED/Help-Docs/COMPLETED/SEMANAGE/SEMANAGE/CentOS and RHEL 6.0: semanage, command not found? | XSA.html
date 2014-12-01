@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en-US"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CentOS and RHEL 6.0: semanage, command not found? | XSA</title>
+<!-- Platform WordPress Framework By PageLines - www.PageLines.com -->
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="alternate" type="application/rss+xml" title="XSA » Feed" href="http://a.llen.co/chris/feed/">
+<link rel="alternate" type="application/rss+xml" title="XSA » Comments Feed" href="http://a.llen.co/chris/comments/feed/">
+
+			<script src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+			// Google Analytics for WordPress by Yoast v4.2.8 | http://yoast.com/wordpress/google-analytics/
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-16270130-30']);
+							_gaq.push(['_trackPageview']);
+			(function () {
+				var ga = document.createElement('script');
+				ga.type = 'text/javascript';
+				ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+			})();
+			//]]></script>
+			<link rel="alternate" type="application/rss+xml" title="XSA » CentOS and RHEL 6.0: semanage, command not found? Comments Feed" href="http://a.llen.co/chris/2011/09/centos-and-rhel-6-0-semanage-command-not-found/feed/">
+<link rel="stylesheet" id="pagelines-stylesheet-css" href="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/style.css" type="text/css" media="all">
+<!--[if IE 7]>
+<link rel='stylesheet' id='ie7-style-css'  href='http://a.llen.co/chris/wp-content/themes/platform/css/ie7.css?ver=1.3.9' type='text/css' media='all' />
+<![endif]-->
+<script type="text/javascript" src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/jquery.js"></script>
+<script type="text/javascript" src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/comment-reply.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://a.llen.co/chris/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://a.llen.co/chris/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Optimizing filtering in MailWasher Enterprise Server" href="http://a.llen.co/chris/2011/09/optimizing-filtering-in-mailwasher-enterprise-server/">
+<link rel="next" title="Plesk 10.3.1, FastCGI and PHP" href="http://a.llen.co/chris/2011/10/plesk-10-3-1-fastcgi-and-php/">
+<meta name="generator" content="WordPress 3.5">
+<link rel="canonical" href="http://a.llen.co/chris/2011/09/centos-and-rhel-6-0-semanage-command-not-found/">
+<link rel="shortlink" href="http://a.llen.co/chris/?p=70">
+<script language="JavaScript"><!--
+ var DevFmtUrl='http://a.llen.co/chris/wp-content/plugins/devformatter/'; var DevFmtAjaxUrl = 'http://a.llen.co/chris/wp-admin/admin-ajax.php'; //-->
+</script>
+<script type="text/javascript" src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/devfmt_common.js"></script>
+<script type="text/javascript" src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/devfmt_public.js"></script>
+<style type="text/css" media="screen"> @import url( 'http://a.llen.co/chris/wp-content/plugins/devformatter/devfmt_reset.css?ver=2012.0.1.39' ); </style>
+<style type="text/css" media="screen"> @import url( 'http://a.llen.co/chris/wp-content/plugins/devformatter/devfmt_css.php?ver=2012.0.1.39' ); </style><link rel="stylesheet" id="dynamic-css" href="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/dynamic.css" type="text/css" media="all">
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+</head>
+<body class="single single-post postid-70 single-format-standard full_width ttype-single tmain-single">
+<div id="site" class="one-sidebar-right"> <!-- #site // Wraps #header, #page-main, #footer - closed in footer -->
+	<div id="page"> <!-- #page // Wraps #header, #page-main - closed in footer -->
+		<div id="page-canvas">
+						<div id="header" class="container-group fix">
+				<div class="outline">
+					<div id="branding" class="container fix">
+	<div class="texture">
+		<div class="content">
+			<div class="content-pad">
+<div class="branding_wrap">
+	<div class="title-container"><a class="home site-title" href="http://a.llen.co/chris" title="Home">XSA</a><h6 class="site-description subhead">The internet from a web developer's perspective</h6></div>		
+	
+	<div class="icons" style="bottom: 0px; right: px;">
+
+				<a target="_blank" href="http://a.llen.co/chris/feed/" class="rsslink"></a>
+		
+																			</div>
+</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="primary-nav" class="container fix">
+	<div class="texture">
+		<div class="content">
+			<div class="content-pad">
+	<div id="nav_row" class="main_nav fix">
+	
+	<ul id="menu-nav" class="main-nav">
+		<li class="page_item page-item-2"><a href="http://a.llen.co/chris/sample-page/">About Chris</a></li>
+	</ul><form method="get" class="searchform" action="http://a.llen.co/chris/" onsubmit="this.submit();return false;">
+	<fieldset>
+		<input value="Search" name="s" class="searchfield" onfocus="if (this.value == 'Search') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search';}" type="text">
+
+		<input class="submit btn" name="submit" src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/search-btn.png" alt="Go" type="image">
+	</fieldset>
+</form>
+	</div>
+
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+				</div>
+			</div>
+						<div id="page-main" class="container-group fix"> <!-- #page-main // closed in footer -->
+				<div id="dynamic-content" class="outline fix">
+					<div id="maincontent" class="container fix">
+	<div class="texture">
+		<div class="content">
+			<div class="content-pad">
+<div id="pagelines_content" class="one-sidebar-right fix">
+	
+		<div id="column-wrap" class="fix">
+		
+				<div id="column-main" class="mcolumn fix">
+			<div class="mcolumn-pad">
+				<div id="postnav" class="copy fix">
+	<div class="copy-pad">
+   			<div class="post-nav fix"> 
+			<span class="previous"><a href="http://a.llen.co/chris/2011/09/optimizing-filtering-in-mailwasher-enterprise-server/" rel="prev">Optimizing filtering in MailWasher Enterprise Server</a></span> 
+			<span class="next"><a href="http://a.llen.co/chris/2011/10/plesk-10-3-1-fastcgi-and-php/" rel="next">Plesk 10.3.1, FastCGI and PHP</a></span>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<div id="theloop" class="copy fix">
+	<div class="copy-pad">
+<div class="post-70 post type-post status-publish format-standard hentry category-linux category-security category-server-administration fpost" id="post-70">
+				
+				
+					
+						<div class="post-meta fix">	
+							
+							<div class="post-header fix post-nothumb" style="">
+																<div class="post-title-section fix">
+
+									<div class="post-title fix">
+										
+										<h1 class="entry-title">CentOS and RHEL 6.0: semanage, command not found?</h1>
+<div class="metabar"><em><span class="sword">By</span> <span class="author vcard"><span class="fn"><a href="http://a.llen.co/chris/author/xsa/" title="Posts by xsa" rel="author">xsa</a></span></span> <span class="sword">On</span> <span class="date time published" title="2011-09-14T00:12:44+1200">September 14, 2011</span>  · <span class="post-comments"><a href="http://a.llen.co/chris/2011/09/centos-and-rhel-6-0-semanage-command-not-found/#comments">Leave a Comment</a></span>  </em></div>										
+									</div>
+
+
+								</div>
+															</div>				
+						</div>
+					
+					  	
+						<div class="entry_wrap fix">
+						
+							<div class="entry_content">
+								<p>Are you a CentOS or RHEL 6.0 administrator trying to manage seLinux but have found the command line tools aren’t available?</p>
+<p><!--DEVFMTCODE--></p><pre class="devcodeblock" title="Bash"><table class="devcodetools"><tbody><tr><td title="Show Plain undefined Code" style="cursor: pointer;">&nbsp;Bash&nbsp;|&nbsp;</td><td style="background-image:url('http://a.llen.co/chris/wp-content/plugins/devformatter/img/devformatter-copy.png');background-repeat:no-repeat;background-position:50% 50%;width:16px;height:16px;"><embed title="Double-click to copy" id="ZeroClipboard1" src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/_zclipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=1&amp;width=16&amp;height=16" wmode="transparent" align="middle" height="16px" width="16px"></td><td>&nbsp;copy&nbsp;code&nbsp;|</td><td style="cursor:pointer" title="DevFormatter Plugin" onclick="devfmt_credits()">?</td><td width="99%">&nbsp;</td></tr></tbody></table><div class="devcodeoverflow"><table class="devcodearea" width="100%"><tbody><tr><td class="devcodelines" width="1%">1</td><td class="devcodelinesarea"><pre class="devcode devcodeline">-bash: semanage: <span style="color: #7a0874; font-weight: bold;">command</span> not found</pre></td></tr></tbody></table></div></pre><!--END_DEVFMTCODE--><p></p>
+<p>This is common when you customize the default package list during an install. Don’t worry, though; it’s easily resolved.</p>
+<p><!--DEVFMTCODE--></p><pre class="devcodeblock" title="Bash"><table class="devcodetools"><tbody><tr><td title="Show Plain undefined Code" style="cursor: pointer;">&nbsp;Bash&nbsp;|&nbsp;</td><td style="background-image:url('http://a.llen.co/chris/wp-content/plugins/devformatter/img/devformatter-copy.png');background-repeat:no-repeat;background-position:50% 50%;width:16px;height:16px;"><embed title="Double-click to copy" id="ZeroClipboard2" src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/_zclipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=2&amp;width=16&amp;height=16" wmode="transparent" align="middle" height="16px" width="16px"></td><td>&nbsp;copy&nbsp;code&nbsp;|</td><td style="cursor:pointer" title="DevFormatter Plugin" onclick="devfmt_credits()">?</td><td width="99%">&nbsp;</td></tr></tbody></table><div class="devcodeoverflow"><table class="devcodearea" width="100%"><tbody><tr><td class="devcodelines" width="1%">1</td><td class="devcodelinesarea"><pre class="devcode devcodeline"><span style="color: #c20cb9; font-weight: bold;">yum</span> <span style="color: #660033;">-y</span> <span style="color: #c20cb9; font-weight: bold;">install</span> policycoreutils-python</pre></td></tr></tbody></table></div></pre><!--END_DEVFMTCODE--><p></p>
+<p>.. and you are good to go. Good luck with seLinux (because you will probably need it!)</p>
+									<div class="clear"></div> 
+																</div>	
+							<div class="tags">
+								&nbsp;
+							</div>
+						</div>
+								</div>
+
+	<div class="clear"></div>
+	</div>
+</div>
+<div id="sharebar" class="copy fix">
+	<div class="copy-pad">
+			<div class="post-footer">
+
+					<div class="left">
+						If you enjoyed this article, please consider sharing it!	
+					</div>
+					<div class="right">
+																					<a href="http://reddit.com/submit?phase=2&amp;url=http://a.llen.co/chris/2011/09/centos-and-rhel-6-0-semanage-command-not-found/&amp;title=CentOS+and+RHEL+6.0%3A+semanage%2C+command+not+found%3F" title="Share on Reddit" rel="nofollow" target="_blank"><img src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/ico-reddit.png" alt="Reddit"></a>
+														
+															<a href="http://www.facebook.com/sharer.php?u=http://a.llen.co/chris/2011/09/centos-and-rhel-6-0-semanage-command-not-found/&amp;t=CentOS+and+RHEL+6.0%3A+semanage%2C+command+not+found%3F" title="Share on Facebook" rel="nofollow" target="_blank"><img src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/ico-facebook.png" alt="Facebook"></a>
+							 
+
+																							<a href="http://twitter.com/?status=CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found?%20-%20http://a.llen.co/chris/2011/09/centos-and-rhel-6-0-semanage-command-not-found/" title="Share on Twitter" rel="nofollow" target="_blank"><img src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/ico-twitter.png" alt="Twitter"></a>
+							 
+
+															<a href="http://del.icio.us/post?url=http://a.llen.co/chris/2011/09/centos-and-rhel-6-0-semanage-command-not-found/&amp;title=CentOS+and+RHEL+6.0%3A+semanage%2C+command+not+found%3F" title="Share on Delicious" rel="nofollow" target="_blank"><img src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/ico-del.png" alt="Delicious"></a>
+														
+														
+														
+												</div>
+				<div class="clear"></div>
+			</div>
+	
+	<div class="clear"></div>
+	</div>
+</div>
+<div id="pl_comments" class="copy fix">
+	<div class="copy-pad">
+
+<div id="comments">
+	
+								<div id="respond">
+				<h3 id="reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://a.llen.co/chris/2011/09/centos-and-rhel-6-0-semanage-command-not-found/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://a.llen.co/chris/wp-comments-post.php" method="post" id="commentform">
+																			<p class="comment-notes">Your email address will not be published. Required fields are marked <span class="required">*</span></p>							<p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" size="30" aria-required="true" type="text"></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" size="30" aria-required="true" type="text"></p>
+<p class="comment-form-url"><label for="url">Website</label><input id="url" name="url" size="30" type="text"></p>
+												<p class="comment-form-comment"><label for="comment">Comment</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>						<p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:  <code>&lt;a
+ href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; 
+&lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del 
+datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; 
+&lt;strong&gt; </code></p>						<p class="form-submit">
+							<input name="submit" id="submit" value="Post Comment" type="submit">
+							<input name="comment_post_ID" value="70" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+						</p>
+						<p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" value="725cd523fa" type="hidden"></p>					</form>
+							</div><!-- #respond -->
+				<script type="text/javascript">
+		jQuery(document).ready(function () {
+			jQuery('#commentform').submit(function () {
+				_gaq.push(
+					['_setAccount', 'UA-16270130-30'],
+					['_trackEvent', 'comment', 'submit']
+				);
+			});
+		});
+	</script>
+				</div>
+	<div class="clear"></div>
+	</div>
+</div>
+<div id="pagination" class="copy fix">
+	<div class="copy-pad">
+				
+		<div class="clear"></div>
+	</div>
+</div>
+			</div>
+		</div>
+		
+				
+	</div>	
+	
+	
+	<div id="sidebar-wrap" class="fix">
+			<div id="sidebar1" class="scolumn fix">
+				<div class="scolumn-pad">
+					<div id="sidebar_primary" class="copy fix">
+	<div class="copy-pad">
+	<ul id="list_sidebar_primary" class="sidebar_widgets fix">
+		<li id="dcategories" class="widget_categories widget">
+	<div class="widget-pad">
+		<h3 class="widget-title">Categories</h3>
+		<ul>
+				<li class="cat-item cat-item-6"><a href="http://a.llen.co/chris/category/linux/" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://a.llen.co/chris/category/mailwasher/" title="View all posts filed under MailWasher">MailWasher</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://a.llen.co/chris/category/plesk-panel/" title="View all posts filed under Plesk Panel">Plesk Panel</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://a.llen.co/chris/category/security/" title="View all posts filed under Security">Security</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://a.llen.co/chris/category/server-administration/" title="View all posts filed under Server Administration">Server Administration</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://a.llen.co/chris/category/silverstripe/" title="View all posts filed under SilverStripe">SilverStripe</a>
+</li>
+		</ul>
+	</div>
+</li>
+
+<li id="darchive" class="widget_archive widget">
+	<div class="widget-pad">
+		<h3 class="widget-title">Articles</h3>
+		<ul>
+				<li><a href="http://a.llen.co/chris/2011/12/" title="December 2011">December 2011</a></li>
+	<li><a href="http://a.llen.co/chris/2011/10/" title="October 2011">October 2011</a></li>
+	<li><a href="http://a.llen.co/chris/2011/09/" title="September 2011">September 2011</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="dlinks" class="widget_links widget">
+	<div class="widget-pad">
+		<h3 class="widget-title">Calendar</h3>
+
+			<table id="wp-calendar">
+	<caption>September 2011</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="Monday">M</th>
+		<th scope="col" title="Tuesday">T</th>
+		<th scope="col" title="Wednesday">W</th>
+		<th scope="col" title="Thursday">T</th>
+		<th scope="col" title="Friday">F</th>
+		<th scope="col" title="Saturday">S</th>
+		<th scope="col" title="Sunday">S</th>
+	</tr>
+	</thead>
+
+	<tfoot>
+	<tr>
+		<td colspan="3" id="prev" class="pad">&nbsp;</td>
+		<td class="pad">&nbsp;</td>
+		<td colspan="3" id="next"><a href="http://a.llen.co/chris/2011/10/" title="View posts for October 2011">Oct »</a></td>
+	</tr>
+	</tfoot>
+
+	<tbody>
+	<tr>
+		<td colspan="3" class="pad">&nbsp;</td><td>1</td><td>2</td><td>3</td><td>4</td>
+	</tr>
+	<tr>
+		<td>5</td><td><a href="http://a.llen.co/chris/2011/09/06/" title="Completely removing SpamAssassin from Plesk Panel 10, Installing MailWasher Enterprise Server in a Plesk Panel environment">6</a></td><td><a href="http://a.llen.co/chris/2011/09/07/" title="Optimizing filtering in MailWasher Enterprise Server">7</a></td><td>8</td><td>9</td><td>10</td><td>11</td>
+	</tr>
+	<tr>
+		<td>12</td><td>13</td><td><a href="http://a.llen.co/chris/2011/09/14/" title="CentOS and RHEL 6.0: semanage, command not found?">14</a></td><td>15</td><td>16</td><td>17</td><td>18</td>
+	</tr>
+	<tr>
+		<td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td>
+	</tr>
+	<tr>
+		<td>26</td><td>27</td><td>28</td><td>29</td><td>30</td>
+		<td class="pad" colspan="2">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table> 
+		
+	</div>
+</li>
+
+<li id="dmeta" class="widget_meta widget">
+	<div class="widget-pad">
+		<h3 class="widget-title">Meta</h3>
+		<ul>
+						<li class="login"><a href="http://a.llen.co/chris/wp-login.php">Log in</a></li>
+						<li class="rss"><a href="http://a.llen.co/chris/feed/">Entries (RSS)</a></li>
+		</ul>
+	</div>
+</li>	</ul>
+	<div class="clear"></div>
+	</div>
+</div>
+	
+				</div>
+			</div>
+			</div>		
+
+</div>				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</div> <!-- END #dynamic-content -->
+
+<div id="morefoot_area"><div id="morefoot" class="container fix">
+	<div class="texture">
+		<div class="content">
+			<div class="content-pad">
+								<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="twitterbar" class="container fix">
+	<div class="texture">
+		<div class="content">
+			<div class="content-pad">
+<div class="tbubble">
+			Set your Twitter account name in your settings to use the TwitterBar Section.</div>				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<div class="clear"></div>
+				
+</div> <!-- END #page-main from header -->
+</div> <!-- END #page-canvas from header -->
+</div> <!-- END #page from header -->
+
+<div id="footer">
+	<div class="outline fix"><div id="footcols" class="container fix">
+	<div class="texture">
+		<div class="content">
+			<div class="content-pad">
+			<div id="fcolumns_container" class="dcol_container_5 fix">
+				
+									<div class="dcol_5 dcol">
+						<div class="dcol-pad">
+															<h3 class="site-title">
+									<a class="home" href="http://a.llen.co/chris" title="Home">
+										XSA									</a>
+								</h3>
+													</div>
+					</div>
+					<div class="dcol_5 dcol">
+						<div class="dcol-pad">
+							<h3 class="widget-title">Pages</h3>
+								<div class="footer-links list-links"><ul><li class="page_item page-item-2"><a href="http://a.llen.co/chris/sample-page/">About Chris</a></li></ul></div>
+
+						</div>
+					</div>
+					<div class="dcol_5 dcol">
+						<div class="dcol-pad">
+							<h3 class="widget-title">The Latest</h3>
+								<ul class="latest_posts">
+																		<li class="list-item fix">
+											<div class="list_item_text">
+												<h5><a class="list_text_link" href="http://a.llen.co/chris/2011/12/108/"><span class="list-title"></span></a></h5>
+												<div class="list-excerpt">After upgrading Plesk via the Plesk updater you may receive the following&nbsp;[…]</div>
+											</div>
+										</li>
+								</ul>
+						</div>
+					</div>
+					<div class="dcol_5 dcol">
+						<div class="dcol-pad">
+							<h3 class="widget-title">More</h3>
+							<div class="findent footer-more">
+								Thanks for dropping by! Feel free to join the discussion by leaving comments, and stay updated by subscribing to the <a href="http://a.llen.co.nz/chris/feed/">RSS feed</a>.							</div>
+						</div>
+					</div>
+					<div class="dcol_5 dcol">
+						<div class="dcol-pad">
+							<div class="findent terms">
+								© 2011 XSA							</div>
+						</div>
+					</div>
+							</div>	
+			<div class="clear"></div>
+						<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="cred" class="pagelines"><a class="plimage" target="_blank" href="http://www.pagelines.com/" title="PageLines"><img src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/pagelines.png" alt="Platform by PageLines"></a></div><div class="clear"></div></div>
+</div>
+</div>
+<script type="text/javascript" src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/superfish.js"></script>
+<script type="text/javascript" src="CentOS%20and%20RHEL%206.0:%20semanage,%20command%20not%20found%3F%20%7C%20XSA_files/jquery_002.js"></script>
+
+</body></html>

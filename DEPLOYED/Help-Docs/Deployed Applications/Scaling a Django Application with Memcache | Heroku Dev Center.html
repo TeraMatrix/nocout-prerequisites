@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html class=" js flexbox flexboxlegacy hashchange history rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent" dir="ltr" lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Scaling a Django Application with Memcache | Heroku Dev Center</title>
+  <link href="https://devcenter.heroku.com/assets/favicon-90e838409660ce441e3c9c206cb707e8.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+
+    <link rel="alternate" type="application/atom+xml" title="Heroku Recent Articles" href="http://feeds.feedburner.com/herokudevcenterarticles">
+    <link rel="alternate" type="application/atom+xml" title="Heroku Changelog" href="http://feeds.feedburner.com/herokuchangelog">
+  <link rel="search" type="application/opensearchdescription+xml" title="Heroku Dev Center" href="https://devcenter.heroku.com/opensearch.xml">
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<script src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/pd.js" type="text/javascript"></script><script src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/51b6483a434bba0f0c000016.js" async="" type="text/javascript"></script><script src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/ga.js" async="" type="text/javascript"></script><script src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/analytics.js" async="" type="text/javascript"></script><script src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/gtm.js" async=""></script><script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"beacon-3.newrelic.com","errorBeacon":"bam.nr-data.net","licenseKey":"ae43571cb3","applicationID":"2057789","transactionName":"dVwNTUMJVV9WR05REUJaAFVUFRZAW1oW","queueTime":10,"applicationTime":122,"ttGuid":"","agentToken":null,"agent":"js-agent.newrelic.com/nr-476.min.js"}</script>
+<script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o?o:e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({QJf3ax:[function(t,e){function n(t){function e(e,n,a){t&&t(e,n,a),a||(a={});for(var c=u(e),f=c.length,s=i(a,o,r),p=0;f>p;p++)c[p].apply(s,n);return s}function a(t,e){f[t]=u(t).concat(e)}function u(t){return f[t]||[]}function c(){return n(e)}var f={};return{on:a,emit:e,create:c,listeners:u,_events:f}}function r(){return{}}var o="nr@context",i=t("gos");e.exports=n()},{gos:"7eSDFh"}],ee:[function(t,e){e.exports=t("QJf3ax")},{}],gos:[function(t,e){e.exports=t("7eSDFh")},{}],"7eSDFh":[function(t,e){function n(t,e,n){if(r.call(t,e))return t[e];var o=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:o,writable:!0,enumerable:!1}),o}catch(i){}return t[e]=o,o}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],D5DuLP:[function(t,e){function n(t,e,n){return r.listeners(t).length?r.emit(t,e,n):(o[t]||(o[t]=[]),void o[t].push(e))}var r=t("ee").create(),o={};e.exports=n,n.ee=r,r.q=o},{ee:"QJf3ax"}],handle:[function(t,e){e.exports=t("D5DuLP")},{}],XL7HBI:[function(t,e){function n(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:i(t,o,function(){return r++})}var r=1,o="nr@id",i=t("gos");e.exports=n},{gos:"7eSDFh"}],id:[function(t,e){e.exports=t("XL7HBI")},{}],loader:[function(t,e){e.exports=t("G9z0Bl")},{}],G9z0Bl:[function(t,e){function n(){var t=l.info=NREUM.info;if(t&&t.agent&&t.licenseKey&&t.applicationID&&c&&c.body){l.proto="https"===p.split(":")[0]||t.sslForHttp?"https://":"http://",a("mark",["onload",i()]);var e=c.createElement("script");e.src=l.proto+t.agent,c.body.appendChild(e)}}function r(){"complete"===c.readyState&&o()}function o(){a("mark",["domContent",i()])}function i(){return(new Date).getTime()}var a=t("handle"),u=window,c=u.document,f="addEventListener",s="attachEvent",p=(""+location).split("?")[0],l=e.exports={offset:i(),origin:p,features:{}};c[f]?(c[f]("DOMContentLoaded",o,!1),u[f]("load",n,!1)):(c[s]("onreadystatechange",r),u[s]("onload",n)),a("mark",["firstbyte",i()])},{handle:"D5DuLP"}]},{},["G9z0Bl"]);</script>
+  <meta content="authenticity_token" name="csrf-param">
+<meta content="md5b4mNsp48c5yKZ85Ny/Yndd8KY9/d+wY99dUV9rxc=" name="csrf-token">
+
+  
+
+  <meta name="description" content="Create a simple application in Django, deploy it to Heroku, then add caching with Memcache to alleviate a performance bottleneck.">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@herokudevcenter">
+    <meta name="twitter:title" content="Scaling a Django Application with Memcache | Heroku Dev Center">
+    <meta name="twitter:description" content="Create a simple application in Django, deploy it to Heroku, then add caching with Memcache to alleviate a performance bottleneck.">
+
+  <meta name="google-site-verification" content="V3T3n-QnyNOZlSVZgEfdXaKkJKyfw2yIP55nR00C8ZU">
+
+
+      <link href="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/public-463e45ce50d5b6bbbc72d84a1ced0649.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/print-17a7ac04141ea2c31450a2dd7de9c40f.css" media="print" rel="stylesheet" type="text/css">
+    <!--[if IE 6]>
+    <link href="https://universal-ie6-css.googlecode.com/files/ie6.0.3.css" media="screen" rel="stylesheet" type="text/css" />
+    <![endif]-->
+
+  
+<img src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/seg.gif" width="1" border="0" height="1"><img src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/a.gif" width="1" border="0" height="1"><script src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/analytics" type="text/javascript"></script></head>
+
+  <body>
+    <div class="heroku-header">
+  <div class="heroku-header-container container">
+
+    <div class="heroku-header-hgroup">
+      <a href="https://devcenter.heroku.com/">
+        heroku
+        <strong>dev center</strong>
+      </a>
+    </div>
+
+    <div class="heroku-header-nav">
+      <select class="js-select-nav">
+        <option selected="selected" value="https://devcenter.heroku.com">Dev Center</option>
+          <option value="https://www.heroku.com/pricing">Pricing</option>
+          <option value="https://help.heroku.com/">Support</option>
+          <option value="https://www.heroku.com/contact">Contact</option>
+          <option value="/login?back_to=%2Farticles%2Fdjango-memcache">Login</option>
+          <option value="https://signup.heroku.com/signup/dc">Sign up</option>
+      </select>
+
+      <ul>
+        <li>
+          <a href="https://www.heroku.com/pricing">Pricing</a>
+        </li>
+        <li>
+          <a href="https://help.heroku.com/">Support</a>
+        </li>
+        <li>
+          <a href="https://www.heroku.com/contact">Contact</a>
+        </li>
+        <li>
+          <a href="https://devcenter.heroku.com/login?back_to=%2Farticles%2Fdjango-memcache">Login</a>
+        </li>
+        <li>
+          <a href="https://signup.heroku.com/signup/dc">Sign up</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+    <div class="devcenter-header">
+  <div class="devcenter-header-container container">
+    <ul class="main-nav">
+      <li><a class="" href="https://devcenter.heroku.com/articles/quickstart">Get<span class="desktop-only">ting</span> started</a></li>
+      <li><a class="" href="https://devcenter.heroku.com/categories/reference">Reference</a></li>
+      <li><a class="active" href="https://devcenter.heroku.com/categories/learning">Learning</a></li>
+    </ul>
+
+    <form class="nav-search" action="/search/raw" id="home-search" method="GET">
+      <input tabindex="1" class="js-search" id="query" name="query" placeholder="search" required="required" type="text">
+    </form>
+  </div>
+</div>
+    
+
+    <div id="sheet">
+      <div class="sheet-container container">
+        <div class="nocontent">
+  <div class="select-secondary-nav">
+    <select class="js-select-nav">
+
+        <option class="option" selected="selected" value="#">
+          Python
+        </option>
+        <option class="option" value="/categories/python">
+          More in Python...
+        </option>
+
+        <optgroup label="Learning">
+              <option class="option" value="/categories/application-architecture">
+                Application Architecture
+              </option>
+              <option class="option" value="/categories/ruby">
+                Ruby
+              </option>
+              <option class="option" value="/categories/java">
+                Java
+              </option>
+              <option class="option" value="/categories/nodejs">
+                Node.js
+              </option>
+              <option class="option" value="/categories/python">
+                Python
+              </option>
+              <option class="option" value="/categories/php">
+                PHP
+              </option>
+              <option class="option" value="/categories/clojure">
+                Clojure
+              </option>
+              <option class="option" value="/categories/scala">
+                Scala
+              </option>
+              <option class="option" value="/categories/mobile">
+                Mobile
+              </option>
+              <option class="option" value="/categories/database">
+                Database
+              </option>
+              <option class="option" value="/categories/miscellaneous">
+                Miscellaneous
+              </option>
+              <option class="option" value="/categories/add-on-documentation">
+                Add-ons
+              </option>
+        </optgroup>
+    </select>
+  </div>
+
+  <ul class="secondary-nav ">
+      <li class="section">
+        <h2>Learning</h2>
+          <ul>
+              <li class="">
+                <a href="https://devcenter.heroku.com/categories/application-architecture">Application Architecture</a>
+              </li>
+          </ul>
+          <ul>
+              <li class="">
+                <a href="https://devcenter.heroku.com/categories/ruby">Ruby</a>
+              </li>
+              <li class="">
+                <a href="https://devcenter.heroku.com/categories/java">Java</a>
+              </li>
+              <li class="">
+                <a href="https://devcenter.heroku.com/categories/nodejs">Node.js</a>
+              </li>
+              <li class="active">
+                <a href="https://devcenter.heroku.com/categories/python">Python</a>
+              </li>
+              <li class="">
+                <a href="https://devcenter.heroku.com/categories/php">PHP</a>
+              </li>
+              <li class="">
+                <a href="https://devcenter.heroku.com/categories/clojure">Clojure</a>
+              </li>
+              <li class="">
+                <a href="https://devcenter.heroku.com/categories/scala">Scala</a>
+              </li>
+          </ul>
+          <ul>
+              <li class="">
+                <a href="https://devcenter.heroku.com/categories/mobile">Mobile</a>
+              </li>
+              <li class="">
+                <a href="https://devcenter.heroku.com/categories/database">Database</a>
+              </li>
+          </ul>
+          <ul>
+              <li class="">
+                <a href="https://devcenter.heroku.com/categories/miscellaneous">Miscellaneous</a>
+              </li>
+          </ul>
+          <ul>
+              <li class="">
+                <a href="https://devcenter.heroku.com/categories/add-on-documentation">Add-ons</a>
+              </li>
+          </ul>
+      </li>
+  </ul>
+</div>
+
+<section class="main">
+
+  <article class="article autolink ">
+    <div id="admin-tabs"></div>
+    <div class="contribution">
+  <img alt="The MemCachier Add-on" src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/98-original.png">
+  <div class="profile">
+    <h4>
+      This article was contributed by
+      <a href="http://www.memcachier.com/" target="_blank">The MemCachier Add-on</a>
+    </h4>
+    <p class="bio">
+      <a href="http://memcachier.com/">MemCachier</a> manages and scales
+ clusters of memcache servers so you can focus on your app. Tell us how 
+much memory you need and get started for free instantly.  Add capacity 
+later as you need it.<br><br><a class="meta" href="http://twitter.com/MemCachier"><img src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/twitter-icon.png">follow @MemCachier on twitter</a>
+    </p>
+  </div>
+</div>
+
+    
+
+    <header>
+      <h1 class="doc">Scaling a Django Application with Memcache</h1>
+    </header>
+
+    <div class="padder">
+
+      <p class="meta">
+        Last Updated: 04 November 2014
+      </p>
+
+
+
+
+        <section id="table-of-contents">
+  <h3>Table of Contents</h3>
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#create-an-empty-django-app">Create an empty Django app</a></li>
+    <li><a href="#add-functionality">Add functionality</a></li>
+    <li><a href="#start-using-memcache">Start using memcache</a></li>
+    <li><a href="#further-reading-and-resources">Further reading and resources</a></li>
+  </ul>
+</section>
+
+<p>Memcache is a technology that helps web apps and mobile app backends
+in two main ways: performance and scalability. You should consider
+using memcache when your pages are loading too slowly or your app is
+having scalability issues. Even for small sites it can be a great
+technology, making page loads snappy and future proofing for scale.</p>
+
+<p>This article shows how to create a simple application in Django,
+deploy it to Heroku, then add caching with Memcache to alleviate a
+performance bottleneck.</p>
+
+<div class="callout">
+<p>We’ve built a sample app that can be seen running <a href="http://memcachier-examples-django2.herokuapp.com/">here</a>. <br>
+<a class="github-source-code" href="http://github.com/memcachier/examples-django2">Source code</a> or
+<a class="heroku-button" href="https://heroku.com/deploy?template=http://github.com/memcachier/examples-django2"><img src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/button.png" alt="Deploy"></a></p>
+</div>
+
+<h2 id="overview"><a href="https://devcenter.heroku.com/articles/django-memcache#overview">Overview</a></h2>
+
+<p>Memcache is an in-memory, distributed cache. The primary API for
+interacting with it are <code>SET(key, value)</code> and <code>GET(key)</code> operations.
+Memcache is like a hashmap (or dictionary) that is spread across
+multiple servers, where operations are still performed in constant
+time.</p>
+
+<p>The most common usage of memcache is to cache expensive database
+queries and HTML renders such that these expensive operations don’t
+need to happen over and over again.</p>
+
+<h2 id="create-an-empty-django-app"><a href="https://devcenter.heroku.com/articles/django-memcache#create-an-empty-django-app">Create an empty Django app</a></h2>
+
+<p>The following commands will create an empty Django app. A detailed
+explanation of these commands can be found in the
+<a href="https://devcenter.heroku.com/articles/getting-started-with-django">Django article</a>.</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> mkdir django_queue &amp;&amp; cd django_queue
+</span><span class="prompt">$</span><span class="function"> virtualenv venv --distribute
+</span><span class="prompt">$</span><span class="function"> source venv/bin/activate
+</span><span class="prompt">$</span><span class="function"> pip install Django psycopg2 dj-database-url
+</span><span class="prompt">$</span><span class="function"> django-admin.py startproject django_queue .
+</span><span class="prompt">$</span><span class="function"> pip freeze &gt; requirements.txt
+</span><span class="prompt">$</span><span class="function"> python manage.py runserver
+</span><span class="string">Validating models...
+</span><span class="string">
+</span><span class="string">0 errors found
+</span><span class="string">Django version 1.4, using settings 'django_queue.settings'
+</span><span class="string">Development server is running at http://127.0.0.1:8000/
+</span><span class="string">Quit the server with CONTROL-C.
+</span></pre></div>
+</div>
+
+
+<p>Visiting <a href="http://localhost:8000/">http://localhost:8000</a> will show a
+“hello, world” landing page:</p>
+
+<p><img src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/20120702-jp8um6diqaedf347rbeee28mga.jpg" alt="Django Hello World"></p>
+
+<h3 id="configure-the-database"><a href="https://devcenter.heroku.com/articles/django-memcache#configure-the-database">Configure the database</a></h3>
+
+<p>Configure the application to use <a href="https://devcenter.heroku.com/articles/heroku-postgresql">Heroku’s Postgres
+database</a>. Edit the file, <code>django_queue/settings.py</code>
+and replace the existing <code>DATABASES</code> setting with the following lines
+instead:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="keyword">import</span> <span class="include">dj_database_url</span>
+DATABASES = {<span class="string"><span class="delimiter">'</span><span class="content">default</span><span class="delimiter">'</span></span>: dj_database_url.config(default=<span class="string"><span class="delimiter">'</span><span class="content">postgres://localhost</span><span class="delimiter">'</span></span>)}
+</pre></div>
+</div>
+
+
+<p>This will use PostgreSQL both on Heroku and on your local machine. If
+you’d prefer to use SQLite locally for less setup, then you acn
+instead put the follwing line in <code>django_queue/settings.py</code>:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="comment"># use sqlite for local development (when DATABASE_URL isn't</span>
+<span class="comment"># defined, as that is # what dj_database_url is looking for).</span>
+curdir = os.path.dirname(os.path.abspath(
+    inspect.getfile(inspect.currentframe())))
+sqlite_db = <span class="string"><span class="delimiter">'</span><span class="content">sqlite://localhost/</span><span class="delimiter">'</span></span> + curdir + <span class="string"><span class="delimiter">'</span><span class="content">/../queue.sqlite</span><span class="delimiter">'</span></span>
+
+DATABASES = {<span class="string"><span class="delimiter">'</span><span class="content">default</span><span class="delimiter">'</span></span>: dj_database_url.config(default=sqlite_db)}
+</pre></div>
+</div>
+
+
+<h3 id="commit-to-git"><a href="https://devcenter.heroku.com/articles/django-memcache#commit-to-git">Commit to git</a></h3>
+
+<p>Code needs to be added to a git repository before it can be deployed
+to Heroku. First, edit <code>.gitignore</code> and adding the following
+lines to exclude unnecessary files:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="string">venv
+</span><span class="string">*.pyc
+</span></pre></div>
+</div>
+
+
+<p>Then initialize a repo and make a commit:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> git init
+</span><span class="prompt">$</span><span class="function"> git add .
+</span><span class="prompt">$</span><span class="function"> git commit -m "empty django app"
+</span></pre></div>
+</div>
+
+
+<h3 id="create-an-empty-django-app-deploy-to-heroku"><a href="https://devcenter.heroku.com/articles/django-memcache#create-an-empty-django-app-deploy-to-heroku">Deploy to Heroku</a></h3>
+
+<p>Create an app using <code>heroku create</code>:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> heroku create
+</span><span class="string">Creating empty-beach-6144... done, stack is cedar-14
+</span><span class="string">http://empty-beach-6144.herokuapp.com/ | git@heroku.com:empty-beach-6144.git
+</span><span class="string">Git remote heroku added
+</span></pre></div>
+</div>
+
+
+<p>And then deploy the app:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> git push heroku master
+</span></pre></div>
+</div>
+
+
+<p>Finally, you can use the Heroku CLI to view the app in your browser:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> heroku open
+</span></pre></div>
+</div>
+
+
+<p>You will see the same “hello, world” landing page you saw in local
+development mode except running on the Heroku platform.</p>
+
+<h2 id="add-functionality"><a href="https://devcenter.heroku.com/articles/django-memcache#add-functionality">Add functionality</a></h2>
+
+<p>The Django application we are building will show a list of items, one
+per line on the page. It will have actions to add new items to the end
+and remove older items from the front. Basically, it is a queue. Items
+in the queue are just strings.</p>
+
+<p>First, make the Django <code>queue</code> app:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> python manage.py startapp queue
+</span></pre></div>
+</div>
+
+
+<p>Add <code>queue</code> to the list of installed apps in
+<a href="https://github.com/memcachier/examples-django2/blob/master/django_queue/settings.py"><code>django_queue/settings.py</code></a>:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>INSTALLED_APPS = (
+  <span class="string"><span class="delimiter">'</span><span class="content">django.contrib.auth</span><span class="delimiter">'</span></span>,
+  <span class="comment"># ...</span>
+  <span class="string"><span class="delimiter">'</span><span class="content">queue</span><span class="delimiter">'</span></span>,
+)
+</pre></div>
+</div>
+
+
+<p>And create a simple model in
+<a href="https://github.com/memcachier/examples-django2/blob/master/queue/models.py"><code>django_queue/queue/models.py</code></a>:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="keyword">from</span> <span class="include">django.db</span> <span class="keyword">import</span> <span class="include">models</span>
+
+<span class="keyword">class</span> <span class="class">QueueItem</span>(models.Model):
+  text = models.CharField(max_length=<span class="integer">200</span>)
+</pre></div>
+</div>
+
+
+<p>Use <code>syncdb</code> to create the <code>queue_queueitems</code> table locally, along with
+all other default Django tables:</p>
+
+<div class="callout">
+<p>You will be prompted to create a superuser.  Respond with “no” and hit return.</p>
+</div>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> python manage.py syncdb
+</span></pre></div>
+</div>
+
+
+<p>Next, setup routes in <code>django_queue/urls.py</code> for remove, add, and index
+methods.  View the source in
+<a href="https://github.com/memcachier/examples-django2/blob/master/django_queue/urls.py">Github</a>
+for <code>urls.py</code>.</p>
+
+<p>Add corresponding views in
+<a href="https://github.com/memcachier/examples-django2/blob/master/queue/views.py"><code>queue/views.py</code></a>:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="keyword">from</span> <span class="include">django.http</span> <span class="keyword">import</span> <span class="include">HttpResponse</span>
+<span class="keyword">from</span> <span class="include">django.core.context_processors</span> <span class="keyword">import</span> <span class="include">csrf</span>
+<span class="keyword">from</span> <span class="include">django.shortcuts</span> <span class="keyword">import</span> <span class="include">render_to_response</span>, <span class="include">redirect</span>
+<span class="keyword">from</span> <span class="include">queue.models</span> <span class="keyword">import</span> <span class="include">QueueItem</span>
+
+<span class="keyword">def</span> <span class="function">index</span>(request):
+  queue = QueueItem.objects.order_by(<span class="string"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span>)
+  c = {<span class="string"><span class="delimiter">'</span><span class="content">queue</span><span class="delimiter">'</span></span>: queue}
+  c.update(csrf(request))
+  <span class="keyword">return</span> render_to_response(<span class="string"><span class="delimiter">'</span><span class="content">index.html</span><span class="delimiter">'</span></span>, c)
+
+<span class="keyword">def</span> <span class="function">add</span>(request):
+  item = QueueItem(text=request.POST[<span class="string"><span class="delimiter">"</span><span class="content">text</span><span class="delimiter">"</span></span>])
+  item.save()
+  <span class="keyword">return</span> HttpResponse(<span class="string"><span class="delimiter">"</span><span class="content">&lt;li&gt;%s&lt;/li&gt;</span><span class="delimiter">"</span></span> % item.text)
+
+<span class="keyword">def</span> <span class="function">remove</span>(request):
+  items = QueueItem.objects.order_by(<span class="string"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span>)[:<span class="integer">1</span>]
+  <span class="keyword">if</span> <span class="predefined">len</span>(items) != <span class="integer">0</span>:
+    items[<span class="integer">0</span>].delete()
+  <span class="keyword">return</span> redirect(<span class="string"><span class="delimiter">"</span><span class="content">/</span><span class="delimiter">"</span></span>)
+</pre></div>
+</div>
+
+
+<p>And create a template, <code>templates/index.html</code>, that has display code.
+View the source for this file in
+<a href="https://github.com/memcachier/examples-django2/blob/master/templates/index.html">Github</a>.</p>
+
+<p>Lastly, configure the <code>templates</code> directory in
+<code>django_queue/settings.py</code>.  See <code>settings.py</code> in
+<a href="https://github.com/memcachier/examples-django2/blob/master/django_queue/settings.py">Github</a>
+for an example <code>templates</code> setting.</p>
+
+<p>Visit <code>http://localhost:8000</code> again and play with the basic queue app.
+A screenshot has been included below:</p>
+
+<p><img src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/20120703-e1keudyecu3c2rwd8xmphahtyq.jpg" alt="Simple Queue App"></p>
+
+<h3 id="commit-your-changes"><a href="https://devcenter.heroku.com/articles/django-memcache#commit-your-changes">Commit your changes</a></h3>
+
+<p>When the app is working, commit your changes:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> git add .
+</span><span class="prompt">$</span><span class="function"> git commit -m "Basic queue app"
+</span></pre></div>
+</div>
+
+
+<h3 id="add-functionality-deploy-to-heroku"><a href="https://devcenter.heroku.com/articles/django-memcache#add-functionality-deploy-to-heroku">Deploy to Heroku</a></h3>
+
+<p>And deploy these changes to Heroku:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> git push heroku master
+</span></pre></div>
+</div>
+
+
+<p>Finally, sync your database on Heroku to create the <code>queue_queueitem</code>
+table, and restart the Heroku app:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> heroku run python manage.py syncdb
+</span><span class="prompt">$</span><span class="function"> heroku restart
+</span></pre></div>
+</div>
+
+
+<p>View the app in your browser:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> heroku open
+</span></pre></div>
+</div>
+
+
+<h2 id="start-using-memcache"><a href="https://devcenter.heroku.com/articles/django-memcache#start-using-memcache">Start using memcache</a></h2>
+
+<p>As previously mentioned, memcache is most effective at caching
+expensive database queries and HTML renders.  The only potentially
+expensive operation in the queue app is the <code>SELECT</code> statement made to
+the database to fetch the queue.  This example will continue by using
+memcache to cache the <code>SELECT</code> statement.</p>
+
+<h3 id="provision-on-heroku"><a href="https://devcenter.heroku.com/articles/django-memcache#provision-on-heroku">Provision on Heroku</a></h3>
+
+<p>Provision the <a href="https://addons.heroku.com/memcachier">MemCachier</a>
+add-on to use in the application deployed to Heroku:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> heroku addons:add memcachier:dev
+</span></pre></div>
+</div>
+
+
+<p>This will provision a new memcache instance for you and expose a set
+of <a href="https://devcenter.heroku.com/articles/config-vars">config vars</a> containing your memcache credentials.</p>
+
+<h3 id="configure-django-with-memcachier"><a href="https://devcenter.heroku.com/articles/django-memcache#configure-django-with-memcachier">Configure Django with MemCachier</a></h3>
+
+<p>We advise configuring the connection to MemCachier by setting the
+appropriate environment variables so that Django will simply load them
+each time your app starts. These are the <code>MEMCACHE_SERVERS</code>,
+<code>MEMCACHE_USERNAME</code> and <code>MEMCACHE_PASSWORD</code> variables. When you
+provision MemCachier we set corresponding variables but under the
+<code>MEMCACHIER_*</code> prefix (i.e, <code>MEMCACHIER_SERVERS</code>), so you’ll need to
+map them across to <code>MEMCACHE_*</code> variables correctly.</p>
+
+<p>To have your application operate correctly in both development and
+production mode, add the following to <code>django_queue/settings.py</code>:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="keyword">def</span> <span class="function">get_cache</span>():
+  <span class="keyword">import</span> <span class="include">os</span>
+  <span class="keyword">try</span>:
+    os.environ[<span class="string"><span class="delimiter">'</span><span class="content">MEMCACHE_SERVERS</span><span class="delimiter">'</span></span>] = os.environ[<span class="string"><span class="delimiter">'</span><span class="content">MEMCACHIER_SERVERS</span><span class="delimiter">'</span></span>].replace(<span class="string"><span class="delimiter">'</span><span class="content">,</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">;</span><span class="delimiter">'</span></span>)
+    os.environ[<span class="string"><span class="delimiter">'</span><span class="content">MEMCACHE_USERNAME</span><span class="delimiter">'</span></span>] = os.environ[<span class="string"><span class="delimiter">'</span><span class="content">MEMCACHIER_USERNAME</span><span class="delimiter">'</span></span>]
+    os.environ[<span class="string"><span class="delimiter">'</span><span class="content">MEMCACHE_PASSWORD</span><span class="delimiter">'</span></span>] = os.environ[<span class="string"><span class="delimiter">'</span><span class="content">MEMCACHIER_PASSWORD</span><span class="delimiter">'</span></span>]
+    <span class="keyword">return</span> {
+      <span class="string"><span class="delimiter">'</span><span class="content">default</span><span class="delimiter">'</span></span>: {
+        <span class="string"><span class="delimiter">'</span><span class="content">BACKEND</span><span class="delimiter">'</span></span>: <span class="string"><span class="delimiter">'</span><span class="content">django_pylibmc.memcached.PyLibMCCache</span><span class="delimiter">'</span></span>,
+        <span class="string"><span class="delimiter">'</span><span class="content">TIMEOUT</span><span class="delimiter">'</span></span>: <span class="integer">500</span>,
+        <span class="string"><span class="delimiter">'</span><span class="content">BINARY</span><span class="delimiter">'</span></span>: <span class="predefined-constant">True</span>,
+        <span class="string"><span class="delimiter">'</span><span class="content">OPTIONS</span><span class="delimiter">'</span></span>: { <span class="string"><span class="delimiter">'</span><span class="content">tcp_nodelay</span><span class="delimiter">'</span></span>: <span class="predefined-constant">True</span> }
+      }
+    }
+  <span class="keyword">except</span>:
+    <span class="keyword">return</span> {
+      <span class="string"><span class="delimiter">'</span><span class="content">default</span><span class="delimiter">'</span></span>: {
+        <span class="string"><span class="delimiter">'</span><span class="content">BACKEND</span><span class="delimiter">'</span></span>: <span class="string"><span class="delimiter">'</span><span class="content">django.core.cache.backends.locmem.LocMemCache</span><span class="delimiter">'</span></span>
+      }
+    }
+
+CACHES = get_cache()
+</pre></div>
+</div>
+
+
+<p>This change to <code>settings.py</code> configures the cache for both development
+and production.  If the <code>MEMCACHIER_*</code> environment variables exist,
+the cache will be setup with <code>django-pylibmc-sasl</code>, connecting to
+MemCachier. Whereas, if the <code>MEMCACHIER_*</code> environment variables
+don’t exist – hence development mode – Django’s simple in-memory
+cache is used instead.</p>
+
+<p>Next, you need to modify your <code>requirements.txt</code> file to include
+<code>django-pylibmc-sasl</code>.</p>
+
+<h3 id="libraries"><a href="https://devcenter.heroku.com/articles/django-memcache#libraries">Libraries</a></h3>
+
+<p>As <code>libmemcached</code> is required to install django-pylibmc-sasl you’ll
+need to install it locally (which is a platform-dependant process).</p>
+
+<p>In Ubuntu:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> sudo apt-get install libmemcached-dev
+</span></pre></div>
+</div>
+
+
+<p>In OS X:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> brew install libmemcached
+</span></pre></div>
+</div>
+
+
+<p>Then, install the <code>django-pylibmc-sasl</code> Python modules:</p>
+
+<div class="callout">
+<p><code>/opt/local</code> may not be where libmemcached was installed.  Replace <code>/opt/local</code> with the correct directory if needed.</p>
+</div>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> LIBMEMCACHED=/opt/local pip install pylibmc
+</span><span class="prompt">$</span><span class="function"> pip install django-pylibmc-sasl
+</span></pre></div>
+</div>
+
+
+<p>Update your <code>requirements.txt</code> file with the new dependencies:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> pip freeze &gt; requirements.txt
+</span><span class="prompt">$</span><span class="function"> cat requirements.txt
+</span><span class="string">...
+</span><span class="string">pylibmc==1.2.3
+</span><span class="string">django-pylibmc-sasl==0.2.4
+</span></pre></div>
+</div>
+
+
+<p>Finally, commit and deploy these changes:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> git commit -a -m "Connecting to memcache."
+</span><span class="prompt">$</span><span class="function"> git push heroku master
+</span></pre></div>
+</div>
+
+
+<h3 id="verify-memcache-config"><a href="https://devcenter.heroku.com/articles/django-memcache#verify-memcache-config">Verify memcache config</a></h3>
+
+<p>Verify that you’ve configured memcache correctly before you move
+forward.</p>
+
+<p>To do this, run the Django shell.  On your local machine run <code>python
+manage.py shell</code> and in Heroku run <code>heroku run python manage.py
+shell</code>.  Run a quick test to make sure your cache is configured
+properly:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>&gt;&gt;&gt; <span class="keyword">from</span> <span class="include">django.core.cache</span> <span class="keyword">import</span> <span class="include">cache</span>
+&gt;&gt;&gt; cache.get(<span class="string"><span class="delimiter">"</span><span class="content">foo</span><span class="delimiter">"</span></span>)
+&gt;&gt;&gt; cache.set(<span class="string"><span class="delimiter">"</span><span class="content">foo</span><span class="delimiter">"</span></span>, <span class="string"><span class="delimiter">"</span><span class="content">bar</span><span class="delimiter">"</span></span>)
+<span class="predefined-constant">True</span>
+&gt;&gt;&gt; cache.get(<span class="string"><span class="delimiter">"</span><span class="content">foo</span><span class="delimiter">"</span></span>)
+<span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>
+</pre></div>
+</div>
+
+
+<p><code>bar</code> should be printed to the screen when <code>foo</code> is fetched from the
+cache.  If you don’t see <code>bar</code> your cache is not configured correctly.</p>
+
+<h3 id="modify-the-application"><a href="https://devcenter.heroku.com/articles/django-memcache#modify-the-application">Modify the application</a></h3>
+
+<p>With a proper connection to memcache, the queue database query code can
+be modified to check the cache first.  Below is a new version of the
+<code>index</code> view in <code>django_queue/queue/views.py</code>:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="keyword">from</span> <span class="include">django.core.cache</span> <span class="keyword">import</span> <span class="include">cache</span>
+<span class="keyword">from</span> <span class="include">django.core.context_processors</span> <span class="keyword">import</span> <span class="include">csrf</span>
+<span class="keyword">import</span> <span class="include">time</span>
+
+QUEUE_KEY = <span class="string"><span class="delimiter">"</span><span class="content">queue</span><span class="delimiter">"</span></span>
+
+<span class="keyword">def</span> <span class="function">index</span>(request):
+  queue = cache.get(QUEUE_KEY)
+  <span class="keyword">if</span> <span class="keyword">not</span> queue:
+    time.sleep(<span class="integer">2</span>) <span class="comment"># simulate a slow query.</span>
+    queue = QueueItem.objects.order_by(<span class="string"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span>)
+    cache.set(QUEUE_KEY, queue)
+  c = {<span class="string"><span class="delimiter">'</span><span class="content">queue</span><span class="delimiter">'</span></span>: queue}
+  c.update(csrf(request))
+  <span class="keyword">return</span> render_to_response(<span class="string"><span class="delimiter">'</span><span class="content">index.html</span><span class="delimiter">'</span></span>, c)
+</pre></div>
+</div>
+
+
+<p>The above code first checks the cache to see if the <code>queue</code> key exists
+in the cache.  If it does not, a database query is executed and the
+cache is updated.  Subsequent pageloads will not need to perform the
+database query.  The <code>time.sleep(2)</code> queue exists to simulate a slow
+query.</p>
+
+<p>You may notice that there’s a bug in this code.  Visit
+<code>http://localhost:8000</code>.  Notice that adding a new item to the queue
+properly appends the new item to the <code>&lt;ul&gt;</code>.  However, if you refresh
+the page, you’ll notice that the queue is out of date.  The queue is out
+of date because the memcache value hasn’t been updated yet.</p>
+
+<h3 id="keep-memcache-up-to-date"><a href="https://devcenter.heroku.com/articles/django-memcache#keep-memcache-up-to-date">Keep memcache up-to-date</a></h3>
+
+<p>There are many techniques for dealing with an out-of-date cache.
+First and easiest, the <code>cache.set</code> method can take an optional third
+argument, which is the time in seconds that the cache key should stay
+in the cache.  If this option is not specified, the default <code>TIMEOUT</code>
+value in <code>settings.py</code> will be used instead.</p>
+
+<p>You could modify the <code>cache.set</code> method to look like this:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre>cache.set(QUEUE_KEY, queue, <span class="integer">5</span>)
+</pre></div>
+</div>
+
+
+<p>But this functionality isn’t ideal.  The user experience associated
+with adding and removing will be bad – the user should not need to
+wait a few seconds for their queue to be updated.  Instead, a better
+strategy is to invalidate the <code>queue</code> key when you know the cache is
+out of date – namely, to modify the <code>add</code> and <code>remove</code> views to
+delete the <code>queue</code> key.  Below are the new methods:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="keyword">def</span> <span class="function">add</span>(request):
+  item = QueueItem(text=request.POST[<span class="string"><span class="delimiter">"</span><span class="content">text</span><span class="delimiter">"</span></span>])
+  item.save()
+  cache.delete(QUEUE_KEY)
+  <span class="keyword">return</span> HttpResponse(<span class="string"><span class="delimiter">"</span><span class="content">&lt;li&gt;%s&lt;/li&gt;</span><span class="delimiter">"</span></span> % item.text)
+
+<span class="keyword">def</span> <span class="function">remove</span>(request):
+  items = QueueItem.objects.order_by(<span class="string"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span>)[:<span class="integer">1</span>]
+  <span class="keyword">if</span> <span class="predefined">len</span>(items) != <span class="integer">0</span>:
+    items[<span class="integer">0</span>].delete()
+    cache.delete(QUEUE_KEY)
+  <span class="keyword">return</span> redirect(<span class="string"><span class="delimiter">"</span><span class="content">/</span><span class="delimiter">"</span></span>)
+</pre></div>
+</div>
+
+
+<p>Note the calls to <code>cache.delete</code>.  This function explicitly deletes
+the <code>queue</code> key from the cache.</p>
+
+<p>Better yet, instead of deleting the <code>queue</code> key, the value should be
+updated to reflect the new queue.  Updating the value instead of
+deleting it will allow the first pageload to avoid having to go to the
+database.  Here’s a better version of the same code:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="keyword">def</span> <span class="function">add</span>(request):
+  item = QueueItem(text=request.POST[<span class="string"><span class="delimiter">"</span><span class="content">text</span><span class="delimiter">"</span></span>])
+  item.save()
+  cache.set(QUEUE_KEY, _get_queue())
+  <span class="keyword">return</span> HttpResponse(<span class="string"><span class="delimiter">"</span><span class="content">&lt;li&gt;%s&lt;/li&gt;</span><span class="delimiter">"</span></span> % item.text)
+
+<span class="keyword">def</span> <span class="function">remove</span>(request):
+  items = QueueItem.objects.order_by(<span class="string"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span>)[:<span class="integer">1</span>]
+  <span class="keyword">if</span> <span class="predefined">len</span>(items) != <span class="integer">0</span>:
+    items[<span class="integer">0</span>].delete()
+    cache.set(QUEUE_KEY, _get_queue())
+  <span class="keyword">return</span> redirect(<span class="string"><span class="delimiter">"</span><span class="content">/</span><span class="delimiter">"</span></span>)
+
+<span class="keyword">def</span> <span class="function">_get_queue</span>():
+  <span class="keyword">return</span> QueueItem.objects.order_by(<span class="string"><span class="delimiter">"</span><span class="content">id</span><span class="delimiter">"</span></span>)
+</pre></div>
+</div>
+
+
+<p>Now the cache will not ever be out-of-date, and the value associated
+with the <code>queue</code> key will be updated immediately when the queue is
+changed.</p>
+
+<p>As usual, commit and deploy your changes:</p>
+
+<div class="CodeRay">
+  <div class="code"><pre><span class="prompt">$</span><span class="function"> git commit -a -m "Using memcache in queue views."
+</span><span class="prompt">$</span><span class="function"> git push heroku master
+</span></pre></div>
+</div>
+
+
+<h2 id="further-reading-and-resources"><a href="https://devcenter.heroku.com/articles/django-memcache#further-reading-and-resources">Further reading and resources</a></h2>
+
+<p>This article has barely scratched the surface of what is possible with
+memcache in Django.  For example, Django has built-in support to cache
+<a href="https://docs.djangoproject.com/en/dev/topics/cache/#the-per-view-cache">views</a>
+and
+<a href="https://docs.djangoproject.com/en/dev/topics/cache/#template-fragment-caching">fragments</a>.
+Furthermore, much of the basic Django setup was glossed over in this
+article.  Please refer to the below resources to learn more about
+Django, memcache, or Heroku:</p>
+
+<ul>
+<li><a href="https://addons.heroku.com/memcachier">MemCachier Add-on Page</a></li>
+<li><a href="https://devcenter.heroku.com/articles/memcachier">MemCachier Documentation</a></li>
+<li><a href="https://devcenter.heroku.com/articles/advanced-memcache">Advance Memcache Usage</a></li>
+<li><a href="https://devcenter.heroku.com/articles/getting-started-with-django">Getting Started with Django in Heroku</a></li>
+<li><a href="https://docs.djangoproject.com/en/dev/intro/tutorial01/">The Django Tutorial</a></li>
+<li><a href="https://docs.djangoproject.com/en/dev/topics/cache/">Django Caching Documentation</a></li>
+</ul>
+
+
+      <section class="article-extras">
+        
+
+        <div class="nocontent">
+  <section class="js-article-feedback article-feedback secondary-article-section">
+    <div class="step1">
+      <h2 id="feedback"><a href="https://devcenter.heroku.com/articles/django-memcache#feedback">Feedback</a></h2>
+
+      <p>
+        <a href="https://devcenter.heroku.com/login?back_to=%2Farticles%2Fdjango-memcache&amp;utm_campaign=login&amp;utm_medium=feedback&amp;utm_source=web">Log in to submit feedback</a>.
+      </p>
+    </div>
+    <p class="step3">
+      Your feedback has been sent to the <a href="mailto:devcenter-feedback@heroku.com">Dev Center</a> team. Thank you.
+    </p>
+  </section>
+</div>
+
+      </section>
+
+    </div>
+  </article>
+
+  <section class="nocontent" id="pagination">
+  <a href="https://devcenter.heroku.com/articles/python-faq" id="previous" rel="prev">« Python FAQ</a>
+  <a href="https://devcenter.heroku.com/articles/clock-processes-python" id="next" rel="next">Scheduled Jobs with Custom Clock Processes in Python with APScheduler »</a>
+</section>
+</section>
+
+
+
+
+        <footer>
+  <div class="container">
+    <div class="nav navbar-nav">
+      <a href="https://www.heroku.com/home">heroku.com</a>
+      <a href="https://www.heroku.com/policy/privacy" class="privacy">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+
+      </div>
+    </div>
+
+      <!-- Google Tag Manager -->
+  <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-JD26" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-JD26');</script>
+  <!-- End Google Tag Manager -->
+
+<script src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/public-21caacfc66796332a9e002c729a1202c.js" type="text/javascript"></script>
+
+<script id="" type="text/javascript">piAId="37622";piCId="30300";(function(){function a(){var b=document.createElement("script");b.type="text/javascript";b.src=("https:"==document.location.protocol?"https://pi":"http://cdn")+".pardot.com/pd.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)}window.attachEvent?window.attachEvent("onload",a):window.addEventListener("load",a,!1)})();</script>
+
+<script id="" type="text/javascript">(function(){window._pa=window._pa||{};var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https:":"http:")+"//tag.perfectaudience.com/serve/51b6483a434bba0f0c000016.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script>
+
+<!--[if lt IE 9]>
+<script src="/assets/public/vendor/selectivizr-1.0.min-be7e7085fe3807e53fb29132e716e183.js" type="text/javascript"></script>
+<![endif]-->
+
+<script>
+  
+$( function() {
+  setAccordion(0);
+
+  var $feedback = $('.js-article-feedback'),
+      $step1 = $feedback.find('.step1'),
+      $openStep2 = $step1.find('.open'),
+      $step2 = $feedback.find('.step2'),
+      $step3 = $feedback.find('.step3');
+
+  var openFeedback = function() {
+    $openStep2.replaceWith($openStep2.text())
+    $step2.fadeIn(10, function(){
+      if (!iPhone && !iPad){
+        $('html, body').animate({scrollTop:$(document).height()}, 1500);
+      }
+    }).find('textarea').focus();
+  }
+
+  $openStep2.click( function(e){
+    e.preventDefault()
+    if (! $step2.is(':visible')) openFeedback() // already open in small screens
+  })
+
+  $step2.submit( function(e){
+    e.preventDefault();
+    $step2.find('input[type="submit"]').attr('disabled', true).val('Sending');
+    $.post( $step2.attr('action'), $step2.serialize(),
+      function(data){
+        $step1.fadeOut(10);
+        $step1.find('textarea').val('');
+        $step3.fadeIn(10);
+      }
+    )
+  })
+
+  $('.js-article-feedback textarea').autosize()
+
+  if (document.location.href.indexOf('#feedback') != -1) {
+    openFeedback()
+  }
+});
+
+</script>
+<script>
+  
+</script>
+
+  
+
+<script src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/nr-476.js"></script><script src="Scaling%20a%20Django%20Application%20with%20Memcache%20%7C%20Heroku%20Dev%20Center_files/ae43571cb3" type="text/javascript"></script></body></html>

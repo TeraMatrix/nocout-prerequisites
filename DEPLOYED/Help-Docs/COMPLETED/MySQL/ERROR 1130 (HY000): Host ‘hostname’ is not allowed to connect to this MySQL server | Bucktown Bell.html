@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!--[if IE 6]>
+<html id="ie6" lang="en-US">
+<![endif]-->
+<!--[if IE 7]>
+<html id="ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html id="ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 6) | !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>ERROR 1130 (HY000): Host ‘hostname’ is not allowed to connect to this MySQL server | Bucktown Bell</title>
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="stylesheet" type="text/css" media="all" href="ERROR%201130%20%28HY000%29:%20Host%20%E2%80%98hostname%E2%80%99%20is%20not%20allowed%20to%20connect%20to%20this%20MySQL%20server%20%7C%20Bucktown%20Bell_files/style.css">
+<link rel="pingback" href="http://bucktownbell.com/xmlrpc.php">
+<!--[if lt IE 9]>
+<script src="http://bucktownbell.com/wp-content/themes/twentyeleven/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="Bucktown Bell » Feed" href="http://bucktownbell.com/?feed=rss2">
+<link rel="alternate" type="application/rss+xml" title="Bucktown Bell » Comments Feed" href="http://bucktownbell.com/?feed=comments-rss2">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://bucktownbell.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://bucktownbell.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Create Your Own Web Server With BIND And Apache On CentOS 5 (Simplified)" href="http://bucktownbell.com/?p=650">
+<link rel="next" title="A step-by-step plan to starting a consulting business" href="http://bucktownbell.com/?p=664">
+<meta name="generator" content="WordPress 3.9.2">
+<link rel="canonical" href="http://bucktownbell.com/?p=653">
+<link rel="shortlink" href="http://bucktownbell.com/?p=653">
+<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #acb1b4; }
+</style>
+</head>
+
+<body class="single single-post postid-653 single-format-standard custom-background single-author singular two-column right-sidebar">
+<div id="page" class="hfeed">
+	<header id="branding" role="banner">
+			<hgroup>
+				<h1 id="site-title"><span><a href="http://bucktownbell.com/" title="Bucktown Bell" rel="home">Bucktown Bell</a></span></h1>
+				<h2 id="site-description">Cut to the chase.</h2>
+			</hgroup>
+
+						<a href="http://bucktownbell.com/">
+									<img src="ERROR%201130%20%28HY000%29:%20Host%20%E2%80%98hostname%E2%80%99%20is%20not%20allowed%20to%20connect%20to%20this%20MySQL%20server%20%7C%20Bucktown%20Bell_files/IMG_5813_11header_v2.jpeg" alt="" height="288" width="1000">
+							</a>
+			
+								<form method="get" id="searchform" action="http://bucktownbell.com/">
+		<label for="s" class="assistive-text">Search</label>
+		<input class="field" name="s" id="s" placeholder="Search" type="text">
+		<input class="submit" name="submit" id="searchsubmit" value="Search" type="submit">
+	</form>
+			
+			<nav id="access" role="navigation">
+				<h3 class="assistive-text">Main menu</h3>
+								<div class="skip-link"><a class="assistive-text" href="#content" title="Skip to primary content">Skip to primary content</a></div>
+				<div class="skip-link"><a class="assistive-text" href="#secondary" title="Skip to secondary content">Skip to secondary content</a></div>
+								<div class="menu-main-menu-container"><ul id="menu-main-menu" class="menu"><li id="menu-item-8603" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-8603"><a href="http://bucktownbell.com/">Home</a></li>
+<li id="menu-item-8605" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8605"><a href="http://bucktownbell.com/?page_id=27">Contact Me</a></li>
+</ul></div>			</nav><!-- #access -->
+	</header><!-- #branding -->
+
+
+	<div id="main">
+
+		<div id="primary">
+			<div id="content" role="main">
+
+				
+					<nav id="nav-single">
+						<h3 class="assistive-text">Post navigation</h3>
+						<span class="nav-previous"><a href="http://bucktownbell.com/?p=650" rel="prev"><span class="meta-nav">←</span> Previous</a></span>
+						<span class="nav-next"><a href="http://bucktownbell.com/?p=664" rel="next">Next <span class="meta-nav">→</span></a></span>
+					</nav><!-- #nav-single -->
+
+					
+<article id="post-653" class="post-653 post type-post status-publish format-standard hentry category-technical tag-mysql tag-problem-solved">
+	<header class="entry-header">
+		<h1 class="entry-title">ERROR 1130 (HY000): Host ‘hostname’ is not allowed to connect to this MySQL server</h1>
+
+				<div class="entry-meta">
+			<span class="sep">Posted on </span><a href="http://bucktownbell.com/?p=653" title="6:32 pm" rel="bookmark"><time class="entry-date" datetime="2011-09-18T18:32:03+00:00">September 18, 2011</time></a><span class="by-author"> <span class="sep"> by </span> <span class="author vcard"><a class="url fn n" href="http://bucktownbell.com/?author=2" title="View all posts by mea" rel="author">mea</a></span></span>		</div><!-- .entry-meta -->
+			</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<blockquote><p>After a bit of research, the fix in my case was to 
+“GRANT” user root to connect to MySQL on any hosts. By default, user 
+“root” was only allowed to connect to localhost and 127.0.0.1 hosts of 
+MySQL.</p>
+<p>#GRANT ALL PRIVILEGES ON *.* TO ‘root’@’%’ IDENTIFIED BY ‘&lt;roots-password&gt;’ WITH GRANT OPTION;</p></blockquote>
+<p>via <a href="http://kuber.posterous.com/host-hostname-is-not-allowed-to-connect-to-th">ERROR 1130 (HY000): Host ‘hostname’ is not allowed to connect to this MySQL server – kuber’s posterous</a>.</p>
+			</div><!-- .entry-content -->
+
+	<footer class="entry-meta">
+		This entry was posted in <a href="http://bucktownbell.com/?cat=17" title="View all posts in Technical" rel="category">Technical</a> and tagged <a href="http://bucktownbell.com/?tag=mysql" rel="tag">mysql</a>, <a href="http://bucktownbell.com/?tag=problem-solved" rel="tag">problem solved</a> by <a href="http://bucktownbell.com/?author=2">mea</a>. Bookmark the <a href="http://bucktownbell.com/?p=653" title="Permalink to ERROR 1130 (HY000): Host ‘hostname’ is not allowed to connect to this MySQL server" rel="bookmark">permalink</a>.		
+			</footer><!-- .entry-meta -->
+</article><!-- #post-653 -->
+
+						<div id="comments">
+	
+	
+	
+			
+</div><!-- #comments -->
+
+				
+			</div><!-- #content -->
+		</div><!-- #primary -->
+
+
+	</div><!-- #main -->
+
+	<footer id="colophon" role="contentinfo">
+
+			
+
+			<div id="site-generator">
+								<a href="http://wordpress.org/" title="Semantic Personal Publishing Platform">Proudly powered by WordPress</a>
+			</div>
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+
+
+</body></html>

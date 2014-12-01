@@ -1,0 +1,537 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US"><head profile="http://gmpg.org/xfn/11">
+	<title>Nagios/OMD-Cluster mit Pacemaker/DRBD - Teil1 - Simon Meggle</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="generator" content="WordPress 3.1.3"><!-- Please leave for stats -->
+	<meta name="description" content="Linux – Monitoring – High Availability">
+	<link rel="alternate" type="application/rss+xml" href="http://blog.simon-meggle.de/en/feed/" title="Simon Meggle RSS feed">
+	<link rel="alternate" type="application/rss+xml" href="http://blog.simon-meggle.de/en/comments/feed/" title="Simon Meggle comments RSS feed">
+	<link rel="pingback" href="http://blog.simon-meggle.de/en/xmlrpc.php">
+	<link rel="introspection" type="application/atomserv+xml" href="http://blog.simon-meggle.de/wp-app.php">
+	<link rel="stylesheet" type="text/css" media="screen" href="Nagios_OMD-Cluster%20mit%20Pacemaker_DRBD%20-%20Teil1%20-%20Simon%20Meggle_files/style.css" title="veryplaintxt">
+	<link rel="stylesheet" type="text/css" media="print" href="Nagios_OMD-Cluster%20mit%20Pacemaker_DRBD%20-%20Teil1%20-%20Simon%20Meggle_files/print.css">
+
+
+<link rel="stylesheet" href="Nagios_OMD-Cluster%20mit%20Pacemaker_DRBD%20-%20Teil1%20-%20Simon%20Meggle_files/wp-terminal.css" type="text/css" media="screen">
+
+<!-- This site is optimized with the Yoast WordPress SEO plugin v0.4.1 - http://yoast.com/wordpress/seo/ -->
+<meta name="description" content="In diesem mehrteiligen Tutorial lernen Sie, mit DRBD, Pacemaker, OMD und LVM ein hochverfügbares Monitoring-System aufzubauen.">
+<link rel="canonical" href="http://blog.simon-meggle.de/en/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil1/">
+<!-- / Yoast WordPress SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="Simon Meggle » Nagios/OMD-Cluster mit Pacemaker/DRBD Comments Feed" href="http://blog.simon-meggle.de/en/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil1/feed/">
+<script src="Nagios_OMD-Cluster%20mit%20Pacemaker_DRBD%20-%20Teil1%20-%20Simon%20Meggle_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript" src="Nagios_OMD-Cluster%20mit%20Pacemaker_DRBD%20-%20Teil1%20-%20Simon%20Meggle_files/l10n.js"></script>
+<script type="text/javascript" src="Nagios_OMD-Cluster%20mit%20Pacemaker_DRBD%20-%20Teil1%20-%20Simon%20Meggle_files/jquery.js"></script>
+<script type="text/javascript" src="Nagios_OMD-Cluster%20mit%20Pacemaker_DRBD%20-%20Teil1%20-%20Simon%20Meggle_files/external-tracking.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blog.simon-meggle.de/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://blog.simon-meggle.de/wp-includes/wlwmanifest.xml"> 
+<link rel="index" title="Simon Meggle" href="http://blog.simon-meggle.de/en/">
+<link rel="up" title="Tutorials" href="http://blog.simon-meggle.de/en/tutorials/">
+<link rel="prev" title="About" href="http://blog.simon-meggle.de/en/about/">
+<link rel="next" title="Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 2" href="http://blog.simon-meggle.de/en/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil-2/">
+<meta name="generator" content="WordPress 3.1.3">
+
+<meta http-equiv="Content-Language" content="en-US">
+<style type="text/css" media="screen">
+.qtrans_flag span { display:none }
+.qtrans_flag { height:12px; width:18px; display:block }
+.qtrans_flag_and_text { padding-left:20px }
+.qtrans_flag_de { background:url(http://blog.simon-meggle.de/wp-content/plugins/qtranslate/flags/de.png) no-repeat }
+.qtrans_flag_en { background:url(http://blog.simon-meggle.de/wp-content/plugins/qtranslate/flags/gb.png) no-repeat }
+</style>
+<link hreflang="de" href="http://blog.simon-meggle.de/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil1/" rel="alternate">
+
+ 		<!-- by Twitter Follow Me Box v1.1 -->
+ 		<script type="text/javascript">
+ 			//<![CDATA[
+  			jQuery(document).ready(function(){
+    			jQuery("body").append("<div id=\"tfmBox\"></div>");
+    			jQuery("#tfmBox").css({'position' : 'fixed', 'top' : '130px', 'width' : '30px', 'height' : '119px', 'z-index' : '1000', 'cursor' : 'pointer', 'background' : '#434c73 url(http://blog.simon-meggle.de/wp-content/plugins/twitter-follow-me-box/follow-me.png) no-repeat scroll left top', 'right' : '0'});
+    			jQuery("#tfmBox").click(function () { 
+			      window.open('http://twitter.com/simonmeggle/');
+    			});
+    		});
+    		//]]>
+  		</script>
+		<!-- /by Twitter Follow Me Box -->
+ 		<link rel="introspection" type="application/atomserv+xml" title="Simon Meggle Atom API" href="http://blog.simon-meggle.de/wp-app.php">
+
+<style type="text/css" media="all">
+/*<![CDATA[*/
+/* CSS inserted by theme options */
+body{font-family:tahoma, geneva, sans-serif;font-size:80%;}
+body div#container { float: right; margin: 0 0 2em -200px; } body div#content { margin: 3em 0 0 200px; } body div.sidebar { float: left; }
+body div#content div.hentry{text-align:justify;}
+body div#content h2,div#content h3,div#content h4,div#content h5,div#content h6{font-family:tahoma, geneva, sans-serif;}
+body div#wrapper{max-width:55em;min-width:35em;width:65%;}
+body div.sidebar{text-align:left;}
+/*]]>*/
+</style>
+
+<style type="text/css">.broken_link, a.broken_link {
+	text-decoration: line-through;
+}</style><meta id="syntaxhighlighteranchor" name="syntaxhighlighter-version" content="3.1.1">
+<!-- Google Analytics Tracking by Google Analyticator 6.1.3: http://ronaldheft.com/code/analyticator/ -->
+<script type="text/javascript">
+	var analyticsFileTypes = [''];
+	var analyticsEventTracking = 'enabled';
+</script>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-20085898-6']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+
+</head>
+
+<body class="wordpress y2014 m08 d14 h03 page page-author-admin">
+
+<div id="wrapper">
+
+	<div id="header">
+		<h1 id="blog-title"><a href="http://blog.simon-meggle.de/" title="Simon Meggle">Simon Meggle</a></h1>
+		<div id="blog-description">Linux – Monitoring – High Availability</div>
+	</div><!-- #header -->
+	
+	<div class="access"><span class="content-access"><a href="#content" title="Skip to content">Zurüruck zum Inhalt</a></span></div>
+
+<div id="globalnav"><ul id="menu"><li class="page_item_home home-link"><a href="http://blog.simon-meggle.de/en/" title="Simon Meggle" rel="home">Home</a></li><li class="page_item page-item-805"><a href="http://blog.simon-meggle.de/en/impressum/" title="Imprint">Imprint</a></li><li class="page_item page-item-56"><a href="http://blog.simon-meggle.de/en/about/" title="About">About</a></li><li class="page_item page-item-345 current_page_ancestor current_page_parent"><a href="http://blog.simon-meggle.de/en/tutorials/" title="Tutorials">Tutorials</a><ul class="children"><li class="page_item page-item-931"><a href="http://blog.simon-meggle.de/en/tutorials/gmail-backup-mit-gmvault-auf-synology-diskstation/" title="(Deutsch) GMail-Backup mit GMVault auf Synology Diskstation">(Deutsch) GMail-Backup mit GMVault auf Synology Diskstation</a></li><li class="page_item page-item-522"><a href="http://blog.simon-meggle.de/en/tutorials/import-von-dokuwiki-in-eine-omd-site/" title="How to import Dokuwiki into an OMD site">How to import Dokuwiki into an OMD site</a></li><li class="page_item page-item-392"><a href="http://blog.simon-meggle.de/en/tutorials/omd-updates-im-pacemaker-cluster/" title="OMD-Updates in the Pacemaker cluster">OMD-Updates in the Pacemaker cluster</a></li><li class="page_item page-item-611"><a href="http://blog.simon-meggle.de/en/tutorials/score-berechnung-im-pacemaker-cluster-teil-1/" title="Score calculation in Pacemaker (Colocation Constraints)">Score calculation in Pacemaker (Colocation Constraints)</a></li><li class="page_item page-item-851"><a href="http://blog.simon-meggle.de/en/tutorials/tiddlyweb-tiddlywiki-und-mgsd-im-netz/" title="TiddlyWeb – TiddlyWiki und mGSD im Netz">TiddlyWeb – TiddlyWiki und mGSD im Netz</a></li><li class="page_item page-item-107 current_page_item"><a href="http://blog.simon-meggle.de/en/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil1/" title="Nagios/OMD-Cluster mit Pacemaker/DRBD">Nagios/OMD-Cluster mit Pacemaker/DRBD</a></li><li class="page_item page-item-186"><a href="http://blog.simon-meggle.de/en/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil-2/" title="Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 2">Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 2</a></li><li class="page_item page-item-246"><a href="http://blog.simon-meggle.de/en/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil-3/" title="Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 3">Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 3</a></li><li class="page_item page-item-251"><a href="http://blog.simon-meggle.de/en/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil-4/" title="Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 4">Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 4</a></li><li class="page_item page-item-274"><a href="http://blog.simon-meggle.de/en/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil-5/" title="Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 5">Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 5</a></li><li class="page_item page-item-297"><a href="http://blog.simon-meggle.de/en/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil-6/" title="Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 6">Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 6</a></li></ul></li></ul></div>
+
+	<div id="container">
+		<div id="content" class="hfeed">
+
+			<div id="post-107" class="hentry p1 page publish author-admin y2011 m05 d13 h04">
+				<h2 class="entry-title">Nagios/OMD-Cluster mit Pacemaker/DRBD</h2>
+				<div class="entry-content">
+<h1>Zum Thema</h1>
+<h2>Motivation</h2>
+<p>OMD (Open Monitoring Distribution) macht die Installation eines 
+kompletten Monitoring-Systems zum Kinderspiel. Das Konzept, die 
+komplette Nagios-Installation incl. (fast) aller Schikanen in einem 
+einzigen Verzeichnis unterzubringen, Sites einfach zu klonen oder 
+testhalber neu zu erstellen, ist so einfach wie genial – selbst der 
+komplette Nachbau eines Systems nach einem Hardwareausfall auf einem 
+neuen Server sollte in weniger als 60 Minuten über die Bühne gehen.</p>
+<p>Apropos Hardwareausfall. OMD erleichtert zwar die Installation und 
+Administration des Monitorings, erhöht aber in keinster Weise dessen 
+Verfügbarkeit; ein toter OMD-Server ist ein toter OMD-Server.<br>
+Da es hierzu noch keine brauchbare Dokumentation gibt, habe ich mich 
+selbst ans Werk gemacht, OMD im Cluster laufen zu lassen. Wichtig dabei 
+war mir, die Architektur von OMD dabei nicht zu durchbrechen und nur so 
+viel zu modifizieren, dass die OMD-Installation in sich konsistent (und 
+somit auch updatefähig) bleibt.</p>
+<h2>Inhalt</h2>
+<p>In diesem mehrteiligen Tutorial lernen Sie, mit DRBD, Pacemaker, OMD 
+und LVM ein hochverfügbares Monitoring-System aufzubauen. Wir starten 
+tatsächlich “bei Null” mit der Installation der Server und enden mit 
+einem hochverfügbaren Monitoringsystem – ich hoffe, ich kann damit all 
+denen helfen, die die Vorteile von OMD auf einem ausfallsicheren System 
+nutzen wollen. Ich denke da z.b. an <em>Dienstleister</em>, die 
+“Monitoring as a Service” anbieten und dem Kunden Zugriff auf “seine” 
+Nagios-Umgebung bieten möchten. Mit einer OMD-Site ist ein solcher 
+Service zwar schnell aufgesetzt, jedoch hängt dieser dann an einem 
+seidenen Faden: der darunterliegenden Hardwareschicht.</p>
+<p>Wir bauen uns also einen Cluster, in dem folgende Technologien zum EInsatz kommen werden:</p>
+<ul>
+<li><strong><a title="OMD" href="http://omdistro.org/" target="_blank">OMD</a> – Open Monitoring Distribution</strong>
+ | Nagios aufzusetzen, war nie leichter. Wer die 
+Installations/Konfigurations-Orgie kennt, die ein vollständig 
+ausgestatter Nagios-Server mit Datenbankanbindung, RRD-Graphen, 
+Visualisierung, Wiki etc. erfordert, wird die Vorteile von OMD schnell 
+zu schätzen lernen. Ein Team von Nagios-Freaks hat sich zusammengesetzt 
+und ein Paket geschnürt, mit dem sich der Installationsaufwand drastisch
+ minimiert. (Natürlich auch empfohlen in nicht geclusterten Umgebungen)<br>
+Weitere Infos zu OMD finden sich auf der Projektseite.</li>
+<li><strong><a href="http://drbd.org/" target="_blank">DRBD</a> – Distributed Block Device</strong> | “RAID1 übers Netzwerk”</li>
+<li><strong>LVM – Logical Volume Manager</strong> | Abstraktionsebene unter Unix/Linux, welche die Erstellung von dynamisch veränderbaren Partitionen (Logical Volumes) erlaubt.</li>
+<li><a href="http://clusterlabs.org/" target="_blank"><strong>Pacemaker/Corosync</strong></a> | Früher Teil des Linux-HA-Projektes, ist Pacemaker seit 2008 der offizielle Nachfolger des bekannten <em>Heartbeats. </em>Die Kommunikation der Nodes untereinander wird durch Corosync geregelt.</li>
+</ul>
+<p>Am Ende werden Sie einen Cluster betreiben und administrieren können, welcher</p>
+<ul>
+<li>aus zwei Nodes besteht (Active/Passive)</li>
+<li>beim Ausfall des aktiven Nodes
+<ul>
+<li>das DRBD-Device promoted</li>
+<li>das Filesystem darauf mountet, in welchem die variablen OMD-Daten liegen</li>
+<li>die virtuelle Service-IP übernimmt</li>
+<li>die OMD-Sites startet</li>
+</ul>
+</li>
+</ul>
+<p>Vorkenntnisse zu DRBD, LVM und Pacemaker sind von Vorteil.<br>
+Sofern nicht anders angegeben, beziehen sich Terminalangaben auf beide Nodes.</p>
+<h1>Teil 1 – Vorbereitung der Server</h1>
+<p>Es empfiehlt sich, das Tutorial mit virtuellen Test-Maschinen 
+abzuarbeiten, um “Zwischenerfolge” per Snapshot sichern zu können (an 
+geeigneter Stelle werde ich darauf hinweisen). Die Wahl der 
+Virtualisierungssoftware überlasse ich Ihnen – beste Erfahrungen habe 
+ich mit Virtualbox gemacht (unter Ubuntu Desktop 10.04). Wer bereits 
+sattelfest ist und möglichst schnell ein Produktivsystem haben will, 
+kann sich natürlich sofort an echtes Blech wagen. (Sollten Sie sich an 
+dieser Stelle fragen, ob Sie aus den Test-VM’s nicht gleich 
+Produktivmaschinen machen könnten: tun Sie’s nicht. Ein Monitoringsystem
+ gehört nicht in virtuelle Umgebungen.)</p>
+<p>Möchten Sie die beiden Testnodes nicht in Ihr LAN hängen, empfehle 
+ich Ihnen, mit virtuellen tap-Devices ein eigenes Testnetzwerk zu bauen.
+ Eine schöne Anleitung hierzu findet sich <a href="http://savvyadmin.com/virtualbox-host-interface-networking-with-nat/">hier</a>.</p>
+<h2>Installation von Ubuntu 10.04</h2>
+<p>Erstellen Sie zwei virtuelle Maschinen mit</p>
+<ul>
+<li>einer (dynamisch wachsenden) System-Platte, z.b. 10GB (sda)</li>
+<li>einer (dynamisch wachsenden) Daten-Platte, z.b. 5GB</li>
+<li>ca. 500 MB RAM</li>
+<li>drei Netzwerkkarten:
+<ul>
+<li>eth0: mit Zugang zum LAN</li>
+<li>eth1 + eth2: isoliertes Netzwerk, d.h. die Netzwerkkarten der beiden
+ Nodes sind jeweils direkt über Kabel verbunden (eth1 mit eth1, eth2 mit
+ eth2)</li>
+</ul>
+</li>
+</ul>
+<p>und installieren Sie darauf Ubuntu Server 10.04 LTS. Bei der 
+abschließenden Software-Auswahl installieren Sie lediglich gleich den 
+openssh-Server.</p>
+<h2>Konfiguration</h2>
+<p>Loggen Sie sich auf der Konsole beider Maschinen mit dem in der 
+Installation vergebenen Usernamen ein und und erlauben Sie sogleich den 
+direkten Root-Login (nicht empfohlen für Produktivsysteme!):</p>
+
+<div class="wp-terminal">user@nagios1:~$ sudo su -<br>[sudo] password for user:<br>root@nagios1:~# passwd [enter]<br></div>
+
+<p>Geben Sie beiden Maschinen einen Namen:</p>
+
+<div class="wp-terminal">vim /etc/hostname<br>nagios1 (bzw. nagios2)<br></div>
+
+<p>Legen Sie in beiden Maschinen folgende Hostnamen ab; tragen Sie diese
+ Namen ebenfalls in die hosts–Datei Ihres Desktops bzw. in Ihren 
+DNS-Server ein:</p>
+
+<div class="wp-terminal">vim /etc/hosts<br>192.168.55.30    nagios<br>192.168.55.10    nagios1<br>192.168.55.20    nagios2<br></div>
+
+<p>Vergeben Sie auf beiden Nodes IP-Adressen…</p>
+
+<div class="wp-terminal">vim /etc/network/interfaces<br># The loopback network interface<br>auto lo<br>iface lo inet loopback<br><br># The primary network interface<br>auto eth0<br>iface eth0 inet static<br>address 192.168.55.(10|20)<br>netmask 255.255.255.0<br>gateway 192.168.55.1<br><br># Corosync 1<br>auto eth1<br>iface eth1 inet static<br>address 10.1.1.(10|20)<br>netmask 255.255.255.0<br><br># Corosync 2<br>auto eth2<br>iface eth2 inet static<br>address 10.1.2.(10|20)<br>netmask 255.255.255.0<br></div>
+
+<p>…und starten sie auf beiden Servern das Netzwerk:</p>
+
+<div class="wp-terminal">root@nagios1:~# invoke-rc.d networking restart<br></div>
+
+<p>Sie sollten nun von jeder Maschine einen Ping zur anderen absetzen können. Verbinden Sie sich nun per SSH auf beide Maschinen.<br>
+Bringen Sie das System auf den neuesten Stand (dauert je nach Verbindung ca. 10 Minuten):</p>
+
+<div class="wp-terminal">sudo apt-get update &amp;&amp; sudo apt-get dist-upgrade [enter]<br></div>
+
+<p>Wenn Sie dieses Tutorial mit virtuellen Maschinen durchführen, ist 
+jetzt ein guter Zeitpunkt, um die Gasterweiterungen der 
+Virtualisierungssoftware zu installieren.</p>
+<h2>Installation der benötigten Pakete</h2>
+<p>Für die Eiligen: Alle für die im folgenden genannten Schritte benötigten Pakete sind hier zusammengefasst:</p>
+
+<div class="wp-terminal">apt-get install tree ntp lvm2 git-core automake
+ autoconf module-assistant debconf-utils docbook-xml docbook-xsl dpatch 
+flex xsltproc debhelper corosync pacemaker fuse-utils xinetd libdbi0 
+libapache2-mod-php5 libapache2-mod-python libapache2-mod-fcgid 
+libapache2-mod-proxy-html php5-gd php5-sqlite php5-mcrypt graphviz snmp 
+libgd2-xpm dnsutils fping mysql-server php-pear php5 php5-cli smbclient 
+unzip libnet-snmp-perl libsnmp-perl rsync dialog libpango1.0-0 curl 
+patch libreadline5 pyro<br></div>
+
+<h3>NTP</h3>
+<p>Für so ziemlich alles, was wir auch in Zukunft clustern wollen, ist 
+eine zuverlässige Zeitsynchronisation der zwischen den beiden Nodes eine
+ gute Grundlage. Deshalb installieren wir auf beiden Nodes den 
+NTP-Daemon…</p>
+
+<div class="wp-terminal">apt-get install ntp<br></div>
+
+<p>…und konfigurieren ihn:</p>
+
+<div class="wp-terminal">vim /etc/ntp.conf[enter]<br># tragen Sie hier die IP-Adresse eines Zeitservers ein<br># minpoll=Intervall, in dem die Zeitquelle abgefragt werden soll;<br># maxpoll=maximaler Abstand zwischen zwei Abfragen.<br># (Zeiteinheiten a 16 Sekunden!)<br>server 192.168.1.2 minpoll 4 maxpoll 10<br># vermeidet bei zu großer Zeitdifferenz, dass NTP die Synchronisation verweigert<br>tinker panic 0<br></div>
+
+<p>Anschließend Restart des NTP-Daemons:</p>
+
+<div class="wp-terminal">invoke-rc.d ntp restart<br></div>
+
+<p>Prüfen, ob die Synchronisation klappt:</p>
+
+<div class="wp-terminal">root@nagios2:~# ntpq -p<br>remote           refid      st t when poll reach   delay   offset  jitter<br>==============================================================================<br>ntpsrv.local 192.168.1.23     2 u    3   16    1    1.579  -185825   0.001<br></div>
+
+<p>Wie sagte Loriots Staubsaugervertreter, “Gut dass das gerade jetzt 
+passiert”. Der Offset ist mit -185825 natürlich sonstwo. Ein initialer 
+Sync:</p>
+
+<div class="wp-terminal">root@nagios2:~# invoke-rc.d ntp stop &amp;&amp; ntpdate 192.168.1.23 &amp;&amp; invoke-rc.d ntp start<br></div>
+
+<h3>LVM-Einrichtung</h3>
+<p>Die variablen Daten, auf die beide Nagios-Nodes später zugreifen 
+sollen, werden auf einer Partition auf der Datenplatte sdb gehalten 
+werden, die wir mit LVM verwalten lassen. Sollten Sie mit LVM nicht 
+vertraut sein, kann ich Ihnen die <a href="http://blog.zugschlus.de/archives/65-LVM-unter-Linux.html">LVM-Erklärung</a> von Marc ‘Zugschlus’ Haber nahelegen.<br>
+Installieren Sie LVM auf beiden Nodes über</p>
+
+<div class="wp-terminal">apt-get install lvm2<br></div>
+
+<p>Erstellen Sie zunächst eine neue primäre Partition für den noch freien Bereich auf der Festplatte:</p>
+
+<div class="wp-terminal">fdisk /dev/sdb [enter]<br>n &gt; neue Partitoin<br>p &gt; primäre Partition<br>1 &gt; Nummer der primären partition<br>t &gt; Typ<br>8e &gt; LVM<br>w &gt; write<br></div>
+
+<p>Nun legen wir auf beiden Nodes Physical Volume, Volume Group, und das
+ Logical Volume an (letzteres soll die Volume Group zunächst nur mit 80%
+ belegen):</p>
+
+<div class="wp-terminal">root@nagios1:~# pvcreate /dev/sdb1<br>Physical volume "/dev/sdb1" successfully created<br>root@nagios1:~# vgcreate vgdata /dev/sdb1<br>Volume group "vgdata" successfully created<br>root@nagios1:~# lvcreate -l 80%VG -n lvomd vgdata<br>Logical volume "lvomd" created<br></div>
+
+<p>Das logical Volume lvomd wird mit keinem Dateisystem formatiert und 
+auch nicht gemountet. Es ist das Raw Device, welches wir über DRBD zum 
+anderen Node replizieren.</p>
+<h3>DRBD-Installation</h3>
+<p>In meinen Tests habe ich festgestellt, dass die Installation per 
+git-clone am einfachsten von der Hand geht. Folgende Pakete sind zu 
+installieren:</p>
+
+<div class="wp-terminal">apt-get install git-core automake autoconf module-assistant debconf-utils docbook-xml docbook-xsl dpatch flex xsltproc debhelper<br></div>
+
+<p>Checken Sie die Sourcen von DRBD aus:</p>
+
+<div class="wp-terminal">cd /usr/src<br>git clone git://git.drbd.org/drbd-8.3.git<br>cd drbd-8.3<br></div>
+
+<p>Lassen Sie nun aus den Sourcen Debian-kompatible Pakete bauen…</p>
+
+<div class="wp-terminal">dpkg-buildpackage -rfakeroot -b -uc<br></div>
+
+<p>…die Sie nun wie gewohnt installieren:</p>
+
+<div class="wp-terminal">cd ..<br>dpkg -i drbd8-*<br></div>
+
+<p>Was noch fehlt ist das Kernelmodul für DRBD, installieren Sie dieses über</p>
+
+<div class="wp-terminal">module-assistant auto-install drbd8<br></div>
+
+<p>(Es kann sein, dass an dieser Stelle noch Kernelheader installiert werden.)<br>
+Dass das Modul im Anschluss erfoglreich geladen werden konnte, sehen Sie mit</p>
+
+<div class="wp-terminal">root@nagios1:~# lsmod | grep drbd<br>drbd                  284143  0<br></div>
+
+<h3>Pacemaker/Corosync-Installation</h3>
+<p>Installieren Sie zunächst die benötigten Pakete:</p>
+
+<div class="wp-terminal">apt-get install corosync pacemaker fuse-utils<br></div>
+
+<p>Damit Corosync beim Systemstart startet, ist die default-config auf “yes” zu setzen:</p>
+
+<div class="wp-terminal">vim /etc/default/corosync [enter]<br>START=yes<br></div>
+
+<h3>OMD-Installation</h3>
+<p>Halten Sie durch, gleich wird es interssanter. Es fehlt nur noch die 
+Installation von OMD selbst. Installieren Sie zuerst alle für OMD 
+benötigten Pakete:</p>
+
+<div class="wp-terminal">apt-get install xinetd libdbi0 
+libapache2-mod-php5 libapache2-mod-python libapache2-mod-fcgid 
+libapache2-mod-proxy-html php5-gd php5-sqlite php5-mcrypt graphviz snmp 
+libgd2-xpm dnsutils fping mysql-server php-pear php5 php5-cli smbclient 
+unzip libnet-snmp-perl libsnmp-perl rsync dialog libpango1.0-0 curl 
+patch libreadline5 pyro<br></div>
+
+<p>Während der Installation der Pakete werden Sie nach dem Passwort für die MySQL-Datenbank gefragt. Notieren Sie dieses.<br>
+Laden Sie von der OMD-Homepage das OMD-Paket für Ubuntu herunter…</p>
+
+<div class="wp-terminal">wget http://omdistro.org/attachments/download/66/omd-0.46_lucid1_i386.deb<br></div>
+
+<p>…und installieren Sie es anschließend:</p>
+
+<div class="wp-terminal">dpkg -i omd-0.46_lucid1_i386.deb<br></div>
+
+<p>Ein erster Schnell-Test, um die OMD-Installation zu prüfen, sollte 
+vorab auf beiden Hosts ausgeführt werden (das ist deshalb wichtig, um 
+später den DRBD/Pacemaker-Cluster als Fehlerquelle ausschließen zu 
+können). Wie der Output des Installationsscriptes bereits ausgibt, ist 
+zunächst Apache neu zu starten. OMD hat sich nämlich ins Verzeichnis 
+/etc/apache/conf.d mit einer Datei namens zzz_omd.conf eingeschlichen. 
+Anhand dieser Datei (bzw. der include-Direktiven darin) wird dem Apache 
+mitgeteilt, dass er fortan als Proxy für die dedizierten Apachen der 
+OMD-Sites dienen soll:</p>
+
+<div class="wp-terminal">invoke-rc.d apache2 restart<br></div>
+
+<p>Nun erstellen wir auf jedem Node eine Test-OMD-Site:</p>
+
+<div class="wp-terminal">omd create siteA [enter]<br>Adding /omd/sites/siteA/tmp to /etc/fstab.<br>Created new site siteA with version 0.46.<br>Restarting Apache...OK<br>Creating temporary filesystem...OK<br>Successfully created site siteA.<br><br>The site can be started with omd start siteA.<br>The default web UI is available at http://nagios2/siteA/<br>The admin user for the web applications is omdadmin with password omd.<br>Please do a su - siteA for administration of this site.<br></div>
+
+<p>Die Testsite “siteA” lässt sich auf beiden Nodes starten mit:</p>
+
+<div class="wp-terminal">omd start siteA<br></div>
+
+<p>Nun überzeugen Sie sich davon, dass sich die OMD-WUI (<a href="http://nagios1/siteA">http://nagios1/siteA</a>,
+ Default-Login mit „omdadmin“/„omd“) aufrufen lässt und jedes der 
+verfügbaren Sub-Interfaces (Nagios, MultiSite, Thruk, NagVis, Dokuwiki, 
+PNP4Nagios) funktioniert.</p>
+<p>Stoppen Sie die Sites nun wieder:</p>
+
+<div class="wp-terminal">omd stop siteA<br></div>
+
+<p><a href="http://blog.simon-meggle.de/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil1/">Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 1 (Installation der Nodes)</a><br>
+<a href="http://blog.simon-meggle.de/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil-2/">Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 2 (Konfiguration der Pakete)</a><br>
+<a href="http://blog.simon-meggle.de/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil-3/">Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 3 (Einrichtung der Clusterressourcen)</a><br>
+<a href="http://blog.simon-meggle.de/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil-4/">Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 4 (OMD-Sites als Clusterressource)</a><br>
+<a href="http://blog.simon-meggle.de/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil-5/">Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 5 (Constraints)</a><br>
+<a href="http://blog.simon-meggle.de/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil-5/">Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 5 (Constraints)</a><br>
+<a href="http://blog.simon-meggle.de/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil-5/">Nagios/OMD-Cluster mit Pacemaker/DRBD – Teil 6 (Besonderheiten)</a></p>
+
+
+
+				</div>
+			</div><!-- .post -->
+
+
+		</div><!-- #content .hfeed -->
+	</div><!-- #container -->
+
+<div class="comments">
+
+
+
+	<h3 class="comment-header" id="numcomments">3 Kommentare</h3>
+	<ol id="comments" class="commentlist">
+		<li id="comment-2315" class="comment c-y2013 c-m04 c-d08 c-h11 alt c1">
+			<div class="comment-author vcard"><span class="fn n">Carsten</span> schrieb:</div>
+						<p>Nach der Installation von OMD und ‘omd create siteA’ sollte auf
+ beiden hosts überprüft werden ob die UID und GID des Site Benutzers 
+“siteA” gleich sind, da die Site sonst später beim 2. Host nicht 
+gestartet werden kann.</p>
+			<div class="comment-meta">
+				<span class="comment-datetime">Monday, 8. April 2013 um %I:%M %p</span> <span class="meta-sep">|</span> <span class="comment-permalink"><a href="#comment-2315" title="Permalink zu diesem Kommentar">Permalink</a></span> 
+			</div>
+		</li>
+
+		<li id="comment-2316" class="comment byuser commentauthor-admin bypostauthor c-y2013 c-m04 c-d08 c-h12 c2">
+			<div class="comment-author vcard"><span class="fn n"><a href="http://blog.simon-meggle.de/" rel="external nofollow" class="url">Simon Meggle</a></span> schrieb:</div>
+						<p>Hallo Carsten, guter Punkt. Wenn die beiden Maschinen frisch 
+installiert sind, ist es zwar sehr wahrscheinlich, dass die UID/GUID der
+ Site die gleichen sind, deshalb habe ich darauf nicht hingewiesen – 
+darauf verlassen sollte man sich aber nicht.<br>
+“omd create” erlaubt beim Anlegen der Site per -u und -g gleich die IDs 
+fest zu verdrahten. Ich habe es soeben im Tutorial vermerkt!<br>
+Danke!</p>
+			<div class="comment-meta">
+				<span class="comment-datetime">Monday, 8. April 2013 um %I:%M %p</span> <span class="meta-sep">|</span> <span class="comment-permalink"><a href="#comment-2316" title="Permalink zu diesem Kommentar">Permalink</a></span> 
+			</div>
+		</li>
+
+		<li id="comment-2870" class="comment c-y2013 c-m06 c-d25 c-h07 alt c3">
+			<div class="comment-author vcard"><span class="fn n">Matthias</span> schrieb:</div>
+						<p>Du schreibst, das man ein Monitoringsystem nicht auf einer VM 
+laufen lassen soll. Das hätte ich aus dem Bauch heraus auch gesagt, aber
+ kannst Du mir das noch besser begründen. Das würde mir für die 
+endgültige Wahl meines eigenen System helfen <img src="Nagios_OMD-Cluster%20mit%20Pacemaker_DRBD%20-%20Teil1%20-%20Simon%20Meggle_files/icon_smile.gif" alt=":)" class="wp-smiley"> </p>
+<p>Ich vermute wegen Performance, oder? </p>
+<p>mfg </p>
+<p>PS: super Anleitung!</p>
+			<div class="comment-meta">
+				<span class="comment-datetime">Tuesday, 25. June 2013 um %I:%M %p</span> <span class="meta-sep">|</span> <span class="comment-permalink"><a href="#comment-2870" title="Permalink zu diesem Kommentar">Permalink</a></span> 
+			</div>
+		</li>
+
+
+	</ol>
+
+
+
+	<h3 class="comment-header" id="numpingbacks">2 Trackbacks/Pingbacks</h3>
+	<ol id="pingbacks" class="commentlist">
+
+
+		<li id="comment-131" class="pingback c-y2012 c-m02 c-d09 c-h09 alt c1">
+			<div class="comment-meta"> 
+				<span class="pingback-author fn"><a href="http://www.xentity.de/?p=105" rel="external nofollow" class="url">OMD: Nagios ganz einfach</a></span> <span class="pingback-datetime">on Thursday, 9. February 2012 um %I:%M %p</span> 			</div>
+						<p>[...] im Blog von Lars Michelsen, auf klimmbimm.de wird OMD mit
+ einem anderen Nagios-Paket verglichen und Simon Meggle beschreibt sehr 
+ausführlich den Aufbau eines Clusters für OMD.           Kategorie: 
+Linux, [...]</p>
+		</li>
+
+
+		<li id="comment-12007" class="pingback c-y2014 c-m01 c-d29 c-h12 c2">
+			<div class="comment-meta"> 
+				<span class="pingback-author fn"><a href="http://blog.space2place.de/2014/01/debian-kein-update-fuer-drbd-im-icinga-cluster/" rel="external nofollow" class="url">Debian – Kein Update für DRBD im Icinga Cluster » Space2Place Blog</a></span> <span class="pingback-datetime">on Wednesday, 29. January 2014 um %I:%M %p</span> 			</div>
+						<p>[...] hat. Das Cluster wurde mit DRBD, Pacemaker und Corosync 
+erstellt. Die Anleitung von Simon Meggle (Hier gehts zum Tutorial) war 
+eine tolle Unterstützung. Dabei habe ich auch DRBD aus dem Git 
+installiert und nicht von den [...]</p>
+		</li>
+
+
+	</ol>
+
+
+
+	<h3 id="respond">Einen Kommentar schreiben</h3>
+
+	<div class="formcontainer">	
+
+		<form id="commentform" action="http://blog.simon-meggle.de/wp-comments-post.php" method="post">
+
+
+			<div id="comment-notes">Ihre Email wird <em>NIE</em> veröffentlicht oder weitergegeben. Benötigte Felder sind markiert <span class="req-field">*</span></div>
+
+			<div class="form-label"><label for="author">Name</label> <span class="req-field">*</span></div>
+			<div class="form-input"><input id="author" name="author" size="30" maxlength="20" tabindex="3" type="text"></div>
+
+			<div class="form-label"><label for="email">Email</label> <span class="req-field">*</span></div>
+			<div class="form-input"><input id="email" name="email" size="30" maxlength="50" tabindex="4" type="text"></div>
+
+			<div class="form-label"><label for="url">Webseite</label></div>
+			<div class="form-input"><input id="url" name="url" size="30" maxlength="50" tabindex="5" type="text"></div>
+
+
+			<div class="form-label"><label for="comment">Kommentar</label></div>
+			<div class="form-textarea"><textarea id="comment" name="comment-07b3a4f2" cols="45" rows="8" tabindex="6"></textarea><textarea name="comment" style="display:none" rows="1" cols="1"></textarea></div>
+
+			<div class="form-submit"><input id="submit" name="submit" value="Senden" tabindex="7" type="submit"><input name="comment_post_ID" value="107" type="hidden"></div>
+
+
+		</form>
+	</div>
+
+
+</div>
+		<div id="primary" class="sidebar">
+			<ul>
+<li id="nav_menu-5" class="widget widget_nav_menu"><h3 class="widgettitle">CONTENT</h3>
+<div class="menu-menue1-container"><ul id="menu-menue1" class="menu"><li id="menu-item-349" class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor current-menu-ancestor current-menu-parent current-page-parent current_page_parent current_page_ancestor menu-item-349"><a href="http://blog.simon-meggle.de/en/tutorials/">Tutorials</a>
+<ul class="sub-menu">
+	<li id="menu-item-906" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-906"><a href="http://blog.simon-meggle.de/en/tutorials/tiddlyweb-tiddlywiki-und-mgsd-im-netz/">TiddlyWeb – TiddlyWiki und mGSD im Netz</a></li>
+	<li id="menu-item-698" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-698"><a href="http://blog.simon-meggle.de/en/tutorials/score-berechnung-im-pacemaker-cluster-teil-1/">Score calculation in Pacemaker (Colocation Constraints)</a></li>
+	<li id="menu-item-344" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-107 current_page_item menu-item-344"><a href="http://blog.simon-meggle.de/en/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil1/">Nagios/OMD-Cluster mit Pacemaker/DRBD</a></li>
+	<li id="menu-item-438" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-438"><a href="http://blog.simon-meggle.de/en/tutorials/omd-updates-im-pacemaker-cluster/">OMD-Updates in the Pacemaker cluster</a></li>
+	<li id="menu-item-563" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-563"><a href="http://blog.simon-meggle.de/en/tutorials/import-von-dokuwiki-in-eine-omd-site/">How to import Dokuwiki into an OMD site</a></li>
+	<li id="menu-item-953" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-953"><a href="http://blog.simon-meggle.de/en/tutorials/gmail-backup-mit-gmvault-auf-synology-diskstation/">(Deutsch) GMail-Backup mit GMVault auf Synology Diskstation</a></li>
+</ul>
+</li>
+<li id="menu-item-81" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-81"><a href="http://blog.simon-meggle.de/en/category/news/">News</a></li>
+<li id="menu-item-63" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-63"><a href="http://blog.simon-meggle.de/en/about/">About</a></li>
+<li id="menu-item-811" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-811"><a href="http://blog.simon-meggle.de/en/impressum/">Imprint</a></li>
+</ul></div></li>
+<li id="qtranslate-3" class="widget widget_qtranslate"><h3 class="widgettitle">Language</h3>
+<ul class="qtrans_language_chooser" id="qtranslate-3-chooser"><li class="lang-de"><a href="http://blog.simon-meggle.de/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil1/" hreflang="de" title="Deutsch"><span>Deutsch</span></a></li><li class="lang-en" active=""><a href="http://blog.simon-meggle.de/en/tutorials/nagiosomd-cluster-mit-pacemakerdrbd-teil1/" hreflang="en" title="English"><span>English</span></a></li></ul><div class="qtrans_widget_end"></div></li>
+
+			</ul>
+		</div><!-- #primary .sidebar -->	<div id="footer">
+		<span id="copyright">© 2014 <span class="vcard"><a class="url fn n" href="http://blog.simon-meggle.de/"><span class="given-name"></span> <span class="family-name"></span></a></span> Simon Meggle</span>
+		<span class="meta-sep">¶</span>
+		<span id="web-standards">nice <a href="http://validator.w3.org/check/referer" title="Valid XHTML">XHTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/validator?profile=css2&amp;warning=2&amp;uri=http://blog.simon-meggle.de/wp-content/themes/veryplaintxt4/veryplaintxt4/style.css" title="Valid CSS">CSS</a>.</span>
+	</div><!-- #footer -->
+
+
+</div><!-- #wrapper -->
+
+
+
+<div style="position: fixed; top: 130px; width: 30px; height: 119px; z-index: 1000; cursor: pointer; background: url(&quot;http://blog.simon-meggle.de/wp-content/plugins/twitter-follow-me-box/follow-me.png&quot;) no-repeat scroll left top rgb(67, 76, 115); right: 0px;" id="tfmBox"></div></body><!-- end trasmission --></html>

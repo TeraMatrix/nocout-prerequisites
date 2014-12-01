@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <title>What is the Python egg cache (PYTHON_EGG_CACHE)? - Stack Overflow</title>
+    <link rel="shortcut icon" href="http://cdn.sstatic.net/stackoverflow/img/favicon.ico?v=038622610830">
+    <link rel="apple-touch-icon image_src" href="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png?v=fd7230a85918">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="http://stackoverflow.com/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:domain" content="stackoverflow.com">
+    <meta name="og:type" content="website">
+    <meta name="og:image" content="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon@2.png?v=fde65a5a78c6">
+    <meta name="og:title" content="What is the Python egg cache (PYTHON_EGG_CACHE)?">
+    <meta name="og:description" content="I've just upgraded from Python 2.6.1 to 2.6.4 on my development machine and upon starting a python script was presented with the following message:
+
+
+  Can't extract file(s) to egg cache
+  
+  The ">
+    <meta name="og:url" content="http://stackoverflow.com/questions/2192323/what-is-the-python-egg-cache-python-egg-cache">
+    <link rel="canonical" href="http://stackoverflow.com/questions/2192323/what-is-the-python-egg-cache-python-egg-cache">
+
+    
+    
+    <script src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/ados.js" async="" type="text/javascript"></script><script src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/quant.js" async=""></script><script src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/beacon.js" async=""></script><script src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/analytics.js" async=""></script><script src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/ados_002.js" async="" type="text/javascript"></script><script src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/jquery.js"></script>
+    <script src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/stub.js"></script>
+    <link rel="stylesheet" type="text/css" href="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/all.css">
+    
+    <link rel="alternate" type="application/atom+xml" title="Feed for question 'What is the Python egg cache (PYTHON_EGG_CACHE)?'" href="http://stackoverflow.com/feeds/question/2192323">
+    <script>
+        
+        StackExchange.ready(function () {
+
+            StackExchange.using("postValidation", function () {
+                StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+            });
+
+            
+            StackExchange.question.init({canOpenBounty:true,votesCast:[],totalCommentCount:0,shownCommentCount:0,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:2192323});
+
+            styleCode();
+
+                StackExchange.realtime.subscribeToQuestion('1', '2192323');
+            
+                    });
+    </script>
+
+
+    <script>
+        StackExchange.ready(function () {
+            StackExchange.realtime.init('wss://qa.sockets.stackexchange.com,ws://qa.sockets.stackexchange.com');
+            StackExchange.realtime.subscribeToInboxNotifications();
+                    StackExchange.realtime.subscribeToReputationNotifications('1');
+                StackExchange.realtime.subscribeToTopBarNotifications('1');
+        });
+    </script>
+    <script>
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","serverTime":1409540759,"networkMetaHostname":"meta.stackexchange.com","styleCode":true,"enableUserHovercards":true,"site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdchgIAAAAAAJwGpIzRQSOFaO0pU6s44Xt8aTwc","recaptchaAudioLang":"en","enableNewTagCreationWarning":true,"nonAsciiTags":true,"enableSocialMediaInSharePopup":true,"useGoogleOAuth2":true},"user":{"fkey":"52899c05396471f7651461ff2c8e975a","isRegistered":true,"userType":3,"userId":362574,"accountId":149807,"gravatar":"<div class=\"gravatar-wrapper-32\"><img src=\"https://www.gravatar.com/avatar/ee3a545e0a909dbb3fe2fe9e505c0ee7?s=32&d=identicon&r=PG\" alt=\"\"></div>","profileUrl":"http://stackoverflow.com/users/362574/joddy","notificationsUnviewedCount":0,"inboxUnviewedCount":0}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"1bc674033ff9","js/moderator.en.js":"3bf88d4bfb80","js/full-anon.en.js":"92f969f30e07","js/full.en.js":"394e1b1891b5","js/wmd.en.js":"32f4be00f171","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"1b05e243a7ff","js/help.en.js":"4a00463b8aeb","js/tageditor.en.js":"ed2efb9cc7d2","js/tageditornew.en.js":"66f4166c6f9d","js/inline-tag-editing.en.js":"1498d8619942","js/revisions.en.js":"9a2b9be85a69","js/review.en.js":"456e7806a627","js/tagsuggestions.en.js":"7dfec0d2a2d7","js/post-validation.en.js":"adee7ffd57c6","js/explore-qlist.en.js":"8b8b631bd679","js/events.en.js":"a12784549dc1","js/keyboard-shortcuts.en.js":"5164bc529c4e","js/external-editor.en.js":"4feffae4b337"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    
+<script src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/full.js" async=""></script><script src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/post-validation.js" async=""></script><script src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/prettify-full.js" async=""></script><script src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/wmd.js" async=""></script><link rel="stylesheet" type="text/css" href="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/sidebar.css"></head>
+<body class="question-page new-topbar" itemscope="" itemtype="http://schema.org/QAPage">
+    <noscript><div id="noscript-padding"></div></noscript>
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+<div class="topbar">
+    <div class="topbar-wrapper">
+        
+        <div class="js-topbar-dialog-corral">
+
+<div class="topbar-dialog siteSwitcher-dialog dno">
+    <div class="header">
+        <h3><a href="http://stackoverflow.com/">current community</a></h3>
+    </div>
+    <div class="modal-content current-site-container">
+        <ul class="current-site">
+                <li>
+                        <div class="related-links">
+            <a href="http://chat.stackoverflow.com/" class="js-gps-track" data-gps-track="site_switcher.click({ item_type:6 })">chat</a>
+                    <a href="http://blog.stackoverflow.com/" class="js-gps-track" data-gps-track="site_switcher.click({ item_type:7 })">blog</a>
+                    <a href="http://stackoverflow.com/users/logout" class="js-gps-track" data-gps-track="site_switcher.click({ item_type:8 })">log out</a>
+    </div>
+
+
+
+
+    <a href="http://stackoverflow.com/" class="current-site-link site-link js-gps-track" data-id="1" data-gps-track="
+        site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-stackoverflow" title="Stack Overflow"></div>
+        Stack Overflow
+    </a>
+
+                </li>
+                <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    
+
+
+
+    <a href="http://meta.stackoverflow.com/" class="site-link js-gps-track" data-id="552" data-gps-track="
+            site.switch({ target_site:552, item_type:3 }),
+        site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-stackoverflowmeta" title="Meta Stack Overflow"></div>
+        Meta Stack Overflow
+    </a>
+
+                </li>
+                            <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    <a class="site-link js-gps-track" href="http://careers.stackoverflow.com/" data-gps-track="site_switcher.click({ item_type:9 })">
+                        <div class="site-icon favicon favicon-careers" title="Stack Overflow Careers"></div>
+                        Careers 2.0
+                    </a>
+                </li>
+        </ul>
+    </div>
+    
+    <div class="header" id="your-communities-header">
+        <h3>
+                <a href="http://stackexchange.com/users/149807/?tab=accounts">your communities</a>
+        </h3>
+            
+            <a href="#" id="edit-pinned-sites">edit</a>
+            <a href="#" id="cancel-pinned-sites" style="display: none;">cancel</a>
+    </div>
+    <div class="modal-content" id="your-communities-section">
+            
+            <ul class="my-sites">
+                    <li>
+                        
+
+
+
+    <a href="http://stackoverflow.com/" class="site-link js-gps-track" data-id="1" data-gps-track="
+            site.switch({ target_site:1, item_type:3 }),
+        site_switcher.click({ item_type:1 })">
+        <div class="site-icon favicon favicon-stackoverflow" title="Stack Overflow"></div>
+        Stack Overflow
+            <span class="rep-score">772</span>
+    </a>
+
+                    </li>
+                    <li>
+                        
+
+
+
+    <a href="http://codereview.stackexchange.com/" class="site-link js-gps-track" data-id="196" data-gps-track="
+            site.switch({ target_site:196, item_type:3 }),
+        site_switcher.click({ item_type:1 })">
+        <div class="site-icon favicon favicon-codereview" title="Code Review"></div>
+        Code Review
+            <span class="rep-score">101</span>
+    </a>
+
+                    </li>
+                    <li>
+                        
+
+
+
+    <a href="http://dba.stackexchange.com/" class="site-link js-gps-track" data-id="182" data-gps-track="
+            site.switch({ target_site:182, item_type:3 }),
+        site_switcher.click({ item_type:1 })">
+        <div class="site-icon favicon favicon-dba" title="Database Administrators"></div>
+        Database Administrators
+            <span class="rep-score">101</span>
+    </a>
+
+                    </li>
+                    <li>
+                        
+
+
+
+    <a href="http://gamedev.stackexchange.com/" class="site-link js-gps-track" data-id="53" data-gps-track="
+            site.switch({ target_site:53, item_type:3 }),
+        site_switcher.click({ item_type:1 })">
+        <div class="site-icon favicon favicon-gamedev" title="Game Development"></div>
+        Game Development
+            <span class="rep-score">101</span>
+    </a>
+
+                    </li>
+                    <li>
+                        
+
+
+
+    <a href="http://programmers.stackexchange.com/" class="site-link js-gps-track" data-id="131" data-gps-track="
+            site.switch({ target_site:131, item_type:3 }),
+        site_switcher.click({ item_type:1 })">
+        <div class="site-icon favicon favicon-programmers" title="Programmers"></div>
+        Programmers
+            <span class="rep-score">101</span>
+    </a>
+
+                    </li>
+            </ul>
+                <div class="pinned-site-editor-container" style="display: none;">
+                    <input id="js-site-search-txt" class="site-filter-input" placeholder="Add a Stack Exchange community" type="text">
+                    <input id="pin-site-btn" value="Add" disabled="disabled" type="submit">
+                    <ul class="js-found-sites found-sites"></ul>
+                    <ul class="pinned-site-list sortable" data-custom-list="False">
+                    </ul>
+                    <input value="Save" id="save-pinned-sites-btn" disabled="disabled" type="submit">
+                    <a href="#" id="reset-pinned-sites">reset to default list</a>
+                </div>
+    </div>
+    
+    <div class="header">
+        <h3><a href="http://stackexchange.com/sites">more stack exchange communities</a></h3>
+    </div>
+    <div class="modal-content">
+            <div class="child-content"></div>
+    </div>
+</div>
+        </div>
+
+        <div class="network-items">
+            
+            <a href="http://stackexchange.com/" class="topbar-icon icon-site-switcher yes-hover js-site-switcher-button js-gps-track" data-gps-track="site_switcher.show" title="A list of all 131 Stack Exchange sites">
+                <span class="hidden-text">Stack Exchange</span>
+            </a>
+            
+                <a href="#" class="topbar-icon icon-inbox yes-hover js-inbox-button" title="Recent inbox messages">
+                    <span class="hidden-text">Inbox</span>
+                    <span class="unread-count" style="display:none"></span>
+                </a>
+                <a href="#" class="topbar-icon icon-achievements yes-hover js-achievements-button" data-unread-class="" title="Recent achievements: reputation, badges, and privileges earned">
+                    <span class="hidden-text">Reputation and Badges</span>
+                    <span class="unread-count" style="display:none">
+                        
+                    </span>
+                </a>
+        </div>
+
+        <div class="topbar-links">
+            
+                <a href="http://stackoverflow.com/users/362574/joddy" class="profile-me">
+			        <div class="gravatar-wrapper-24" title="Joddy"><img src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/ee3a545e0a909dbb3fe2fe9e505c0ee7.jpeg" alt="" class="avatar-me js-avatar-me"></div>
+                    <div class="links-container topbar-flair">
+
+                        <span class="reputation" title="your reputation: 772">
+                            772
+                        </span>
+<span title="5 silver badges"><span class="badge2"></span><span class="badgecount">5</span></span><span title="10 bronze badges"><span class="badge3"></span><span class="badgecount">10</span></span>                    </div>
+			    </a>
+                <div class="links-container">
+                    <span class="topbar-menu-links">
+
+                        
+                        
+                            <a href="http://stackoverflow.com/review" title="Review queues - help improve the site">
+                                review
+                            </a>
+
+    <a href="#" class="icon-help js-help-button" title="Help Center and other resources">
+        help
+        <span class="triangle"></span>
+    </a>
+    <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="http://stackoverflow.com/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="http://stackoverflow.com/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                    <li>
+                        <a href="http://meta.stackoverflow.com/" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                            Meta
+                            <span class="item-summary">
+                                Discuss the workings and policies of this site
+                            </span>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+                        
+                    </span>
+                </div>
+
+			<div class="search-container">
+                <form id="search" action="/search" method="get" autocomplete="off">
+                    <input name="q" placeholder="search" tabindex="1" autocomplete="off" maxlength="240" type="text">
+                </form>
+			</div>
+            	
+        </div>      
+    </div> 
+</div>
+<script>
+    StackExchange.ready(function () { StackExchange.topbar.init(); });
+</script>
+    <div class="container">
+        <div id="header">
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="http://stackoverflow.com/">
+                    Stack Overflow
+                </a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs ">
+                    <ul>
+                        <li class="youarehere"><a id="nav-questions" href="http://stackoverflow.com/questions">Questions</a></li>
+                        <li><a id="nav-tags" href="http://stackoverflow.com/tags">Tags</a></li>
+                        <li><a id="nav-users" href="http://stackoverflow.com/users">Users</a></li>
+                        <li><a id="nav-badges" href="http://stackoverflow.com/help/badges">Badges</a></li>
+                        <li><a id="nav-unanswered" href="http://stackoverflow.com/unanswered">Unanswered</a></li>
+                    </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion" href="http://stackoverflow.com/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <div id="content">
+            
+
+<div itemscope="" itemtype="http://schema.org/Question">
+	<link itemprop="image" href="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png">
+			<div id="question-header">
+			<h1 itemprop="name"><a href="http://stackoverflow.com/questions/2192323/what-is-the-python-egg-cache-python-egg-cache" class="question-hyperlink">What is the Python egg cache (PYTHON_EGG_CACHE)?</a></h1>
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question" data-questionid="2192323" id="question">
+
+        <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input name="_id_" value="2192323" type="hidden">
+    <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+    <span itemprop="upvoteCount" class="vote-count-post ">49</span>
+    <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+    
+    <a class="star-off" href="#" title="This is a favorite question (click again to undo)">favorite</a>
+    <div class="favoritecount"><b>10</b></div>   
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="text">
+
+        <p>I've just upgraded from Python 2.6.1 to 2.6.4 on my 
+development machine and upon starting a python script was presented with
+ the following message:</p>
+
+<blockquote>
+  <p>Can't extract file(s) to egg cache</p>
+  
+  <p>The following error occurred while
+  trying to extract file(s) to  the
+  Python egg cache:</p>
+  
+  <p>[Errno 13] Permission denied:
+  '/var/www/.python-eggs'</p>
+  
+  <p>The Python egg cache directory is
+  currently set to:</p>
+  
+  <p>/var/www/.python-eggs</p>
+  
+  <p>Perhaps your account does not have
+  write access to this directory?   You
+  can change the cache directory by
+  setting the PYTHON_EGG_CACHE 
+  environment variable to point to an
+  accessible directory.</p>
+</blockquote>
+
+<p>There isn't anything in the <a href="http://docs.python.org/search.html?q=PYTHON_EGG_CACHE&amp;check_keywords=yes&amp;area=default">python docs</a> so I'm at a bit of a loss regarding best-practices on where to put this directory and what it's used for.</p>
+
+<p>Can someone explain what the Python egg cache is?</p>
+
+<p>Also, can you explain why/how it is different to the <code>site-packages</code> directory Python uses to store eggs (as I understand it)?</p>
+
+    </div>
+    <div class="post-taglist">
+        <a href="http://stackoverflow.com/questions/tagged/python" class="post-tag js-gps-track" title="show questions tagged 'python'" rel="tag">python</a> <a href="http://stackoverflow.com/questions/tagged/python-egg-cache" class="post-tag js-gps-track" title="show questions tagged 'python-egg-cache'" rel="tag">python-egg-cache</a> 
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/q/2192323/362574" title="short permalink to this question" class="short-link" id="link-post-2192323">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/2192323/edit" class="suggest-edit-post" title="revise and improve this post">edit</a><span class="lsep">|</span><a href="#" class="flag-post-link" title="flag this post for serious problems or moderator attention" data-postid="2192323">flag</a></div>        
+    </td>
+    <td class="post-signature" align="right">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/2192323/revisions" title="show all edits to this post">edited <span title="2010-02-03 14:52:48Z" class="relativetime">Feb 3 '10 at 14:52</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+    <td class="post-signature owner">
+        <div class="user-info user-hover">
+    <div class="user-action-time">
+        asked <span title="2010-02-03 13:50:10Z" class="relativetime">Feb 3 '10 at 13:50</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/30478/unpluggd"><div class="gravatar-wrapper-32"><img src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/f8c63410ad2ade1978775862befb95ff.jpeg" alt=""></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/30478/unpluggd">unpluggd</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">5,530</span><span title="5 gold badges"><span class="badge1"></span><span class="badgecount">5</span></span><span title="44 silver badges"><span class="badge2"></span><span class="badgecount">44</span></span><span title="87 bronze badges"><span class="badge3"></span><span class="badgecount">87</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</div>
+</td>
+        </tr>
+                
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-2192323" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="true" data-cansee="false" data-comments-unavailable="false" data-addlink-disabled="false">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+				    <tfoot>
+					    <tr>
+						    <td></td>
+						    <td class="comment-form">
+							    <form id="add-comment-2192323" class="" data-placeholdertext="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments."></form>
+						    </td>
+					    </tr>
+				    </tfoot>
+		    </table>
+	    </div>
+            <div id="comments-link-2192323">
+
+                <a class="js-add-link comments-link " title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments." href="#">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span><a class="js-show-link comments-link dno" title="expand to show all comments on this post, or add one of your own" href="#" onclick=""></a>
+            </div>
+    </td>
+</tr>              <tr class="bounty-notification">
+          <td class="votecell"></td>
+          <td>
+          <div style="margin-top:20px">
+            <a class="bounty-link bounty" title="offer some of your reputation for better answers">
+                start a bounty
+            </a>
+          </div>
+          </td>
+          </tr>
+    </tbody></table>
+</div>
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								5 Answers
+                                <span style="display:none;" itemprop="answerCount">5</span>
+						</h2>
+						<div>
+							<div id="tabs">
+        <a href="http://stackoverflow.com/questions/2192323/what-is-the-python-egg-cache-python-egg-cache?answertab=active#tab-top" title="Answers with the latest activity first">active</a>
+        <a href="http://stackoverflow.com/questions/2192323/what-is-the-python-egg-cache-python-egg-cache?answertab=oldest#tab-top" title="Answers in the order they were provided">oldest</a>
+        <a class="youarehere" href="http://stackoverflow.com/questions/2192323/what-is-the-python-egg-cache-python-egg-cache?answertab=votes#tab-top" title="Answers with the highest score first">votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+
+
+  
+<a name="2193746"></a>
+<div id="answer-2193746" class="answer accepted-answer" data-answerid="2193746" itemscope="" itemtype="http://schema.org/Answer" itemprop="acceptedAnswer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input name="_id_" value="2193746" type="hidden">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span itemprop="upvoteCount" class="vote-count-post ">40</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+        <span class="vote-accepted-on load-accepted-answer-date" title="loading when this answer was accepted...">accepted</span>
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>From my investigations it turns out that some eggs are packaged as zip files, and are saved as such in Python's <code>site-packages</code> directory.</p>
+
+<p>These zipped eggs need to be unzipped before they can be executed, so are expanded into the <code>PYTHON_EGG_CACHE</code> directory which by default is <code>~/.python-eggs</code> (located in the user's home directory). If this doesn't exist it causes problems when trying to run applications.</p>
+
+<p>There are a number of fixes:</p>
+
+<ol>
+<li>Create a <code>.python-eggs</code> directory in the user's home directory and make it writable for the user.</li>
+<li>Create a global directory for unzipping (eg. <code>/tmp/python-eggs</code>) and set the environment variable <code>PYTHON_EGG_CACHE</code> to this directory.</li>
+<li>Use the <code>-Z</code> switch when using <code>easy_install</code> to unzip the package when installing.</li>
+</ol>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/2193746/362574" title="short permalink to this answer" class="short-link" id="link-post-2193746">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/2193746/edit" class="suggest-edit-post" title="revise and improve this post">edit</a><span class="lsep">|</span><a href="#" class="flag-post-link" title="flag this post for serious problems or moderator attention" data-postid="2193746">flag</a></div>                    </td>
+            
+
+
+    <td class="post-signature owner" align="right">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2010-02-03 17:03:15Z" class="relativetime">Feb 3 '10 at 17:03</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/30478/unpluggd"><div class="gravatar-wrapper-32"><img src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/f8c63410ad2ade1978775862befb95ff.jpeg" alt=""></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/30478/unpluggd">unpluggd</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">5,530</span><span title="5 gold badges"><span class="badge1"></span><span class="badgecount">5</span></span><span title="44 silver badges"><span class="badge2"></span><span class="badgecount">44</span></span><span title="87 bronze badges"><span class="badge3"></span><span class="badgecount">87</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-2193746" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="true" data-cansee="false" data-comments-unavailable="false" data-addlink-disabled="false">
+
+
+
+    <tr id="comment-6245534" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of 'useful comment' votes received" class="cool">4</span>
+                        </td>
+                        <td>
+                                <a class="comment-up comment-up-off" title="this comment adds something useful to the post">upvote</a>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                                <td>
+                                    <a class="comment-flag" title="flag this comment as unconstructive, offensive, or spam">flag</a>
+                                </td>
+                        </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Python can access files 
+inside .zip files. The only time that they need to be extracted is when 
+the application wants a filename instead of a file-like object for a 
+resource (or directory) inside an egg. This usually happens with web 
+servers and the like.</span>
+                –&nbsp;
+                    <a href="http://stackoverflow.com/users/216357/wump" title="2487 reputation" class="comment-user">wump</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment6245534_2193746"><span title="2011-03-31 16:16:44Z" class="relativetime-clean">Mar 31 '11 at 16:16</span></a></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-22306670" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of 'useful comment' votes received" class="cool">2</span>
+                        </td>
+                        <td>
+                                <a class="comment-up comment-up-off" title="this comment adds something useful to the post">upvote</a>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                                <td>
+                                    <a class="comment-flag" title="flag this comment as unconstructive, offensive, or spam">flag</a>
+                                </td>
+                        </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Worth mentioning as well that
+ .python-eggs takes your umask without adding execution permissions onto
+ the directory.  Directories are not accessible without execution 
+permissions, so you get the same error as above.</span>
+                –&nbsp;
+                    <a href="http://stackoverflow.com/users/734463/jdborg" title="2181 reputation" class="comment-user">jdborg</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment22306670_2193746"><span title="2013-03-29 16:16:44Z" class="relativetime-clean">Mar 29 '13 at 16:16</span></a></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+				    <tfoot>
+					    <tr>
+						    <td></td>
+						    <td class="comment-form">
+							    <form id="add-comment-2193746" class="" data-placeholdertext="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."></form>
+						    </td>
+					    </tr>
+				    </tfoot>
+		    </table>
+	    </div>
+            <div id="comments-link-2193746">
+
+                <a class="js-add-link comments-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”." href="#">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span><a class="js-show-link comments-link dno" title="expand to show all comments on this post, or add one of your own" href="#" onclick=""></a>
+            </div>
+    </td>
+</tr>    </tbody></table>
+</div>
+
+  
+<a name="2192369"></a>
+<div id="answer-2192369" class="answer" data-answerid="2192369" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input name="_id_" value="2192369" type="hidden">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span itemprop="upvoteCount" class="vote-count-post ">24</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>The python egg cache is simply a directory used by setuptools to store packages installed that conform to the <a href="http://peak.telecommunity.com/DevCenter/EggFormats">egg specification</a>.  You can <a href="http://pypi.python.org/pypi/setuptools">read more about setuptools here</a>.</p>
+
+<p>Additionally, as the error message states, you can specify a 
+different egg cache directory in your environment by setting 
+PYTHON_EGG_CACHE=/some/other/dir.  The easiest way to do this is to set 
+it in your ~/.bash_profile (assuming you're using bash), like this:</p>
+
+<pre style="" class="lang-py prettyprint prettyprinted"><code><span class="pln">export PYTHON_EGG_CACHE</span><span class="pun">=/</span><span class="pln">some</span><span class="pun">/</span><span class="pln">other</span><span class="pun">/</span><span class="pln">dir</span></code></pre>
+
+<p>You may need to set it in your Apache environment if you're using a Web application.</p>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/2192369/362574" title="short permalink to this answer" class="short-link" id="link-post-2192369">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/2192369/edit" class="suggest-edit-post" title="revise and improve this post">edit</a><span class="lsep">|</span><a href="#" class="flag-post-link" title="flag this post for serious problems or moderator attention" data-postid="2192369">flag</a></div>                    </td>
+    <td class="post-signature" align="right">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/2192369/revisions" title="show all edits to this post">edited <span title="2013-03-04 15:19:59Z" class="relativetime">Mar 4 '13 at 15:19</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/142162/tim-cooper"><div class="gravatar-wrapper-32"><img src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/F5xn2.png" alt=""></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/142162/tim-cooper">Tim Cooper</a><br>
+        <span class="reputation-score" title="reputation score 54638" dir="ltr">54.6k</span><span title="14 gold badges"><span class="badge1"></span><span class="badgecount">14</span></span><span title="105 silver badges"><span class="badge2"></span><span class="badgecount">105</span></span><span title="130 bronze badges"><span class="badge3"></span><span class="badgecount">130</span></span>
+    </div>
+</div>    </td>
+            
+
+
+    <td class="post-signature" align="right">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2010-02-03 13:56:10Z" class="relativetime">Feb 3 '10 at 13:56</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/199397/aj"><div class="gravatar-wrapper-32"><img src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/8807d544a2d1049174b4c10fb19977c9.png" alt=""></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/199397/aj">AJ.</a><br>
+        <span class="reputation-score" title="reputation score 12892" dir="ltr">12.9k</span><span title="5 gold badges"><span class="badge1"></span><span class="badgecount">5</span></span><span title="35 silver badges"><span class="badge2"></span><span class="badgecount">35</span></span><span title="61 bronze badges"><span class="badge3"></span><span class="badgecount">61</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-2192369" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="true" data-cansee="false" data-comments-unavailable="false" data-addlink-disabled="false">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+				    <tfoot>
+					    <tr>
+						    <td></td>
+						    <td class="comment-form">
+							    <form id="add-comment-2192369" class="" data-placeholdertext="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."></form>
+						    </td>
+					    </tr>
+				    </tfoot>
+		    </table>
+	    </div>
+            <div id="comments-link-2192369">
+
+                <a class="js-add-link comments-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”." href="#">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span><a class="js-show-link comments-link dno" title="expand to show all comments on this post, or add one of your own" href="#" onclick=""></a>
+            </div>
+    </td>
+</tr>    </tbody></table>
+</div>
+
+  
+<a name="11958516"></a>
+<div id="answer-11958516" class="answer" data-answerid="11958516" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input name="_id_" value="11958516" type="hidden">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span itemprop="upvoteCount" class="vote-count-post ">5</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>This is a dark side-effect of using otherwise nice eggs mechanism.</p>
+
+<p>Eggs are packages (a directory full of files) packed into one <code>.egg</code> file to simplify depolyment. </p>
+
+<p>They are stored in <code>/site-packages/</code> dir.</p>
+
+<p>As long as the files stored in the egg are <code>.py</code> files it works great. Python import can import things from any file-like object just like it was an ordinary file.</p>
+
+<p>But when something like <code>.so</code> happens to drop in there, 
+python cannot explain to the underlying OS that it wants to load an 
+library which doesn't have a physical name. And the only workaround 
+distutils authors have thought of is unzipping it into a temp dir. 
+Naturally it is not <code>/site-packages/</code> since <code>/site-packages/</code> is not writable for ordinary users.</p>
+
+<p>So you can either </p>
+
+<ul>
+<li><p>set <code>PYTHON_EGG_DIR</code> to <code>/tmp</code>, <em>or</em> </p></li>
+<li><p>give user <code>www</code> write permission to <code>/var/www/.python-eggs</code><br>
+(so that the files don't get unzipped every time /tmp is cleaned up) <em>or better then</em></p></li>
+<li><p>unzip the egg as suggested by @shalley303<br>
+(and avoid unzipping of the egg in the run-time altogether).</p></li>
+</ul>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/11958516/362574" title="short permalink to this answer" class="short-link" id="link-post-11958516">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/11958516/edit" class="suggest-edit-post" title="revise and improve this post">edit</a><span class="lsep">|</span><a href="#" class="flag-post-link" title="flag this post for serious problems or moderator attention" data-postid="11958516">flag</a></div>                    </td>
+    <td class="post-signature" align="right">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/11958516/revisions" title="show all edits to this post">edited <span title="2013-03-29 16:22:05Z" class="relativetime">Mar 29 '13 at 16:22</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td class="post-signature" align="right">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2012-08-14 18:29:31Z" class="relativetime">Aug 14 '12 at 18:29</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/237105/antony-hatchkins"><div class="gravatar-wrapper-32"><img src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/a6e329efbf7cdfd89d8f1f5b5d05896d.png" alt=""></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/237105/antony-hatchkins">Antony Hatchkins</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">5,898</span><span title="28 silver badges"><span class="badge2"></span><span class="badgecount">28</span></span><span title="38 bronze badges"><span class="badge3"></span><span class="badgecount">38</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-11958516" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="true" data-cansee="false" data-comments-unavailable="false" data-addlink-disabled="false">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+				    <tfoot>
+					    <tr>
+						    <td></td>
+						    <td class="comment-form">
+							    <form id="add-comment-11958516" class="" data-placeholdertext="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."></form>
+						    </td>
+					    </tr>
+				    </tfoot>
+		    </table>
+	    </div>
+            <div id="comments-link-11958516">
+
+                <a class="js-add-link comments-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”." href="#">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span><a class="js-show-link comments-link dno" title="expand to show all comments on this post, or add one of your own" href="#" onclick=""></a>
+            </div>
+    </td>
+</tr>    </tbody></table>
+</div>
+
+  
+<a name="10018293"></a>
+<div id="answer-10018293" class="answer" data-answerid="10018293" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input name="_id_" value="10018293" type="hidden">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span itemprop="upvoteCount" class="vote-count-post ">2</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>You can also disable the use of the .egg after it has been installed.
+ You need to go into the site-packages directory, extract the .egg, and 
+then move it to a hidden file (or delete it, or whatever). </p>
+
+<p>Here is an example of what I did to disable the MySQLdb module .egg 
+file which was causing this error when the python script was being run 
+from Zabbix.</p>
+
+<pre>cd /usr/local/lib/python2.7/site-packages
+unzip MySQL_python-1.2.3-py2.7-linux-x86_64.egg
+mv MySQL_python-1.2.3-py2.7-linux-x86_64.egg .MySQL_python-1.2.3-py2.7-linux-x86_64.egg
+</pre>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/10018293/362574" title="short permalink to this answer" class="short-link" id="link-post-10018293">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/10018293/edit" class="suggest-edit-post" title="revise and improve this post">edit</a><span class="lsep">|</span><a href="#" class="flag-post-link" title="flag this post for serious problems or moderator attention" data-postid="10018293">flag</a></div>                    </td>
+            
+
+
+    <td class="post-signature" align="right">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2012-04-04 19:53:39Z" class="relativetime">Apr 4 '12 at 19:53</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/1313728/shalley303"><div class="gravatar-wrapper-32"><img src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/d8b49d23ccbeaf39182f8f544b224048.png" alt=""></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/1313728/shalley303">shalley303</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">21</span><span title="2 bronze badges"><span class="badge3"></span><span class="badgecount">2</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-10018293" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="true" data-cansee="false" data-comments-unavailable="false" data-addlink-disabled="false">
+
+
+
+    <tr id="comment-22366346" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                <a class="comment-up comment-up-off" title="this comment adds something useful to the post">upvote</a>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                                <td>
+                                    <a class="comment-flag" title="flag this comment as unconstructive, offensive, or spam">flag</a>
+                                </td>
+                        </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">I don't think you get a <code>.egg</code> with PyODBC, just a <code>.egg-info</code> and <code>.so</code></span>
+                –&nbsp;
+                    <a href="http://stackoverflow.com/users/734463/jdborg" title="2181 reputation" class="comment-user">jdborg</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment22366346_10018293"><span title="2013-04-01 09:31:39Z" class="relativetime-clean">Apr 1 '13 at 9:31</span></a></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+				    <tfoot>
+					    <tr>
+						    <td></td>
+						    <td class="comment-form">
+							    <form id="add-comment-10018293" class="" data-placeholdertext="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."></form>
+						    </td>
+					    </tr>
+				    </tfoot>
+		    </table>
+	    </div>
+            <div id="comments-link-10018293">
+
+                <a class="js-add-link comments-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”." href="#">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span><a class="js-show-link comments-link dno" title="expand to show all comments on this post, or add one of your own" href="#" onclick=""></a>
+            </div>
+    </td>
+</tr>    </tbody></table>
+</div>
+
+  
+<a name="2192498"></a>
+<div id="answer-2192498" class="answer" data-answerid="2192498" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input name="_id_" value="2192498" type="hidden">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span itemprop="upvoteCount" class="vote-count-post ">2</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>Python eggs are zip-compressed packages containing both Python 
+modules and metadata. The egg cache is where the the extracted contents 
+of the egg are stored so that the Python modules contained within are 
+usable.</p>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/2192498/362574" title="short permalink to this answer" class="short-link" id="link-post-2192498">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/2192498/edit" class="suggest-edit-post" title="revise and improve this post">edit</a><span class="lsep">|</span><a href="#" class="flag-post-link" title="flag this post for serious problems or moderator attention" data-postid="2192498">flag</a></div>                    </td>
+            
+
+
+    <td class="post-signature" align="right">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2010-02-03 14:15:17Z" class="relativetime">Feb 3 '10 at 14:15</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/20862/ignacio-vazquez-abrams"><div class="gravatar-wrapper-32"><img src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/2343ae368d3241278581ce6c87f62a25.jpeg" alt=""></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/20862/ignacio-vazquez-abrams">Ignacio Vazquez-Abrams</a><br>
+        <span class="reputation-score" title="reputation score 316849" dir="ltr">317k</span><span title="30 gold badges"><span class="badge1"></span><span class="badgecount">30</span></span><span title="489 silver badges"><span class="badge2"></span><span class="badgecount">489</span></span><span title="680 bronze badges"><span class="badge3"></span><span class="badgecount">680</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-2192498" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="true" data-cansee="false" data-comments-unavailable="false" data-addlink-disabled="false">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+				    <tfoot>
+					    <tr>
+						    <td></td>
+						    <td class="comment-form">
+							    <form id="add-comment-2192498" class="" data-placeholdertext="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."></form>
+						    </td>
+					    </tr>
+				    </tfoot>
+		    </table>
+	    </div>
+            <div id="comments-link-2192498">
+
+                <a class="js-add-link comments-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”." href="#">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span><a class="js-show-link comments-link dno" title="expand to show all comments on this post, or add one of your own" href="#" onclick=""></a>
+            </div>
+    </td>
+</tr>    </tbody></table>
+</div>
+									<a name="new-answer"></a>
+						<form id="post-form" action="/questions/2192323/answer/submit" method="post" class="post-form">
+						    <input id="post-id" value="2192323" type="hidden">
+                            <input id="qualityBanWarningShown" name="qualityBanWarningShown" value="false" type="hidden">
+							<h2 class="space">Your Answer</h2>
+
+
+
+        
+
+<script>
+    StackExchange.ready(function() {
+        initTagRenderer("".split(" "), "".split(" "));
+         
+        prepareEditor({
+            heartbeatType: 'answer',
+            bindNavPrevention: true,
+            postfix: "",
+            onDemand: false,
+            discardSelector: ".discard-answer"
+            
+        });
+        
+
+    });  
+</script>
+
+
+<div id="post-editor" class="post-editor">
+
+    <div style="position: relative;">     
+        <div class="wmd-container">
+            <div id="wmd-button-bar" class="wmd-button-bar"><ul class="wmd-button-row" id="wmd-button-row"><li title="Strong &lt;strong&gt; Ctrl+B" id="wmd-bold-button" style="left: 0px;" class="wmd-button"><span style="background-position: 0px 0px;"></span></li><li title="Emphasis &lt;em&gt; Ctrl+I" id="wmd-italic-button" style="left: 25px;" class="wmd-button"><span style="background-position: -20px 0px;"></span></li><li id="wmd-spacer1" class="wmd-spacer wmd-spacer1"></li><li title="Hyperlink &lt;a&gt; Ctrl+L" id="wmd-link-button" style="left: 75px;" class="wmd-button"><span style="background-position: -40px 0px;"></span></li><li title="Blockquote &lt;blockquote&gt; Ctrl+Q" id="wmd-quote-button" style="left: 100px;" class="wmd-button"><span style="background-position: -60px 0px;"></span></li><li title="Code Sample &lt;pre&gt;&lt;code&gt; Ctrl+K" id="wmd-code-button" style="left: 125px;" class="wmd-button"><span style="background-position: -80px 0px;"></span></li><li title="Image &lt;img&gt; Ctrl+G" id="wmd-image-button" style="left: 150px;" class="wmd-button"><span style="background-position: -100px 0px;"></span></li><li id="wmd-spacer2" class="wmd-spacer wmd-spacer2"></li><li title="Numbered List &lt;ol&gt; Ctrl+O" id="wmd-olist-button" style="left: 200px;" class="wmd-button"><span style="background-position: -120px 0px;"></span></li><li title="Bulleted List &lt;ul&gt; Ctrl+U" id="wmd-ulist-button" style="left: 225px;" class="wmd-button"><span style="background-position: -140px 0px;"></span></li><li title="Heading &lt;h1&gt;/&lt;h2&gt; Ctrl+H" id="wmd-heading-button" style="left: 250px;" class="wmd-button"><span style="background-position: -160px 0px;"></span></li><li title="Horizontal Rule &lt;hr&gt; Ctrl+R" id="wmd-hr-button" style="left: 275px;" class="wmd-button"><span style="background-position: -180px 0px;"></span></li><li id="wmd-spacer3" class="wmd-spacer wmd-spacer3"></li><li title="Undo - Ctrl+Z" id="wmd-undo-button" style="left: 325px;" class="wmd-button"><span style="background-position: -200px -20px;"></span></li><li title="Redo - Ctrl+Shift+Z" id="wmd-redo-button" style="left: 350px;" class="wmd-button"><span style="background-position: -220px -20px;"></span></li><li title="Markdown Editing Help" style="right: 0px;" id="wmd-help-button" class="wmd-button wmd-help-button"><span style="background-position: -240px 0px;"></span></li></ul></div>
+            <textarea id="wmd-input" class="wmd-input processed" name="post-text" cols="92" rows="15" tabindex="101" data-min-length=""></textarea>
+        <div style="margin-right: -8px;" class="grippie"></div></div>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+    <div id="draft-discarded" class="draft-discarded community-option fl" style="margin-top: 8px; height:24px; display:none;">draft discarded</div>
+
+    <div class="community-option">
+        <input id="communitymode" name="communitymode" type="checkbox">
+        <label for="communitymode" title="Marking an answer community wiki encourages others to edit it by lowering the reputation barrier required to edit. However, you will not gain any upvote reputation from it. This cannot be undone.">community wiki</label>
+    </div>
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" value="52899c05396471f7651461ff2c8e975a" type="hidden">
+        <input id="author" name="author" type="text">
+    </div>
+</div>
+							<div style="position: relative;">
+								
+							</div>
+           
+															<div class="form-submit cbt">
+									<input id="submit-button" value="Post Your Answer" tabindex="110" type="submit">
+									<a href="#" class="discard-answer dno">discard</a>
+								</div>
+						</form>
+
+
+
+						<h2 class="bottom-notice" data-loc="1">
+Not the answer you're looking for?							Browse other questions tagged <a href="http://stackoverflow.com/questions/tagged/python" class="post-tag" title="show questions tagged 'python'" rel="tag">python</a> <a href="http://stackoverflow.com/questions/tagged/python-egg-cache" class="post-tag" title="show questions tagged 'python-egg-cache'" rel="tag">python-egg-cache</a>  or <a href="http://stackoverflow.com/questions/ask">ask your own question</a>.						</h2>
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+						    <div class="module question-stats">
+			        <table id="qinfo">
+			            <tbody><tr>
+			                <td>
+			                    <p class="label-key">asked</p>
+			                </td>
+			                <td style="padding-left: 10px">
+			                    <p class="label-key" title="2010-02-03 13:50:10Z"><b>4 years ago</b></p>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <p class="label-key">viewed</p>
+			                </td>
+
+			                <td style="padding-left: 10px">
+			                    <p class="label-key">
+			                        <b>26712 times</b>
+			                    </p>
+			                </td>
+			            </tr>
+			                <tr>
+			                    <td>
+			                        <p class="label-key">active</p>
+			                    </td>
+			                    <td style="padding-left: 10px">
+			                        <p class="label-key"><b><a href="http://stackoverflow.com/questions/2192323/what-is-the-python-egg-cache-python-egg-cache?lastactivity" class="lastactivity-link" title="2013-03-29 16:22:05Z">1 year ago</a></b></p>
+			                    </td>
+			                </tr>
+			        </tbody></table>
+			    </div>
+			<div class="module community-bulletin" data-tracker="cb=1">
+    <div class="related">
+                <div class="bulletin-title">
+                    Featured on Meta
+                </div>
+                <hr>
+    <div class="spacer">
+        <div class="bulletin-item-type">
+                <a href="http://meta.stackoverflow.com/questions/269769/feedback-requested-new-recommended-homepage-phase-2?cb=1" class="question-hyperlink">
+<div class="favicon favicon-stackoverflowmeta" title="Meta Stack Overflow"></div>                </a>
+            </div>
+                <div class="bulletin-item-content">
+                    <a href="http://meta.stackoverflow.com/questions/269769/feedback-requested-new-recommended-homepage-phase-2?cb=1" class="question-hyperlink">Feedback requested: New “recommended” homepage, phase 2</a>
+                </div>
+                <br class="cbt">
+            </div>
+                <div class="bulletin-title">
+                    Hot Meta Posts
+                </div>
+                <hr>
+    <div class="spacer">
+        <div class="bulletin-item-type">
+                <span title="Vote score (upvotes - downvotes)">31</span>
+            </div>
+                <div class="bulletin-item-content">
+                    <a href="http://meta.stackoverflow.com/questions/270253/why-are-the-off-topic-flags-buried-under-it-should-be-closed-for-another-reason?cb=1" class="question-hyperlink">Why are the off-topic flags buried under "It should be closed for another rea…</a>
+                </div>
+                <br class="cbt">
+            </div>
+    <div class="spacer">
+        <div class="bulletin-item-type">
+                <span title="Vote score (upvotes - downvotes)">7</span>
+            </div>
+                <div class="bulletin-item-content">
+                    <a href="http://meta.stackoverflow.com/questions/270231/c-standard-thread-marked-as-off-topic?cb=1" class="question-hyperlink">C Standard thread marked as off-topic</a>
+                </div>
+                <br class="cbt">
+            </div>
+    <div class="spacer">
+        <div class="bulletin-item-type">
+                <span title="Vote score (upvotes - downvotes)">17</span>
+            </div>
+                <div class="bulletin-item-content">
+                    <a href="http://meta.stackoverflow.com/questions/270260/what-percent-of-users-visit-meta-sites?cb=1" class="question-hyperlink">What percent of users visit meta sites?</a>
+                </div>
+                <br class="cbt">
+            </div>
+    </div>
+</div>			
+			<script>
+                var ados = ados || {};ados.run = ados.run || [];
+                ados.run.push(function() { ados_add_placement(22,8277,"adzerk1902822577",[17,2221]).setZone(45) ; });                    
+            </script>
+              
+        <div class=" orange looking tagged" id="hireme">  <a href="http://careers.stackoverflow.com/?a=33bEc&amp;utm_source=stackoverflow.com&amp;utm_medium=ad&amp;utm_campaign=jobs-large-sidebar-orange-looking" class="top" target="_blank"> <span>Looking for a job?</span> </a> <ul class="jobs"> <li> <a href="http://careers.stackoverflow.com/jobs/64696/senior-software-development-engineer-amazon-amazon-development-center?a=5fNm5k3LYR&amp;utm_source=stackoverflow.com&amp;utm_medium=ad&amp;utm_campaign=jobs-large-sidebar-orange-looking" target="_blank" title="Senior Software Development Engineer - Amazon, Bengaluru Area, India at Amazon Development center, Bangalore. Click to learn more."> <span class="title">Senior Software Development Engineer - Amazon, Bengaluru…</span> <span class="company">Amazon Development center,…</span> <span class="location">Bangalore, India / relocation</span> <span class="post-tag">machine-learning</span> <span class="post-tag">scalability</span> </a> </li> <li> <a href="http://careers.stackoverflow.com/jobs/40083/engineering-lead-at-a-profitable-saas-startup-aplopio-recruiterbox?a=3fQJtv02To&amp;utm_source=stackoverflow.com&amp;utm_medium=ad&amp;utm_campaign=jobs-large-sidebar-orange-looking" target="_blank" title="Engineering Lead at a profitable SaaS startup at Aplopio / Recruiterbox. Click to learn more."> <span class="title">Engineering Lead at a profitable SaaS startup</span> <span class="company">Aplopio / Recruiterbox</span> <span class="location">Bangalore, India / relocation</span> <span class="post-tag">python</span> <span class="post-tag">django</span> </a> </li> <li> <a href="http://careers.stackoverflow.com/jobs/30980/symfony2-php-developer-join-stockopediacoms-stockopedia-ltd?a=2w0BYTHoZ5&amp;utm_source=stackoverflow.com&amp;utm_medium=ad&amp;utm_campaign=jobs-large-sidebar-orange-looking" target="_blank" title="Symfony2 / PHP developer ? Join Stockopedia.com's massive scaling project at Stockopedia. Click to learn more."> <span class="title">Symfony2 / PHP developer ? Join Stockopedia.com's massive…</span> <span class="company">Stockopedia</span> <span class="location">Bangalore, India / relocation</span> <span class="post-tag">php</span> <span class="post-tag">symfony2</span> </a> </li> <li> <a href="http://careers.stackoverflow.com/jobs/66059/consultant-sap-sce-capgemini?a=5mEOkKNlXe&amp;utm_source=stackoverflow.com&amp;utm_medium=ad&amp;utm_campaign=jobs-large-sidebar-orange-looking" target="_blank" title="Consultant SAP SCE at Capgemini. Click to learn more."> <span class="title">Consultant SAP SCE</span> <span class="company">Capgemini</span> <span class="location">Utrecht, Netherlands</span> </a> </li> </ul> <img alt="" class="impression" src="What%20is%20the%20Python%20egg%20cache%20%28PYTHON_EGG_CACHE%29%3F%20-%20Stack%20Overflow_files/5fNm5k3LYR-3fQJtv02To-2w0BYTHoZ5-5mEOkKNlXe-33bEc.gif" style="display:none"></div>
+			<div style="margin-bottom: 10px;">
+        
+
+<style type="text/css">
+#newsletter-ad {
+    width: 190px;
+    height: 250px;
+    overflow: hidden;
+    background: url('//cdn.sstatic.net/stackoverflow/img/newsletter-ad.png');
+    padding: 0 15px 0 15px;
+}
+#newsletter-ad-header {
+    margin-top: 60px;
+}
+#newsletter-ad ul {
+    margin: 1em 0 1em 1.5em;
+}
+#newsletter-ad ul li {
+    margin-bottom: 5px;
+}
+#newsletter-signup-container {
+    text-align: center;
+}
+#newsletter-preview-container {
+    margin-top: 10px;
+    text-align: center;
+}
+#newsletter-email-input {
+    width: 200px;
+}
+</style>
+
+<script>
+    StackExchange.ready(function () {
+        StackExchange.newsletterAd.init();
+    });
+</script>
+
+<div id="newsletter-ad">
+    <p id="newsletter-ad-header">Get the <b>weekly newsletter!</b></p>
+    <ul>
+        <li>Top questions and answers</li>
+        <li>Important announcements</li>
+        <li>Unanswered questions</li>
+    </ul>
+    <div id="newsletter-signup-container"><input id="newsletter-signup" value="Sign up for the newsletter" type="button"></div>
+    <p id="newsletter-preview-container">see an <a href="http://stackexchange.com/newsletters/newsletter?site=stackoverflow.com" id="newsletter-preview">example newsletter</a></p>
+    <div class="dno">
+        
+<p class="privacy-policy-agreement">
+By subscribing, you agree to the <a href="http://stackexchange.com/legal/privacy-policy" target="_blank">privacy policy</a> and <a href="http://stackexchange.com/legal/terms-of-service" target="_blank">terms of service</a>.</p>
+<input name="legalLinksShown" value="1" type="hidden">
+    </div>
+</div>
+
+    </div>  
+    
+            <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	<div class="linked" data-tracker="lq=1">
+<div class="spacer">
+	<a href="http://stackoverflow.com/q/14417515?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">3</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/14417515/pypi-local-cache-for-jenkins-local-builds?lq=1" class="question-hyperlink">PyPI local cache for Jenkins/local builds</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/7172617?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">1</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/7172617/python-egg-cache?lq=1" class="question-hyperlink">python egg cache</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/4025412?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">1</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/4025412/specify-a-custom-python-egg-cache-dir-with-zc-buildout?lq=1" class="question-hyperlink">Specify a custom PYTHON_EGG_CACHE dir with zc.buildout?</a>
+</div>			</div>
+</div>
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/100003?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted extra-large">1854
+    </div>
+</a><a href="http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python?rq=1" class="question-hyperlink">What is a metaclass in Python?</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/215267?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">1
+    </div>
+</a><a href="http://stackoverflow.com/questions/215267/how-do-you-fix-a-trac-installation-that-begins-giving-errors-relating-to-python?rq=1" class="question-hyperlink">How do you fix a Trac installation that begins giving errors relating to PYTHON_EGG_CACHE?</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/231767?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted extra-large">2749
+    </div>
+</a><a href="http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python?rq=1" class="question-hyperlink">What does the yield keyword do in Python?</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/268015?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">3
+    </div>
+</a><a href="http://stackoverflow.com/questions/268015/apache-user-can-not-write-to-python-eggs?rq=1" class="question-hyperlink">apache user can not write to .python-eggs</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/1855219?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">1
+    </div>
+</a><a href="http://stackoverflow.com/questions/1855219/django-python-egg-cache-access-denied-error?rq=1" class="question-hyperlink">Django: PYTHON_EGG_CACHE, access denied error</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/5677512?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/5677512/problem-with-python-imports-mysqldb-and-apache-python-egg-cache?rq=1" class="question-hyperlink">problem with python imports (MySQLdb) and apache python_egg_cache</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/5912701?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/5912701/python-egg-cache-extraction-error-permission-denied-apache-not-seeing-sete?rq=1" class="question-hyperlink">Python - egg cache extraction error - permission denied - Apache not seeing SetEnv?</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/7172617?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">1
+    </div>
+</a><a href="http://stackoverflow.com/questions/7172617/python-egg-cache?rq=1" class="question-hyperlink">python egg cache</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/7690206?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/7690206/python-egg-cache-extraction-error?rq=1" class="question-hyperlink">PYTHON EGG Cache extraction error</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/24230950?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/24230950/cant-extract-files-to-egg-cache-error-in-gae?rq=1" class="question-hyperlink">“Can't extract file(s) to egg cache” error in GAE</a>
+</div>
+
+                    </div>
+				</div>
+            
+<div id="hot-network-questions" class="module">
+    <h4>
+        <a href="http://stackexchange.com/questions?tab=hot" class="js-gps-track" data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li>
+                <div class="favicon favicon-physics" title="Physics Stack Exchange"></div><a href="http://physics.stackexchange.com/questions/133389/work-is-equal-to-mv2" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:151 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Work is equal to mv^2?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/36864/possibly-quit-your-job-with-a-polyglot" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Possibly quit your job with a polyglot
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-unix" title="Unix &amp; Linux Stack Exchange"></div><a href="http://unix.stackexchange.com/questions/153054/what-permissions-should-i-set-for-an-executable-im-likely-to-share" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:106 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What permissions should I set for an executable I'm likely to share?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="http://mathematica.stackexchange.com/questions/58577/approximate-value-for-the-area-between-the-curve" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    approximate value for the area between the curve
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/66812/does-the-polyjuice-potion-dark-mark-work" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Does the Polyjuice Potion Dark Mark work?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="http://academia.stackexchange.com/questions/27852/why-does-art-history-exist-as-a-distinct-discipline-separate-from-the-discipline" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why does art history exist as a distinct discipline separate from the discipline of history?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-russian" title="Russian Language Stack Exchange"></div><a href="http://russian.stackexchange.com/questions/7223/non-russian-names-to-decline-or-not-to-decline" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:451 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Non-Russian names: to decline or not to decline?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/66780/why-do-people-care-so-much-for-frodo" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why do people care so much for Frodo?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="http://math.stackexchange.com/questions/915422/an-example-of-set-with-a-countably-infinite-set-of-accumulation-points" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    An example of set with a countably infinite set of accumulation points
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-cooking" title="Seasoned Advice"></div><a href="http://cooking.stackexchange.com/questions/46772/how-can-i-word-add-bread-crumbs-until-it-feels-right" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:49 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How can I word "add bread crumbs until it feels right"?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="http://math.stackexchange.com/questions/915456/simplifying-the-sum-of-powers-of-the-golden-ratio" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Simplifying the sum of powers of the golden ratio
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-programmers" title="Programmers Stack Exchange"></div><a href="http://programmers.stackexchange.com/questions/254978/whats-wrong-with-comments-that-explain-complex-code" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:131 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What's wrong with comments that explain complex code?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-movies" title="Movies &amp; TV Stack Exchange"></div><a href="http://movies.stackexchange.com/questions/24298/murderous-cop-on-a-training-island" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:367 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Murderous cop on a training island
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-travel" title="Travel Stack Exchange"></div><a href="http://travel.stackexchange.com/questions/35987/same-sex-marriage-in-the-uk-for-foreigners-on-vacation" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:273 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Same sex marriage in the UK for foreigners on vacation
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="http://math.stackexchange.com/questions/915451/usage-of-complex-numbers-in-the-riemann-hypothesis" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Usage of Complex Numbers in the Riemann Hypothesis.
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/66855/who-finished-c-3po" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Who finished C-3PO?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-gamedev" title="Game Development Stack Exchange"></div><a href="http://gamedev.stackexchange.com/questions/82739/rotating-a-gui-label-relatively" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:53 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Rotating a GUI.Label relatively
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="http://academia.stackexchange.com/questions/27723/should-i-call-my-adviser-by-her-first-name" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Should I call my adviser by her first name?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="http://ell.stackexchange.com/questions/32600/has-a-flu-or-had-a-flu" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    has a flu or had a flu
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-stackoverflow" title="Stack Overflow"></div><a href="http://stackoverflow.com/questions/25582100/why-an-expression-instead-of-a-constant-in-a-c-for-loops-conditional" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:1 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why an expression instead of a constant, in a C for-loop's conditional?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-german" title="German Language Stack Exchange"></div><a href="http://german.stackexchange.com/questions/15521/german-word-for-complete" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:253 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    German word for "complete"
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-codereview" title="Code Review Stack Exchange"></div><a href="http://codereview.stackexchange.com/questions/61651/brainfk-interpreter-in-java" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:196 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Brainf**k Interpreter in Java
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-tex" title="TeX - LaTeX Stack Exchange"></div><a href="http://tex.stackexchange.com/questions/198852/change-the-order-in-moderncv-banking" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:85 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Change the order in ModernCV banking
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-english" title="English Language &amp; Usage Stack Exchange"></div><a href="http://english.stackexchange.com/questions/193878/opposite-of-nightmare" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:97 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Opposite of Nightmare?
+                </a>
+
+            </li>
+    </ul>
+
+        
+</div>
+		</div>
+	
+<div id="feed-link">
+    <div id="feed-link-text">
+        <a href="http://stackoverflow.com/feeds/question/2192323" title="feed of this question and its answers">
+            <span class="feed-icon"></span>question feed
+        </a>
+    </div>
+</div>	<script>
+StackExchange.ready(function(){$.get('/posts/2192323/ivc/7076');});
+</script>
+<noscript>
+    <div><img src="/posts/2192323/ivc/7076" class="dno" alt="" width="0" height="0"></div>
+</noscript><div style="display:none" id="prettify-lang">lang-py</div></div>
+
+    <script>
+        $('#wmd-input').one("keypress", function() {
+            $.ajax({
+                url: '/accounts/email-settings-form',
+                cache: false,
+                success: function(data) {
+                    $('#submit-button').parent().prepend(data);
+                }
+            });
+        });
+
+    </script>
+
+
+        </div>
+    </div>
+    <div id="footer" class="categories">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                        <a href="http://stackoverflow.com/tour">tour</a>
+                    <a href="http://stackoverflow.com/help">help</a>
+                    <a href="http://blog.stackoverflow.com/?blb=1">blog</a>
+                        <a href="http://chat.stackoverflow.com/">chat</a>
+                    <a href="http://data.stackexchange.com/">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackexchange.com/work-here">work here</a>
+                    <a href="http://stackexchange.com/mediakit">advertising info</a>
+
+                    <a onclick='StackExchange.switchMobile("on")'>mobile</a>
+                    <b><a href="http://stackoverflow.com/contact">contact us</a></b>
+                        <b><a href="http://meta.stackoverflow.com/">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tbody><tr>
+            <th colspan="3">
+                Technology
+            </th>
+            <th>
+                Life / Arts
+            </th>
+            <th>
+                Culture / Recreation
+            </th>
+            <th>
+                Science
+            </th>
+            <th>
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="http://stackoverflow.com/" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="http://serverfault.com/" title="professional system and network administrators">Server Fault</a></li>
+                        <li><a href="http://superuser.com/" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="http://webapps.stackexchange.com/" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="http://askubuntu.com/" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="http://webmasters.stackexchange.com/" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="http://gamedev.stackexchange.com/" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="http://tex.stackexchange.com/" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="http://programmers.stackexchange.com/" title="professional programmers interested in conceptual questions about software development">Programmers</a></li>
+                        <li><a href="http://unix.stackexchange.com/" title="users of Linux, FreeBSD and other Un*x-like operating systems.">Unix &amp; Linux</a></li>
+                        <li><a href="http://apple.stackexchange.com/" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="http://wordpress.stackexchange.com/" title="WordPress developers and administrators">WordPress Development</a></li>
+                        <li><a href="http://gis.stackexchange.com/" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="http://electronics.stackexchange.com/" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="http://android.stackexchange.com/" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="http://security.stackexchange.com/" title="Information security professionals">Information Security</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="http://dba.stackexchange.com/" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="http://drupal.stackexchange.com/" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="http://sharepoint.stackexchange.com/" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="http://ux.stackexchange.com/" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="http://mathematica.stackexchange.com/" title="users of Mathematica">Mathematica</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (14)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://photo.stackexchange.com/" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="http://scifi.stackexchange.com/" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="http://graphicdesign.stackexchange.com/" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                        <li><a href="http://cooking.stackexchange.com/" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="http://diy.stackexchange.com/" title="contractors and serious DIYers">Home Improvement</a></li>
+                        <li><a href="http://money.stackexchange.com/" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                        <li><a href="http://academia.stackexchange.com/" title="academics and those enrolled in higher education">Academia</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (10)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://english.stackexchange.com/" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="http://skeptics.stackexchange.com/" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="http://judaism.stackexchange.com/" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="http://travel.stackexchange.com/" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="http://christianity.stackexchange.com/" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="http://gaming.stackexchange.com/" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="http://bicycles.stackexchange.com/" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="http://rpg.stackexchange.com/" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (21)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://math.stackexchange.com/" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="http://stats.stackexchange.com/" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                        <li><a href="http://cstheory.stackexchange.com/" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="http://physics.stackexchange.com/" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="http://mathoverflow.net/" title="professional mathematicians">MathOverflow</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (7)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://stackapps.com/" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="http://meta.stackexchange.com/" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                        <li><a href="http://area51.stackexchange.com/" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="http://careers.stackoverflow.com/">Stack Overflow Careers</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</tbody></table>
+                </div>
+            </div>
+
+            <div id="copyright">
+                site design / logo © 2014 stack exchange inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a> 
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="svnrev">
+                rev 2014.8.29.1807
+            </div>
+            
+        </div>
+    </div>
+    <noscript>
+        <div id="noscript-warning">Stack Overflow works best with JavaScript enabled<img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"></div>
+    </noscript>
+<script>var p = "http", d = "static"; if (document.location.protocol == "https:") { p += "s"; d = "engine"; } var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = p + "://" + d + ".adzerk.net/ados.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script>
+<script>
+    var ados = ados || {};
+    ados.run = ados.run || [];
+    ados.run.push(function () { ados_setKeywords('python,python-egg-cache,x-user-registered,x-200plus-rep');; ados_load(); });         
+</script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-5620270-1');        
+        ga('set', 'dimension1', '149807');         
+        ga('set', 'dimension2', '|python|python-egg-cache|');         
+        ga('send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+            qc.async=true;
+            qc.src=(ssl?'https://secure':'http://edge')+'.quantserve.com/quant.js';
+            s.parentNode.insertBefore(qc, s);
+            var sc=document.createElement('script');
+            sc.async=true;
+            sc.src=(ssl?'https://sb':'http://b') + '.scorecardresearch.com/beacon.js';
+            s.parentNode.insertBefore(sc, s);
+        })();
+        _comscore.push({ c1: "2", c2: "17440561" });
+        _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+    </script>        
+    
+    
+</body></html>

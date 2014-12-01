@@ -1,0 +1,5 @@
+1. sudo pcs resource disable uwsgi
+
+2. sudo pcs resource enable uwsgi
+
+3. sudo pcs status [ overall stats of the cluster ]

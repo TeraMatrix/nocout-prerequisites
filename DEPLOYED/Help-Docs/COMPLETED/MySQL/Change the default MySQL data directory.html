@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<!-- saved from url=(0080)http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled -->
+<html lang="en-US"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Change the default MySQL data directory</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="http://crashmag.net/xmlrpc.php">
+	<!--[if lt IE 9]>
+	<script src="http://crashmag.net/wp-content/themes/twentyfourteen/js/html5.js"></script>
+	<![endif]-->
+	<link rel="alternate" type="application/rss+xml" title="CrashMAG.net » Feed" href="http://crashmag.net/feed">
+<link rel="alternate" type="application/rss+xml" title="CrashMAG.net » Comments Feed" href="http://crashmag.net/comments/feed">
+<link rel="alternate" type="application/rss+xml" title="CrashMAG.net » Change the default MySQL data directory with SELinux enabled Comments Feed" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled/feed">
+<link rel="stylesheet" id="twentyfourteen-lato-css" href="./Change the default MySQL data directory_files/css" type="text/css" media="all">
+<link rel="stylesheet" id="genericons-css" href="./Change the default MySQL data directory_files/genericons.css" type="text/css" media="all">
+<link rel="stylesheet" id="twentyfourteen-style-css" href="./Change the default MySQL data directory_files/style.css" type="text/css" media="all">
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentyfourteen-ie-css'  href='http://crashmag.net/wp-content/themes/twentyfourteen/css/ie.css?ver=20131205' type='text/css' media='all' />
+<![endif]-->
+<script src="./Change the default MySQL data directory_files/cb=gapi.loaded_1" async=""></script><script src="./Change the default MySQL data directory_files/cb=gapi.loaded_0" async=""></script><script type="text/javascript" async="" src="./Change the default MySQL data directory_files/plusone.js" gapi_processed="true"></script><script type="text/javascript" defer="" async="" src="./Change the default MySQL data directory_files/piwik.js"></script><script async="" type="text/javascript" src="./Change the default MySQL data directory_files/ca-pub-5024190921931727.js"></script><script type="text/javascript" async="" src="./Change the default MySQL data directory_files/ga.js"></script><script type="text/javascript" src="./Change the default MySQL data directory_files/wp-plus-one.js"></script>
+<script type="text/javascript" src="./Change the default MySQL data directory_files/jquery.js"></script>
+<script type="text/javascript" src="./Change the default MySQL data directory_files/jquery-migrate.min.js"></script>
+<script type="text/javascript" src="./Change the default MySQL data directory_files/external-tracking.min.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://crashmag.net/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://crashmag.net/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Useful SystemD commands" href="http://crashmag.net/useful-systemd-commands">
+<link rel="next" title="Set a SQL Server 2005/2008 database offline and disconnect users" href="http://crashmag.net/set-a-sql-server-20052008-database-offline-and-disconnect-users">
+<meta name="generator" content="WordPress 3.9.1">
+<link rel="shortlink" href="http://crashmag.net/?p=546">
+	<link type="text/css" rel="stylesheet" href="./Change the default MySQL data directory_files/shCore.css">
+	<link type="text/css" rel="stylesheet" href="./Change the default MySQL data directory_files/shThemeDefault.css">
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shCore.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushBash.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushCpp.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushCSharp.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushCss.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushDelphi.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushDiff.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushGroovy.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushJava.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushJScript.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushPerl.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushPhp.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushPlain.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushPython.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushRuby.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushScala.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushSql.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushVb.js"></script>
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/shBrushXml.js"></script>
+	<script type="text/javascript">		
+		SyntaxHighlighter.config.clipboardSwf = 'http://crashmag.net/wp-content/plugins/syntax-highlighter-and-code-prettifier/scripts/clipboard.swf';
+		SyntaxHighlighter.all();
+	</script>
+	
+<!-- All in One SEO Pack 2.2.1 by Michael Torbert of Semper Fi Web Design[298,380] -->
+<meta name="description" itemprop="description" content="This article tells you how to specify a different directory for the MySQL data directory. So that you can have your database files on separate storage.">
+
+<meta name="keywords" itemprop="keywords" content="centos,data directory,data folder,fedora,my.cnf,mysql,restorecon,rhel,scientific linux,selinux,semanage,databases,linux">
+
+<link rel="canonical" href="./Change the default MySQL data directory_files/Change the default MySQL data directory.html">
+<!-- /all in one seo pack -->
+	<style type="text/css" id="twentyfourteen-header-css">
+			.site-title a {
+			color: #ffffff;
+		}
+		</style>
+	<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #7c1717; }
+</style>
+<!-- Google Analytics Tracking by Google Analyticator 6.4.7.3: http://www.videousermanuals.com/google-analyticator/ -->
+<script type="text/javascript">
+                var analyticsFileTypes = [''];
+                            var analyticsSnippet = 'enabled';
+                var analyticsEventTracking = 'enabled';
+            </script>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+  
+	_gaq.push(['_setAccount', 'UA-43051118-1']);
+    _gaq.push(['_addDevId', 'i9k95']); // Google Analyticator App ID with Google
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+<!-- begin SI CAPTCHA Anti-Spam - comment form style --><style type="text/css">div#captchaImgDiv { display:block; }.captchaSizeDivSmall { width:175px; height:45px; padding-top:10px; }.captchaSizeDivLarge { width:250px; height:60px; padding-top:10px; }img#si_image_com,#si_image_reg,#si_image_log,#si_image_side_login { border-style:none; margin:0; padding-right:5px; float:left; }.captchaImgRefresh { border-style:none; margin:0; vertical-align:bottom; }div#captchaInputDiv { display:block; padding-top:15px; padding-bottom:5px; }label#captcha_code_label { margin:0; }input#captcha_code { width:65px; }</style><!-- end SI CAPTCHA Anti-Spam - comment form style --></head>
+
+<body class="single single-post postid-546 single-format-standard custom-background masthead-fixed singular" cz-shortcut-listen="true">
+<div id="page" class="hfeed site">
+	
+	<header id="masthead" class="site-header" role="banner">
+		<div class="header-main">
+			<h1 class="site-title"><a href="http://crashmag.net/" rel="home">CrashMAG.net</a></h1>
+
+			<div class="search-toggle">
+				<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#search-container" class="screen-reader-text">Search</a>
+			</div>
+
+			<nav id="primary-navigation" class="site-navigation primary-navigation" role="navigation">
+				<button class="menu-toggle">Primary Menu</button>
+				<a class="screen-reader-text skip-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#content">Skip to content</a>
+				<div class="menu-categories-container"><ul id="menu-categories" class="nav-menu"><li id="menu-item-748" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-748"><a href="http://crashmag.net/recommended-articles">Recommended articles</a></li>
+<li id="menu-item-749" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-749"><a href="http://crashmag.net/about">About</a></li>
+</ul></div>			</nav>
+		</div>
+
+		<div id="search-container" class="search-box-wrapper hide">
+			<div class="search-box">
+				<form role="search" method="get" class="search-form" action="http://crashmag.net/">
+				<label>
+					<span class="screen-reader-text">Search for:</span>
+					<input type="search" class="search-field" placeholder="Search …" value="" name="s" title="Search for:">
+				</label>
+				<input type="submit" class="search-submit" value="Search">
+			</form>			</div>
+		</div>
+	</header><!-- #masthead -->
+
+	<div id="main" class="site-main">
+
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+			
+<article id="post-546" class="post-546 post type-post status-publish format-standard hentry category-databases category-linux category-mysql tag-centos-2 tag-data-directory tag-data-folder tag-fedora-2 tag-my-cnf tag-mysql-2 tag-restorecon tag-rhel tag-scientific-linux tag-selinux tag-semanage">
+	
+	<header class="entry-header">
+				<div class="entry-meta">
+			<span class="cat-links"><a href="http://crashmag.net/topics/databases" title="View all posts in Databases" rel="category tag">Databases</a>, <a href="http://crashmag.net/topics/linux" title="View all posts in Linux" rel="category tag">Linux</a>, <a href="http://crashmag.net/topics/databases/mysql" title="View all posts in MySQL" rel="category tag">MySQL</a></span>
+		</div>
+		<h1 class="entry-title">Change the default MySQL data directory with SELinux enabled</h1>
+		<div class="entry-meta">
+			<span class="entry-date"><a href="./Change the default MySQL data directory_files/Change the default MySQL data directory.html" rel="bookmark"><time class="entry-date" datetime="2011-06-14T21:14:12+00:00">14/06/2011</time></a></span> <span class="byline"><span class="author vcard"><a class="url fn n" href="http://crashmag.net/author/crashmag" rel="author">crashmag</a></span></span>			<span class="comments-link"><a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#comments" title="Comment on Change the default MySQL data directory with SELinux enabled">15 Comments</a></span>
+					</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<div class="wp_plus_one_button" style="margin: 0 8px 8px 0; float:left; "><div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 106px; height: 24px; background: transparent;"><iframe frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position: static; top: 0px; width: 106px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 24px;" tabindex="0" vspace="0" width="100%" id="I0_1406271886502" name="I0_1406271886502" src="./Change the default MySQL data directory_files/fastbutton.html" data-gapiattached="true" title="+1"></iframe></div></div><p>This is a short article that explains how you change the default MySQL data directory and adjust SELinux to account for the changes. The article assumes that you’re running either RHEL, CentOS, Scientific Linux or Fedora with SELinux enabled. This works with the most recent EL (6.2) version.</p>
+<p>We’ll be doing this in the following order.</p>
+<ul>
+<li>Stopping the MySQL server</li>
+<li>Create a new data directory and move the content from the old data directory</li>
+<li>Correct the MySQL configuration file</li>
+<li>Adjust SELinux parameters to accept our new change</li>
+<li>Starting the MySQL server</li>
+</ul>
+<h2>Stopping the MySQL server</h2>
+<pre># service mysqld stop</pre>
+<h2>Create a new data diretory and move the content from the old one</h2>
+<h3>Creating a new data directory</h3>
+<pre># mkdir /srv/mysql/</pre>
+<pre># chown mysql:mysql /srv/mysql</pre>
+<h3>Moving the original data files</h3>
+<pre> # mv /var/lib/mysql/* /srv/mysql/</pre>
+<h2>Correct the MySQL configuration file</h2>
+<p>Edit the my.cnf file for your distribution. In my example it’s located in the /etc/mysql/ directory. RHEL/CentOS/Scientific Linux put the my.cnf file directly in /etc by default.</p>
+<pre># nano /etc/mysql/my.cnf</pre>
+<p>Change</p>
+<pre>datadir=/var/lib/mysql</pre>
+<p>to</p>
+<pre>datadir=/srv/mysql</pre>
+<p>and</p>
+<pre>socket=/var/lib/mysql/mysql.sock</pre>
+<p>to</p>
+<pre>socket=/srv/mysql/mysql.sock</pre>
+<p>and save the file.</p>
+<h2>Adjust SELinux parameters to accept our new change</h2>
+<p>Should the following command output “Permissive” or “Disabled” then you may skip the details for SELinux.</p>
+<pre># getenforce</pre>
+<p>Run the semanage command to add a context mapping for /srv/mysql.</p>
+<pre># semanage fcontext -a -t mysqld_db_t "/srv/mysql(/.*)?"</pre>
+<p>Now use the restorecon command to apply this context mapping to the running system.</p>
+<pre># restorecon -Rv /srv/mysql</pre>
+<h2>Starting the MySQL server</h2>
+<pre># service mysqld start</pre>
+<h2>Verifying access and connectivity</h2>
+<pre>$ mysql -u root -p</pre>
+<pre>mysql&gt; show databases;</pre>
+<p>If this is working, you’re up and running. Should you get a message that says<br>
+</p><blockquote>ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/var/lib/mysql/mysql.sock’<p></p></blockquote>
+<p> then add the following to your /etc/my.cnf</p>
+<pre>[client]
+socket = /srv/mysql/mysql.sock
+</pre>
+<p>Optionally you can just use
+</p><pre>$ mysql -u root -p --protocol tcp</pre>
+<p> to avoid connecting via the socket.</p>
+<p>// CrashMAG</p>
+	</div><!-- .entry-content -->
+	
+	<footer class="entry-meta"><span class="tag-links"><a href="http://crashmag.net/tag/centos-2" rel="tag">centos</a><a href="http://crashmag.net/tag/data-directory" rel="tag">data directory</a><a href="http://crashmag.net/tag/data-folder" rel="tag">data folder</a><a href="http://crashmag.net/tag/fedora-2" rel="tag">fedora</a><a href="http://crashmag.net/tag/my-cnf" rel="tag">my.cnf</a><a href="http://crashmag.net/tag/mysql-2" rel="tag">mysql</a><a href="http://crashmag.net/tag/restorecon" rel="tag">restorecon</a><a href="http://crashmag.net/tag/rhel" rel="tag">rhel</a><a href="http://crashmag.net/tag/scientific-linux" rel="tag">scientific linux</a><a href="http://crashmag.net/tag/selinux" rel="tag">selinux</a><a href="http://crashmag.net/tag/semanage" rel="tag">semanage</a></span></footer></article><!-- #post-## -->
+	<nav class="navigation post-navigation" role="navigation">
+		<h1 class="screen-reader-text">Post navigation</h1>
+		<div class="nav-links">
+			<a href="http://crashmag.net/useful-systemd-commands" rel="prev"><span class="meta-nav">Previous Post</span>Useful SystemD commands</a><a href="http://crashmag.net/set-a-sql-server-20052008-database-offline-and-disconnect-users" rel="next"><span class="meta-nav">Next Post</span>Set a SQL Server 2005/2008 database offline and disconnect users</a>		</div><!-- .nav-links -->
+	</nav><!-- .navigation -->
+	
+<div id="comments" class="comments-area">
+
+	
+	<h2 class="comments-title">
+		15 thoughts on “Change the default MySQL data directory with SELinux enabled”	</h2>
+
+	
+	<ol class="comment-list">
+				<li id="comment-401" class="comment even thread-even depth-1">
+			<article id="div-comment-401" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn"><a href="http://www.seoppcpros.com/" rel="external nofollow" class="url">TonyRiver</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#comment-401">
+							<time datetime="2011-12-29T11:23:59+00:00">
+								29/12/2011 at 11:23							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Anyone know if this is the same in CentOS, Fedora, and Redhat?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+					<a class="comment-reply-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled?replytocom=401#respond" onclick="return addComment.moveForm(&quot;div-comment-401&quot;, &quot;401&quot;, &quot;respond&quot;, &quot;546&quot;)">Reply</a>				</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-404" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-404" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn">Marco H</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#comment-404">
+							<time datetime="2012-02-06T09:06:50+00:00">
+								06/02/2012 at 09:06							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I had try it on RHEL 6.2 and it works fine. So i’m sure it will work also on CentOS 6.2</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+					<a class="comment-reply-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled?replytocom=404#respond" onclick="return addComment.moveForm(&quot;div-comment-404&quot;, &quot;404&quot;, &quot;respond&quot;, &quot;546&quot;)">Reply</a>				</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-406" class="comment even thread-even depth-1">
+			<article id="div-comment-406" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn">rajczym</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#comment-406">
+							<time datetime="2012-02-18T19:03:00+00:00">
+								18/02/2012 at 19:03							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>It worked fine with Fedora 16!!!</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+					<a class="comment-reply-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled?replytocom=406#respond" onclick="return addComment.moveForm(&quot;div-comment-406&quot;, &quot;406&quot;, &quot;respond&quot;, &quot;546&quot;)">Reply</a>				</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-436" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-436" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn">Yes it works perfectly with CentOS 6.2</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#comment-436">
+							<time datetime="2012-06-01T21:52:19+00:00">
+								01/06/2012 at 21:52							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Very useful guidance!!</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+					<a class="comment-reply-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled?replytocom=436#respond" onclick="return addComment.moveForm(&quot;div-comment-436&quot;, &quot;436&quot;, &quot;respond&quot;, &quot;546&quot;)">Reply</a>				</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-440" class="comment even thread-even depth-1">
+			<article id="div-comment-440" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn">SomeUser</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#comment-440">
+							<time datetime="2012-06-22T09:38:51+00:00">
+								22/06/2012 at 09:38							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thank you very much for this concise guide. It saved me a lot of a hassle fiddling with SELinux!!!</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+					<a class="comment-reply-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled?replytocom=440#respond" onclick="return addComment.moveForm(&quot;div-comment-440&quot;, &quot;440&quot;, &quot;respond&quot;, &quot;546&quot;)">Reply</a>				</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-441" class="pingback odd alt thread-odd thread-alt depth-1">
+			<div class="comment-body">
+				Pingback: <a href="http://atutz.com/articles/how-to-change-mysql-data-directory/" rel="external nofollow" class="url">How to change MySQL data directory? | | Atutz , Linux Server tutorialsAtutz , Linux Server tutorials</a> 			</div>
+</li><!-- #comment-## -->
+		<li id="comment-445" class="comment even thread-even depth-1">
+			<article id="div-comment-445" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn"><a href="http://iliganlight.com/" rel="external nofollow" class="url">yirvineox</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#comment-445">
+							<time datetime="2012-08-24T10:43:42+00:00">
+								24/08/2012 at 10:43							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi,</p>
+<p>I carefully followed your instruction but it failed when I start the mysql service. What I did, is to reboot(restart) the server after applying the “semanage” and “restorecon”.</p>
+<p>For all the people out there trying to move datadir, this is the step. Follow the instruction until you reached here,</p>
+<p># semanage fcontext -a -t mysqld_db_t “/diskmnt/data1/mysql_data/mysql(/.*)?”</p>
+<p>then apply restorecon command to apply context mapping,</p>
+<p># restorecon -Rv /diskmnt/data1/mysql_data/mysql</p>
+<p>As suggested in the link, I can start the mysql services</p>
+<p># service mysqld start</p>
+<p>Since mine has failed when I start the mysql service, I decided to restart/reboot the Server, cause I was thinking may be the SELinux still looking/expecting for the default datadir ‘/var/lib/mysql’. After rebooting the server, I expect that the changes made in SELinux has been loaded or something like that. Then mysql services has started successfully after invoking “/etc/init.d/mysqld start”.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+					<a class="comment-reply-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled?replytocom=445#respond" onclick="return addComment.moveForm(&quot;div-comment-445&quot;, &quot;445&quot;, &quot;respond&quot;, &quot;546&quot;)">Reply</a>				</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-808" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-808" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn">Steve</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#comment-808">
+							<time datetime="2012-11-13T17:07:21+00:00">
+								13/11/2012 at 17:07							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks!  Works great under CentOS 6.3</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+					<a class="comment-reply-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled?replytocom=808#respond" onclick="return addComment.moveForm(&quot;div-comment-808&quot;, &quot;808&quot;, &quot;respond&quot;, &quot;546&quot;)">Reply</a>				</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-1100" class="comment even thread-even depth-1">
+			<article id="div-comment-1100" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn">Niall</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#comment-1100">
+							<time datetime="2012-12-14T21:37:49+00:00">
+								14/12/2012 at 21:37							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>On CentOS 6.0 with the 5.x installation of MySQL, the semanage context needs to be mysqld_safe_t, not mysqld_db_t.<br>
+So:<br>
+“semanage fcontext -a -t mysqld_safe_t “/srv/mysql(/.*)?”<br>
+Instead of:<br>
+“semanage fcontext -a -t mysqld_db_t “/srv/mysql(/.*)?”</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+					<a class="comment-reply-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled?replytocom=1100#respond" onclick="return addComment.moveForm(&quot;div-comment-1100&quot;, &quot;1100&quot;, &quot;respond&quot;, &quot;546&quot;)">Reply</a>				</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-3087" class="pingback odd alt thread-odd thread-alt depth-1">
+			<div class="comment-body">
+				Pingback: <a href="http://frakturmedia.net/2013/computing/setting-up-raspberry-pis-for-scraping/" rel="external nofollow" class="url">frakturmedia » Blog Archive » Setting up Raspberry Pi’s for scraping</a> 			</div>
+</li><!-- #comment-## -->
+		<li id="comment-17260" class="pingback even thread-even depth-1">
+			<div class="comment-body">
+				Pingback: <a href="http://www.linuxquestions.org/questions/linux-server-73/transferring-mysql-database-without-mysqldump-command-4175465846/#post4974138" rel="external nofollow" class="url">transferring mysql database without mysqldump command</a> 			</div>
+</li><!-- #comment-## -->
+		<li id="comment-19886" class="pingback odd alt thread-odd thread-alt depth-1">
+			<div class="comment-body">
+				Pingback: <a href="http://www.criszhao.com/mysql_datadir" rel="external nofollow" class="url">修改mysql数据存放默认目录 | criszhao's IT blog</a> 			</div>
+</li><!-- #comment-## -->
+		<li id="comment-20090" class="comment even thread-even depth-1">
+			<article id="div-comment-20090" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn">Steffano</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#comment-20090">
+							<time datetime="2013-10-31T03:55:47+00:00">
+								31/10/2013 at 03:55							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Centos 6.4 and zpanel, this tutorial is working great.</p>
+<p>Thank you</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+					<a class="comment-reply-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled?replytocom=20090#respond" onclick="return addComment.moveForm(&quot;div-comment-20090&quot;, &quot;20090&quot;, &quot;respond&quot;, &quot;546&quot;)">Reply</a>				</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-21008" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-21008" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn">Deepak</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#comment-21008">
+							<time datetime="2014-04-01T20:11:02+00:00">
+								01/04/2014 at 20:11							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks for the clean steps. Saved some hours. Below setting helped me.<br>
+<code><br>
+[client]<br>
+socket = /srv/mysql/mysql.sock<br>
+</code></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+					<a class="comment-reply-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled?replytocom=21008#respond" onclick="return addComment.moveForm(&quot;div-comment-21008&quot;, &quot;21008&quot;, &quot;respond&quot;, &quot;546&quot;)">Reply</a>				</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-21170" class="comment even thread-even depth-1">
+			<article id="div-comment-21170" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn"><a href="http://mediaradar.com/" rel="external nofollow" class="url">vitaliy</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#comment-21170">
+							<time datetime="2014-04-24T16:19:56+00:00">
+								24/04/2014 at 16:19							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I have phpmyadmin installed, which, after the above steps, can not connect to mysql. Does anyone else have this problem/solution? Thanks!!</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+					<a class="comment-reply-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled?replytocom=21170#respond" onclick="return addComment.moveForm(&quot;div-comment-21170&quot;, &quot;21170&quot;, &quot;respond&quot;, &quot;546&quot;)">Reply</a>				</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+	</ol><!-- .comment-list -->
+
+	
+	
+	
+									<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://crashmag.net/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="">
+																			<p class="comment-notes">Your email address will not be published. Required fields are marked <span class="required">*</span></p>							<p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" aria-required="true"></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" aria-required="true"></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30"></p>
+
+<div class="captchaSizeDivLarge"><img id="si_image_com" class="si-captcha" src="./Change the default MySQL data directory_files/securimage_show.php" width="175" height="60" alt="CAPTCHA Image" title="CAPTCHA Image">
+    <input id="si_code_com" name="si_code_com" type="hidden" value="gTDK6BAd85an5w1H">
+    <div id="si_refresh_com">
+<a href="http://crashmag.net/change-the-default-mysql-data-directory-with-selinux-enabled#" rel="nofollow" title="Refresh Image" onclick="si_captcha_refresh(&#39;si_image_com&#39;,&#39;com&#39;,&#39;/wp-content/plugins/si-captcha-for-wordpress/captcha&#39;,&#39;http://crashmag.net/wp-content/plugins/si-captcha-for-wordpress/captcha/securimage_show.php?si_form_id=com&amp;prefix=&#39;); return false;">
+      <img class="captchaImgRefresh" src="./Change the default MySQL data directory_files/refresh.png" width="22" height="20" alt="Refresh Image" onclick="this.blur();"></a>
+  </div>
+  </div>
+<br>
+<p><label id="captcha_code_label" for="captcha_code">CAPTCHA Code</label><input id="captcha_code" name="captcha_code" type="text" size="6">
+<span class="required"> *</span>
+</p>												<p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>						<p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:  <code>&lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; &lt;strong&gt; </code></p>						<p class="form-submit">
+							<input name="submit" type="submit" id="submit" value="Post Comment">
+							<input type="hidden" name="comment_post_ID" value="546" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+						</p>
+						<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="3d272e0579"></p><p style="display: none;"></p>					<input type="hidden" id="ak_js" name="ak_js" value="1406271886369"></form>
+							</div><!-- #respond -->
+			
+</div><!-- #comments -->
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+<div id="content-sidebar" class="content-sidebar widget-area" role="complementary">
+			<aside id="recent-posts-3" class="widget widget_recent_entries">		<h1 class="widget-title">Most recent posts</h1>		<ul>
+					<li>
+				<a href="http://crashmag.net/changing-the-default-locale-for-virtual-machine-templates-in-virtual-machine-manager-2012-r2">Changing the default locale for virtual machine templates in Virtual Machine Manager 2012 R2</a>
+						</li>
+					<li>
+				<a href="http://crashmag.net/setting-up-a-2-node-glusterfs-filesystem">Setting up a 2-node GlusterFS filesystem</a>
+						</li>
+					<li>
+				<a href="http://crashmag.net/enable-tls-1-1-and-1-2-in-mozilla-firefox-24-0">Enable TLS 1.1 and 1.2 in Mozilla Firefox 24.0</a>
+						</li>
+					<li>
+				<a href="http://crashmag.net/creating-a-bootable-firmware-bios-update-iso-for-your-supermicro-motherboard">Creating a bootable firmware bios update iso for your Supermicro motherboard</a>
+						</li>
+					<li>
+				<a href="http://crashmag.net/how-to-identify-ecc-memory-modules">How to identify ECC memory modules</a>
+						</li>
+				</ul>
+		</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h1 class="widget-title">Tags</h1><div class="tagcloud"><a href="http://crashmag.net/tag/apache" class="tag-link-118" title="2 topics" style="font-size: 10.571428571429pt;">apache</a>
+<a href="http://crashmag.net/tag/arch-linux" class="tag-link-56" title="5 topics" style="font-size: 14.857142857143pt;">arch linux</a>
+<a href="http://crashmag.net/tag/backup-2" class="tag-link-58" title="2 topics" style="font-size: 10.571428571429pt;">backup</a>
+<a href="http://crashmag.net/tag/bind" class="tag-link-69" title="2 topics" style="font-size: 10.571428571429pt;">bind</a>
+<a href="http://crashmag.net/tag/bios" class="tag-link-98" title="3 topics" style="font-size: 12.285714285714pt;">bios</a>
+<a href="http://crashmag.net/tag/bittorrent" class="tag-link-29" title="2 topics" style="font-size: 10.571428571429pt;">bittorrent</a>
+<a href="http://crashmag.net/tag/centos-2" class="tag-link-55" title="18 topics" style="font-size: 22pt;">centos</a>
+<a href="http://crashmag.net/tag/cheat-sheet" class="tag-link-180" title="2 topics" style="font-size: 10.571428571429pt;">cheat sheet</a>
+<a href="http://crashmag.net/tag/chmod" class="tag-link-26" title="1 topic" style="font-size: 8pt;">chmod</a>
+<a href="http://crashmag.net/tag/debian" class="tag-link-108" title="6 topics" style="font-size: 15.857142857143pt;">debian</a>
+<a href="http://crashmag.net/tag/deluge" class="tag-link-32" title="2 topics" style="font-size: 10.571428571429pt;">deluge</a>
+<a href="http://crashmag.net/tag/dmidecode" class="tag-link-97" title="2 topics" style="font-size: 10.571428571429pt;">dmidecode</a>
+<a href="http://crashmag.net/tag/examples" class="tag-link-27" title="18 topics" style="font-size: 22pt;">examples</a>
+<a href="http://crashmag.net/tag/fedora-2" class="tag-link-54" title="13 topics" style="font-size: 20.142857142857pt;">fedora</a>
+<a href="http://crashmag.net/tag/file-permissions" class="tag-link-25" title="1 topic" style="font-size: 8pt;">file permissions</a>
+<a href="http://crashmag.net/tag/filesystem" class="tag-link-197" title="3 topics" style="font-size: 12.285714285714pt;">filesystem</a>
+<a href="http://crashmag.net/tag/git" class="tag-link-46" title="2 topics" style="font-size: 10.571428571429pt;">git</a>
+<a href="http://crashmag.net/tag/howto" class="tag-link-23" title="17 topics" style="font-size: 21.714285714286pt;">howto</a>
+<a href="http://crashmag.net/tag/linux-2" class="tag-link-102" title="7 topics" style="font-size: 16.571428571429pt;">linux</a>
+<a href="http://crashmag.net/tag/microsoft" class="tag-link-113" title="2 topics" style="font-size: 10.571428571429pt;">microsoft</a>
+<a href="http://crashmag.net/tag/mysql-2" class="tag-link-57" title="6 topics" style="font-size: 15.857142857143pt;">mysql</a>
+<a href="http://crashmag.net/tag/nano" class="tag-link-22" title="3 topics" style="font-size: 12.285714285714pt;">nano</a>
+<a href="http://crashmag.net/tag/openssl" class="tag-link-116" title="2 topics" style="font-size: 10.571428571429pt;">openssl</a>
+<a href="http://crashmag.net/tag/p2p" class="tag-link-28" title="2 topics" style="font-size: 10.571428571429pt;">p2p</a>
+<a href="http://crashmag.net/tag/password-reset" class="tag-link-24" title="2 topics" style="font-size: 10.571428571429pt;">password reset</a>
+<a href="http://crashmag.net/tag/permissions" class="tag-link-152" title="2 topics" style="font-size: 10.571428571429pt;">permissions</a>
+<a href="http://crashmag.net/tag/php-2" class="tag-link-60" title="1 topic" style="font-size: 8pt;">php</a>
+<a href="http://crashmag.net/tag/postgresql-2" class="tag-link-82" title="3 topics" style="font-size: 12.285714285714pt;">postgresql</a>
+<a href="http://crashmag.net/tag/redhat" class="tag-link-196" title="2 topics" style="font-size: 10.571428571429pt;">redhat</a>
+<a href="http://crashmag.net/tag/restorecon" class="tag-link-139" title="2 topics" style="font-size: 10.571428571429pt;">restorecon</a>
+<a href="http://crashmag.net/tag/rhel" class="tag-link-66" title="14 topics" style="font-size: 20.571428571429pt;">rhel</a>
+<a href="http://crashmag.net/tag/scientific-linux" class="tag-link-106" title="12 topics" style="font-size: 19.571428571429pt;">scientific linux</a>
+<a href="http://crashmag.net/tag/selinux" class="tag-link-135" title="3 topics" style="font-size: 12.285714285714pt;">selinux</a>
+<a href="http://crashmag.net/tag/semanage" class="tag-link-138" title="3 topics" style="font-size: 12.285714285714pt;">semanage</a>
+<a href="http://crashmag.net/tag/server" class="tag-link-31" title="10 topics" style="font-size: 18.571428571429pt;">server</a>
+<a href="http://crashmag.net/tag/smtp" class="tag-link-167" title="3 topics" style="font-size: 12.285714285714pt;">smtp</a>
+<a href="http://crashmag.net/tag/ssh" class="tag-link-62" title="4 topics" style="font-size: 13.714285714286pt;">ssh</a>
+<a href="http://crashmag.net/tag/t-sql" class="tag-link-85" title="3 topics" style="font-size: 12.285714285714pt;">t-sql</a>
+<a href="http://crashmag.net/tag/tips" class="tag-link-61" title="9 topics" style="font-size: 18pt;">tips</a>
+<a href="http://crashmag.net/tag/ubuntu" class="tag-link-127" title="3 topics" style="font-size: 12.285714285714pt;">ubuntu</a>
+<a href="http://crashmag.net/tag/vcs" class="tag-link-47" title="2 topics" style="font-size: 10.571428571429pt;">vcs</a>
+<a href="http://crashmag.net/tag/windows-2" class="tag-link-74" title="2 topics" style="font-size: 10.571428571429pt;">windows</a>
+<a href="http://crashmag.net/tag/windows-7-2" class="tag-link-157" title="3 topics" style="font-size: 12.285714285714pt;">windows 7</a>
+<a href="http://crashmag.net/tag/wordpress" class="tag-link-45" title="2 topics" style="font-size: 10.571428571429pt;">wordpress</a>
+<a href="http://crashmag.net/tag/wsb" class="tag-link-162" title="2 topics" style="font-size: 10.571428571429pt;">wsb</a></div>
+</aside><aside id="text-3" class="widget widget_text">			<div class="textwidget"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-5024190921931727";
+/* Sidebar */
+google_ad_slot = "1723330079";
+google_ad_width = 120;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript" src="./Change the default MySQL data directory_files/show_ads.js">
+</script><ins style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:120px;background-color:transparent"><iframe width="120" height="600" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;"></iframe></ins></ins></div>
+		</aside></div><!-- #content-sidebar -->
+<div id="secondary">
+		<h2 class="site-description">Linux | Open Source | Databases | Web</h2>
+	
+	
+	</div><!-- #secondary -->
+
+		</div><!-- #main -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+
+			
+			<div class="site-info">
+								<a href="http://wordpress.org/">Proudly powered by WordPress</a>
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- #page -->
+
+	<script type="text/javascript" src="./Change the default MySQL data directory_files/si_captcha.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+var si_captcha_styles = "\
+<!-- begin SI CAPTCHA Anti-Spam - comment form style -->\
+<style type='text/css'>\
+div#captchaImgDiv { display:block; }\
+.captchaSizeDivSmall { width:175px; height:45px; padding-top:10px; }\
+.captchaSizeDivLarge { width:250px; height:60px; padding-top:10px; }\
+img#si_image_com,#si_image_reg,#si_image_log,#si_image_side_login { border-style:none; margin:0; padding-right:5px; float:left; }\
+.captchaImgRefresh { border-style:none; margin:0; vertical-align:bottom; }\
+div#captchaInputDiv { display:block; padding-top:15px; padding-bottom:5px; }\
+label#captcha_code_label { margin:0; }\
+input#captcha_code { width:65px; }\
+</style>\
+<!-- end SI CAPTCHA Anti-Spam - comment form style -->\
+";
+jQuery(document).ready(function($) {
+$('head').append(si_captcha_styles);
+});
+//]]>
+</script>
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.crashmag.net/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 1]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
+    g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Piwik Code -->
+	<script type="text/javascript">
+	  window.___gcfg = {lang: 'en'};
+	
+	  (function() {
+	    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	    po.src = 'https://apis.google.com/js/plusone.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	  })();
+	</script><script type="text/javascript" src="./Change the default MySQL data directory_files/form.js"></script>
+<script type="text/javascript" src="./Change the default MySQL data directory_files/comment-reply.min.js"></script>
+<script type="text/javascript" src="./Change the default MySQL data directory_files/functions.js"></script>
+
+<iframe name="oauth2relay703875950" id="oauth2relay703875950" src="./Change the default MySQL data directory_files/postmessageRelay.html" tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe></body></html>

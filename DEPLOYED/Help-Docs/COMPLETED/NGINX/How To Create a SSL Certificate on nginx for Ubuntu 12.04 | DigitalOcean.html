@@ -1,0 +1,3348 @@
+<!DOCTYPE html>
+<html class="m-pikabu-transitions m-pikabu-translate3d wf-proximanova-i4-active wf-proximanova-n1-active wf-proximanova-n3-active wf-proximanova-n4-active wf-proximanova-n6-active wf-proximanova-n7-active wf-active"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>How To Create a SSL Certificate on nginx for Ubuntu 12.04 | DigitalOcean</title>
+
+<meta name="description" content="About Self-Signed Certificates A SSL certificate is a way to encrypt a site's information and create a more secure connection. Additionally, the certificate can show the virtual private erver's identification information to site visitors. Certificate">
+<meta name="keywords" content="NGINX Ubuntu">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="DigitalOcean">
+<meta name="twitter:creator" content="DigitalOcean">
+<meta name="twitter:title" content="How To Create a SSL Certificate on nginx for Ubuntu 12.04 | DigitalOcean">
+<meta name="twitter:description" content="About Self-Signed Certificates A SSL certificate is a way to encrypt a site's information and create a more secure connection. Additionally, the certificate can show the virtual private erver's identification information to site visitors. Certificate">
+
+<meta name="og:title" content="How To Create a SSL Certificate on nginx for Ubuntu 12.04 | DigitalOcean">
+<meta name="og:description" content="About Self-Signed Certificates A SSL certificate is a way to encrypt a site's information and create a more secure connection. Additionally, the certificate can show the virtual private erver's identification information to site visitors. Certificate">
+<meta name="og:site_name" content="DigitalOcean">
+<meta name="og:type" content="article">
+<meta property="og:image" content="https://www.digitalocean.com/assets/community/tags/nginx-bf8fd79b6bbf881889132cd11ed1e5fa.png">
+
+    <link href="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/application-f0caa3a8cbaf692ad45bed88d788a6a1.css" media="all" rel="stylesheet">
+    <meta content="authenticity_token" name="csrf-param">
+<meta content="ZuejqwNNsCqkbPZgFGZ4Q/nwfS9PXrjiSGwmO1dcrlg=" name="csrf-token">
+    <script type="text/javascript" async="" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/5850.js"></script><script src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/widgets.js" async="" id="twitter-wjs"></script><script src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/njm7orv.js"></script>
+    <style type="text/css">.tk-proxima-nova{font-family:"proxima-nova",sans-serif;}</style><link href="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/d.css" rel="stylesheet"><script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26573244-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+  /* <![CDATA[ */
+  var google_conversion_id = 1010666955;
+  var google_conversion_language = "en";
+  var google_conversion_format = "3";
+  var google_conversion_color = "ffffff";
+  var google_conversion_label = "g5d3CM2C9QIQy5v24QM";
+  var google_conversion_value = 0;
+  /* ]]> */
+</script>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+  <style>
+.m-pikabu-sidebar, 
+.m-pikabu-container {
+-webkit-transition: -webkit-transform 0.2s ease-in;
+-moz-transition: -moz-transform 0.2s ease-in;
+-ms-transition: -ms-transform 0.2s ease-in;
+-o-transition: -o-transform 0.2s ease-in;
+transition: transform 0.2s ease-in;
+}
+.m-pikabu-left-visible .m-pikabu-left {
+	width: 80%;
+}
+.m-pikabu-right-visible .m-pikabu-right {
+	width: 80%;
+}</style><script src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/roundtrip.js" type="text/javascript" async="true"></script><script src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/4IDGVTPEAFC4TM2QKYNQ53" type="text/javascript" async="true"></script><div style="width: 1px; height: 1px; display: inline;"><img style="border-style:none;" alt="" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/out_002.gif" height="1" width="1">
+<img style="border-style:none;" alt="" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/out_003.gif" height="1" width="1">
+<img style="border-style:none;" alt="" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/out_004.gif" height="1" width="1">
+<img style="border-style:none;" alt="" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/out_005.gif" height="1" width="1">
+<img alt="" style="display:none" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/tr.gif" height="1" width="1"><img style="border-style:none;" alt="" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/a_002.gif" height="1" width="1">
+<img style="border-style:none;" alt="" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/out.gif" height="1" width="1">
+<img src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/seg.gif" height="1" width="1">
+</div></head>
+  <body data-twttr-rendered="true" class="">
+      <div style="display: block; bottom: 0px; position: fixed;" id="table-of-contents" class="hide-on-pikabu tocify">
+  <h3 id="toc-trigger">
+    <a href="#">
+      Contents
+      <span class="icon-navicon"></span>
+    </a>
+  </h3>
+<ul style="display: none;" class="tocify-header" id="tocify-header0"><li data-unique="SetUp" class="tocify-item"><a>Set Up</a></li></ul><ul style="display: none;" class="tocify-header" id="tocify-header1"><li data-unique="StepOne—CreateaDirectoryfortheCertificate" class="tocify-item"><a> Step One—Create a Directory for the Certificate</a></li></ul><ul style="display: none;" class="tocify-header" id="tocify-header2"><li data-unique="StepTwo—CreatetheServerKeyandCertificateSigningRequest" class="tocify-item"><a> Step Two—Create the Server Key and Certificate Signing Request</a></li></ul><ul style="display: none;" class="tocify-header" id="tocify-header3"><li data-unique="StepThree—RemovethePassphrase" class="tocify-item"><a>Step Three—Remove the Passphrase</a></li></ul><ul style="display: none;" class="tocify-header" id="tocify-header4"><li data-unique="StepFour—SignyourSSLCertificate" class="tocify-item"><a>Step Four— Sign your SSL Certificate</a></li></ul><ul style="display: none;" class="tocify-header" id="tocify-header5"><li data-unique="StepFive—SetUptheCertificate" class="tocify-item"><a> Step Five—Set Up the Certificate</a></li></ul><ul style="display: none;" class="tocify-header" id="tocify-header6"><li data-unique="StepSix—ActivatetheVirtualHost" class="tocify-item tocify-focus"><a> Step Six—Activate the Virtual Host</a></li></ul><ul style="display: none;" class="tocify-header" id="tocify-header7"><li data-unique="SeeMore" class="tocify-item"><a>See More</a></li></ul></div>
+
+
+
+    <div style="width: auto;" class="m-pikabu-viewport">
+      <div class="mobile-nav">
+  <div class="m-pikabu-sidebar m-pikabu-left m-pikabu-hidden">
+    <div class="account-buttons">
+    <div id="entrance">
+      <a class="button" href="https://www.digitalocean.com/community/auth/digitalocean" id="sign-up">Sign Up</a>
+      <a class="button" href="https://www.digitalocean.com/community/auth/digitalocean" id="log-in">Log In</a>
+    </div>
+</div>
+      
+    <a class="close-panel icon-close" href="javascript:void(0);"></a>
+
+    <form accept-charset="UTF-8" action="/community/search" id="search" method="get"><div style="display:none"><input name="utf8" value="✓" type="hidden"></div>
+      <input id="query" name="query" placeholder="Search the community" type="text">
+
+      <button class="icon-btn" name="button" type="submit">
+        <span class="icon-arrow-down"></span>
+</button></form>    
+    
+
+    <nav>
+  <ul>
+    <li><a href="https://www.digitalocean.com/community/tutorials">Tutorials</a></li>
+    <li><a href="https://www.digitalocean.com/community/questions">Questions</a></li>
+    <li><a href="https://www.digitalocean.com/community/projects">Projects</a></li>
+    <li><a href="https://www.digitalocean.com/community/tags">Tags</a></li>
+    <li class="mobile-nav-only"><a href="https://www.digitalocean.com/">Main Site</a></li>
+  </ul>
+</nav>
+
+  </div>
+</div>
+
+      <div class="m-pikabu-container"><div class="m-pikabu-overlay"></div>
+      	<header>
+  <div class="wrapper">
+    <a class="logo" href="https://www.digitalocean.com/community"></a>
+
+    <a class="m-pikabu-nav-toggle icon-navicon" data-role="left">
+      <span>Menu</span>
+    </a>
+
+    <div class="account-buttons">
+    <div id="entrance">
+      <a class="button" href="https://www.digitalocean.com/community/auth/digitalocean" id="sign-up">Sign Up</a>
+      <a class="button" href="https://www.digitalocean.com/community/auth/digitalocean" id="log-in">Log In</a>
+    </div>
+</div>
+    <nav>
+  <ul>
+    <li><a href="https://www.digitalocean.com/community/tutorials">Tutorials</a></li>
+    <li><a href="https://www.digitalocean.com/community/questions">Questions</a></li>
+    <li><a href="https://www.digitalocean.com/community/projects">Projects</a></li>
+    <li><a href="https://www.digitalocean.com/community/tags">Tags</a></li>
+    <li class="mobile-nav-only"><a href="https://www.digitalocean.com/">Main Site</a></li>
+  </ul>
+</nav>
+
+    <form accept-charset="UTF-8" action="/community/search" data-remote="true" id="search" method="post"><div style="display:none"><input name="utf8" value="✓" type="hidden"></div>
+  <input id="query" name="query" placeholder="Search the community" type="text">
+  <input id="dropdown" name="dropdown" value="true" type="hidden">
+
+  <button class="icon-btn" name="button" type="submit">
+    <span class="icon-arrow-down"></span>
+</button></form>
+  </div>
+</header>
+        
+
+        <div class="wrapper tutorial-single">
+          <div class="flash-container"></div>
+          
+
+
+
+<div class="section section-primary">
+  <div class="sidebar main-sidebar" data-sticky-sidebar="" data-sticky-content=".section-content">
+
+
+      <p class="sidebar-avatar">
+        
+      </p>
+
+      <p class="sidebar-author">Etel Sverdlov</p>
+
+
+    <p class="sidebar-date">
+        Published
+        Jun  8, 2012
+    </p>
+      <p class="sidebar-date updated-at">Updated Jun 10, 2014</p>
+
+    <p class="sidebar-difficulty">
+      <span class="difficulty-level Beginner">Beginner</span>
+    </p>
+
+
+    <ul class="social-sharing">
+  <li class="shareBtn sbMain">
+    <a href="#">
+      <span class="sIcon icon-share"></span>  
+      SHARE
+    </a>
+  </li>
+  
+  <li class="shareBtn" id="sbTwitter">
+    <a href="http://twitter.com/share?text=How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04&amp;url=https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04" target="_blank" title="Share on Twitter">
+      <span class="sIcon icon-bird"></span>  
+      TWEET
+    </a>
+  </li>
+
+  <li class="shareBtn" id="sbFacebook">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04" target="_blank" title="Share on Facebook">
+      <span class="sIcon icon-facebook-B"></span>
+      SHARE
+    </a>
+  </li>
+  <li class="shareBtn" id="sbGoogle">
+    <a href="https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04" target="_blank" title="Share on Google+">
+      <span class="sIcon icon-google-plus-B"></span>  
+      SHARE
+    </a>
+  </li>
+  <li class="shareBtn" id="sbYC">
+    <a href="https://news.ycombinator.com/submitlink?u=https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04&amp;t=How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04" target="_blank" title="Submit to Hacker News">
+      <span class="sIcon icon-hacker-news"></span>  
+      SHARE
+    </a>
+  </li>
+</ul>
+  </div>
+
+  <div class="section-content content">
+
+    <h1 class="content-title">How To Create a SSL Certificate on nginx for Ubuntu 12.04</h1>
+
+    <div class="tut-meta">
+        <div class="content-tags">
+          <span class="meta-label">Tagged In: </span>
+          <a href="https://www.digitalocean.com/community/tags/nginx">NGINX</a>, <a href="https://www.digitalocean.com/community/tags/ubuntu">Ubuntu</a>
+        </div>
+
+      <div class="feedable-info">
+          <span class="meta-label">Author:</span>
+          Etel Sverdlov
+          <span>•</span>
+
+          <span class="meta-label">Published:</span>
+          Jun  8, 2012
+
+          <span>•</span>
+          <span class="meta-label">Updated:</span>
+          Jun 10, 2014
+      </div>
+    
+      <ul class="social-sharing small-share">
+  <li class="shareBtn sbMain">
+    <a href="#">
+      <span class="sIcon icon-share"></span>  
+      SHARE
+    </a>
+  </li>
+  
+  <li class="shareBtn" id="sbTwitter">
+    <a href="http://twitter.com/share?text=How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04&amp;url=https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04" target="_blank" title="Share on Twitter">
+      <span class="sIcon icon-bird"></span>  
+      TWEET
+    </a>
+  </li>
+
+  <li class="shareBtn" id="sbFacebook">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04" target="_blank" title="Share on Facebook">
+      <span class="sIcon icon-facebook-B"></span>
+      SHARE
+    </a>
+  </li>
+  <li class="shareBtn" id="sbGoogle">
+    <a href="https://plus.google.com/share?url=https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04" target="_blank" title="Share on Google+">
+      <span class="sIcon icon-google-plus-B"></span>  
+      SHARE
+    </a>
+  </li>
+  <li class="shareBtn" id="sbYC">
+    <a href="https://news.ycombinator.com/submitlink?u=https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04&amp;t=How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04" target="_blank" title="Submit to Hacker News">
+      <span class="sIcon icon-hacker-news"></span>  
+      SHARE
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    
+
+    <div class="content-body tutorial-content">
+        <h3>About Self-Signed Certificates</h3>
+
+<p>A SSL certificate is a way to encrypt a site's information and create
+ a more secure connection. Additionally, the certificate can show the 
+virtual private erver's identification information to site visitors. 
+Certificate Authorities can issue SSL certificates that verify the 
+server's details while a self-signed certificate has no 3rd party 
+corroboration.</p>
+
+<div data-unique="SetUp" name="SetUp"></div><h2>Set Up</h2>
+
+<p>The  steps in this tutorial require the user to have root privileges. You can see how to set that up in the <a href="https://www.digitalocean.com/community/articles/initial-server-setup-with-ubuntu-12-04">Initial Server Setup Tutorial </a> in steps 3 and 4.</p> 
+
+<p>Additionally, you need to have nginx already installed and running on
+ your VPS.  If this is not the case, you can download it with this 
+command:</p>
+
+<pre>sudo apt-get install nginx</pre>
+
+<div data-unique="StepOne—CreateaDirectoryfortheCertificate" name="StepOne—CreateaDirectoryfortheCertificate"></div><h2> Step One—Create a Directory for the Certificate</h2>
+
+<p>The SSL certificate has 2 parts main parts: the certificate itself 
+and the public key.  To make all of the relevant files easy to access, 
+we should create a directory to store them in:</p>
+
+<pre> sudo mkdir /etc/nginx/ssl</pre>
+
+<p>We will perform the next few steps within the directory:</p> 
+
+<pre> cd /etc/nginx/ssl</pre>
+
+<div data-unique="StepTwo—CreatetheServerKeyandCertificateSigningRequest" name="StepTwo—CreatetheServerKeyandCertificateSigningRequest"></div><h2> Step Two—Create the Server Key and Certificate Signing Request</h2>
+
+<p>Start by creating the private server key. During this process,  you 
+will be asked to enter a specific passphrase. Be sure to note this 
+phrase carefully, if you forget it or lose it, you will not be able to 
+access the certificate.</p> 
+
+<pre>sudo openssl genrsa -des3 -out server.key 1024</pre>
+
+<p>Follow up by creating a certificate signing request:</p>
+
+<pre>sudo openssl req -new -key server.key -out server.csr</pre>
+
+<p>This command will prompt terminal to display a lists of fields that need to be filled in.</p>
+
+<p>The most important line is "Common Name". Enter your official domain 
+name here or, if you don't have one yet, your site's IP address. Leave 
+the challenge password and optional company name blank.</p> 
+
+<pre>You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:US
+State or Province Name (full name) [Some-State]:New York
+Locality Name (eg, city) []:NYC
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Awesome Inc
+Organizational Unit Name (eg, section) []:Dept of Merriment
+Common Name (e.g. server FQDN or YOUR name) []:example.com                  
+Email Address []:webmaster@awesomeinc.com<script type="text/javascript">
+/* <![CDATA[ */
+(function(){try{var s,a,i,j,r,c,l,b=document.getElementsByTagName("script");l=b[b.length-1].previousSibling;a=l.getAttribute('data-cfemail');if(a){s='';r=parseInt(a.substr(0,2),16);for(j=2;a.length-j;j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}s=document.createTextNode(s);l.parentNode.replaceChild(s,l);}}catch(e){}})();
+/* ]]> */
+</script></pre>
+
+<div data-unique="StepThree—RemovethePassphrase" name="StepThree—RemovethePassphrase"></div><h2>Step Three—Remove the Passphrase</h2>
+
+<p>We are almost finished creating the certificate. However, it would 
+serve us to remove the passphrase. Although having the passphrase in 
+place does provide heightened security, the issue starts when one tries 
+to reload nginx. In the event that nginx  crashes or needs to reboot, 
+you will always have to re-enter your passphrase to get your entire web 
+server back online.</p> 
+
+<p>Use this command to remove the password:</p>
+
+<pre>sudo cp server.key server.key.org
+sudo openssl rsa -in server.key.org -out server.key</pre>
+
+<div data-unique="StepFour—SignyourSSLCertificate" name="StepFour—SignyourSSLCertificate"></div><h2>Step Four— Sign your SSL Certificate</h2>
+
+<p>Your certificate is all but done, and you just have to sign it. 
+Keep in mind that you can specify how long the certificate should remain
+ valid by changing the 365 to the number of days you prefer. As it 
+stands this certificate will expire after one year.</p>
+
+<pre> sudo openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt</pre>
+
+<p>You are now done making your certificate.</p>
+
+<div data-unique="StepFive—SetUptheCertificate" name="StepFive—SetUptheCertificate"></div><h2> Step Five—Set Up the Certificate</h2>
+
+<p>Now we have all of the required components of the finished 
+certificate.The next thing to do is to set up the virtual hosts to 
+display the new certificate.</p> 
+
+<p>Let's create new file with the same default text and layout as the 
+standard virtual host file. You can replace "example" in the command 
+with whatever name you prefer:</p>
+
+<pre>sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/example</pre>
+
+<p>Then go ahead and open up that new file:</p>
+
+<pre> sudo nano /etc/nginx/sites-available/example</pre>
+
+<p>Scroll down to the bottom  of the file and find the section that begins with this:</p>
+
+<pre># HTTPS server
+
+server {
+        listen 443;
+        server_name example.com;
+
+        root /usr/share/nginx/www;
+        index index.html index.htm;
+
+        ssl on;
+        ssl_certificate /etc/nginx/ssl/server.crt;
+        ssl_certificate_key /etc/nginx/ssl/server.key; 
+}</pre>
+
+<p>Uncomment within the section under the line HTTPS Server. Match your 
+config to the information above, replacing the example.com in the 
+"server_name" line with your domain name or IP address. Subsequently, 
+add in the correct directory for your site (the above configuration 
+includes the default nginx page).</p> 
+
+<p>Additionally, make sure that both of these lines are commented out in the line toward the beginning of the file that says:
+
+ </p><pre># Make site accessible from http://localhost/
+# server_name localhost;</pre>
+
+<div data-unique="StepSix—ActivatetheVirtualHost" name="StepSix—ActivatetheVirtualHost"></div><h2> Step Six—Activate the Virtual Host</h2>
+
+<p>The last step is to activate the host by creating a symbolic link 
+between the sites-available directory and the sites-enabled directory.</p>
+
+<pre> sudo ln -s /etc/nginx/sites-available/example /etc/nginx/sites-enabled/example</pre>
+
+<p>Then restart nginx:</p>
+
+<pre> sudo service nginx restart</pre>
+
+<p>Visit https://youraddress</p>
+
+<p>You will see your self-signed certificate on that page!</p>
+
+<div data-unique="SeeMore" name="SeeMore"></div><h2>See More</h2>
+
+<p>Once you have setup your SSL certificate on the site, you can <a href="https://www.digitalocean.com/community/articles/how-to-set-up-vsftpd-on-ubuntu-12-04">Install an FTP server</a> if you haven't done so yet.</p> 
+
+<h3>Resources</h3>
+
+<ul>
+<li><a href="http://wiki.nginx.org/HttpSslModule#Generate_Certificates" target="_blank">http://wiki.nginx.org/HttpSslModule#Generate_Certificates</a></li></ul>
+
+<div class="author">By Etel Sverdlov</div>
+
+      <div class="clear"></div>
+      
+    </div>
+
+    <div class="content-primary-actions hidden">
+      <a class="share" href="#"><span class="icon-share"></span>Share Tutorial</a>
+      <a class="improve" href="#"><span class="icon-edit"></span>Improve Tutorial</a>
+      <a class="write" href="#"><span class="icon-edit"></span>Write Tutorial</a>
+    </div>
+
+    
+
+      <div class="related">
+    <h2>Related Tutorials</h2>
+
+    <ul>
+          <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-use-martini-to-serve-go-applications-behind-an-nginx-server-on-ubuntu">How To Use Martini to Serve Go Applications Behind an Nginx Server on Ubuntu</a></li>
+          <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-http-authentication-with-nginx-on-ubuntu-12-10">How To Set Up HTTP Authentication With Nginx On Ubuntu 12.10</a></li>
+          <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-the-latest-version-of-nginx-on-ubuntu-12-10">How To Install The Latest Version Of Nginx On Ubuntu 12.10</a></li>
+          <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-multiple-ssl-certificates-on-one-ip-with-nginx-on-ubuntu-12-04">How To Set Up Multiple SSL Certificates on One IP with Nginx on Ubuntu 12.04</a></li>
+          <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-virtual-hosts-server-blocks-on-ubuntu-12-04-lts--3">How To Set Up nginx Virtual Hosts (Server Blocks) on Ubuntu 12.04 LTS</a></li>
+    </ul>
+  </div>
+
+
+    <div class="content-comments">
+      <div class="comments-header">
+        <h4><span class="Comments">55 Comments</span></h4>
+      </div>
+      <div class="tutorial commentable" id="tutorial_51">
+  <div class="comments">
+  <ul class="response-list">
+      <li class="response   " id="comment_1018">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_1018" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="ciegoproductions" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/c44d39772388d7917f959bae7c92c1a5.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">ciegoproductions</span>
+  
+  <span class="response-time">March  1, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">To create a csr certificate for third party signers, I  completed up to Step Three.
+Then I had to sign in as root, sudo su, and run
+<pre>cat www.mysite.com.crt gd_bundle.crt &gt; mysite_combined.crt</pre>
+not sure why I had problems just running as other user using sudo.
+Then change the ssl_certificate to point to the new combined file in nginx conf. </div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_1018_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_1311">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_1311" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="stuart" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/086cbbd898c33042d2e17a1af74b2a0e.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">stuart</span>
+  
+  <span class="response-time">April 15, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Hi, I'm having no 
+luck installing an SSL certificate from a third party signer; I've tried
+ using StartSSL and even purchased one from Dreamhost but I'm getting a 
+wide variety of errors.
+
+It doesn't help that I'm new to all of this, but I've managed to get 
+nginx setup and running nicely but I can't quite seem to move to the 
+next step; can anybody point me in the right direction of a tutorial 
+that explains things as well as this by incorporating a third party 
+certificate?
+
+Thanks in advance!</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_1311_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_1320">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_1320" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="karlozm" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/11b0e686fb4e8b7aaaea683930419fa8.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">karlozm</span>
+  
+  <span class="response-time">April 17, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">I have an error, " bind() to 0.0.0.0:80 failed (98: address already in use)</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_1320_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_1321">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_1321" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="karlozm" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/11b0e686fb4e8b7aaaea683930419fa8.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">karlozm</span>
+  
+  <span class="response-time">April 17, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">I have found the solution here http://ibnuyahya.com/nginx-emerg-bind-to-0-0-0-080-failed-98-address-already-in-use/</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_1321_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_1387">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_1387" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="alispat" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/c643841498790d566a253e140cc28611.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">alispat</span>
+  
+  <span class="response-time">April 26, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">VERY NICE. Thank you!</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_1387_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_1871">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_1871" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="mdubbs" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/268339b2b85ca0cf18c84834ec2b785e.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">mdubbs</span>
+  
+  <span class="response-time">May 20, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">You should add the following to your site server{ } section to protect against the BEAST attack.
+
+ssl_ciphers RC4:HIGH:!aNULL:!MD5;
+ssl_prefer_server_ciphers on;</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_1871_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_2401">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_2401" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="anilg3" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/7f3c730710a24bd25d05eabc3f97b279.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">anilg3</span>
+  
+  <span class="response-time">June 29, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Step 3 - Remove the
+ Passphrase instructions appear to be incomplete. It doesn't mention 
+what to do after entering second command.
+
+When I execute second command and leave the Enter pass phrase for 
+server.key.org blank, system prompts me You must type in 4 to 8191 
+characters.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_2401_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_2403">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_2403" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">June 29, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@anilg3: You must enter the passphrase you entered while creating the private key, you can't leave it blank.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_2403_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_2613">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_2613" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="tjrieves" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/a51092a42c9d5fe1e12f92b3c590cfe9.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">tjrieves</span>
+  
+  <span class="response-time">July  8, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">This helped me with
+ a new nginx + php5-fpm web server I'm making for my university. I 
+migrated a page from an old apache web server and couldn't figure out 
+how to get it to work. Turns out it was automatically redirecting to 
+https:// so all I had to do was set up an SSL key. This is the best 
+tutorial I found.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_2613_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_2956">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_2956" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="gumedempumelelo" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/b1f3972d92c5d2aef2658a302a764b7f.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">gumedempumelelo</span>
+  
+  <span class="response-time">July 28, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">I have positive Comodo SSL from Namecheap, I need CSR to have it issued. How do I get the CSR?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_2956_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_2967">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_2967" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">July 29, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@gumedempumelelo: 
+Follow this article but instead of signing the certificate yourself on 
+step 4, have namecheap sign it for you (cat yourcertificate.csr and 
+submit the contents to namecheap's SSL wizard)</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_2967_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_4380">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_4380" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="info" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/e8c059da6ca4a1a2f55a606f0f9395ed.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">info</span>
+  
+  <span class="response-time">September  7, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Worth noting, in 
+case anyone else has this issue, I had setup UFW (Ultimate FireWall) and
+ had only left open my web and SSH ports. Thus SSL on 443 or whatever 
+post you use, didn't work.
+
+Dont forget to add this rule to UFW or IPTABLES!!</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_4380_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_4890">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_4890" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="raj.amalw" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/67283abf3e13430b424e4e3e8a2233c7.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">raj.amalw</span>
+  
+  <span class="response-time">September 21, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Downloads the page on https instead of processing it on wordpress. Anyone please help</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_4890_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_4894">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_4894" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">September 21, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@raj.amalw: Copy the <pre>location ~ \.php$</pre> block from the http virtualhost to the https virtualhost and restart nginx.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_4894_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_4906">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_4906" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="raj.amalw" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/67283abf3e13430b424e4e3e8a2233c7.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">raj.amalw</span>
+  
+  <span class="response-time">September 22, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@Kamal Nasser 
+,Thanks It works only on my wordpress homepage and dashboard. When I try
+ to access any page or wordpress post via https it gives 404 Not found 
+error nginx. Please help</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_4906_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_4907">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_4907" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="raj.amalw" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/67283abf3e13430b424e4e3e8a2233c7.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">raj.amalw</span>
+  
+  <span class="response-time">September 22, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Edit . Finally got it working copied the block to https block. Thanks</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_4907_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_5823">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_5823" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="m.shoaib.mir" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/061ebbbaf52816267ba58124549d5744.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">m.shoaib.mir</span>
+  
+  <span class="response-time">October 23, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Hi Kamal,
+Every thing is set but getting the following error:
+403 Forbidden
+nginx/1.1.19.
+
+It may be due to some permission issue. All is done as mentioned in this article.
+
+Thanks</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_5823_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_5859">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_5859" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">October 24, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@m.shoaib.mir: Check nginx's error logs and see what the issue is:
+
+<pre>tail /var/log/nginx/error.log</pre></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_5859_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_5903">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_5903" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="m.shoaib.mir" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/061ebbbaf52816267ba58124549d5744.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">m.shoaib.mir</span>
+  
+  <span class="response-time">October 25, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Hi Kamal,
+
+Here is that error:
+
+Date Time [error] 10642#0: *1 directory index of "/usr/share/nginx/www/"
+ is forbidden, client: ***.***.***.***, server: example.com, request: 
+"GET / HTTP/1.1", host: "example.com"</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_5903_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_5987">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_5987" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="augustobotossi" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/8aa80c1c3d29f75011348ef515e69670.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">augustobotossi</span>
+  
+  <span class="response-time">October 28, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">I am sorry for the 
+stupid question but how do I know that the ssl certificate is working? 
+When I try to access my Wordpress site using https it shows a message 
+saying that the site is not trusted.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_5987_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_6058">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_6058" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">October 30, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@augustobotossi: It
+ is working. The browser doesn't "trust" your site as it's a self-signed
+ certificate so it can't be sure that it really is your server that it's
+ talking to. All traffic is encrypted however.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_6058_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_7186">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_7186" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="SaM5246" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/073a54a2de6d0aa16b51c7560db818c9.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">SaM5246</span>
+  
+  <span class="response-time">December  5, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Firefox says unable to connect
+
+https://123.123.123
+
+</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_7186_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_7187">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_7187" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="SaM5246" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/073a54a2de6d0aa16b51c7560db818c9.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">SaM5246</span>
+  
+  <span class="response-time">December  5, 2013</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">server {
+        listen 80 default_server;
+        listen [::]:80 default_server ipv6only=on;
+
+        root /usr/share/nginx/html;
+        index index.html index.htm index.php;
+
+        # Make site accessible from http://localhost/
+        # server_name 123.123.123;
+
+# HTTPS server
+
+ server {
+        listen 443;
+        server_name 1.123.123.45;
+
+        root /usr/share/nginx/html;
+        index index.html index.htm index.php;
+
+        ssl on;
+        ssl_certificate cert.pem;
+        ssl_certificate_key cert.key;
+
+
+        }
+</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_7187_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_8112">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_8112" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="vinvin" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/ee854565f8f667fa93e36a8b077b4642.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">vinvin</span>
+  
+  <span class="response-time">January  7, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Hello, and thank 
+you for the HowTo. I have a question however, why do you create a key 
+with a password in step 2 if the goal is to remove it in step 3 ? You 
+can create keys with no pass, removing the -des3 arg, and even easier, 
+create the CSR and the key in one command with 'openssl req -newkey 
+...'.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_8112_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_9887">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_9887" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="soc" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/a92181919cb1b7644daf82d164c99ec5.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">soc</span>
+  
+  <span class="response-time">February  8, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">This Connection is Untrusted
+
+sec_error_untrusted_issuer</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_9887_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_9977">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_9977" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="michael" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/5dfd8e29c3c081c6fa355a02fed38128.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">michael</span>
+  
+  <span class="response-time">February 10, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Has anyone 
+successfully set up their SSL certificate to work with Woocommerce + 
+Wordpress + Nginx? I'm getting a 404 error on my checkout page with 
+force ssl turned on. </div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_9977_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10021">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10021" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="4uankur" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/fcdf35b69eb2b747af3bf27c6b2fa7ff.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">4uankur</span>
+  
+  <span class="response-time">February 12, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Thanks.
+A very easy tutorial. Successfully setup SSL on wordpress.
+I faced similar issues as few others. Note that you have to copy all the
+ server configs ( which were in server block listening to port 80) to 
+new HTTPS block. </div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10021_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10470">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10470" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="andy" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/fdc3e2b401199c4b47d57eb694d1d571.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">andy</span>
+  
+  <span class="response-time">March  1, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Thanks so much for 
+the tutorial!  I'm gaining confidence everyday being my own sysadmin!  
+One problem I'm having with my test setup is I can't seem to load the 
+home page over https.  The browser simply downloads the file 
+(index.php).
+
+The test site is found here:  http://smallfrydigital.com .  
+
+For example, https://smallfrydigital.com/news loads just fine, but 
+https://smallfrydigital.com will not.
+
+I'm assuming it's a problem with my config file, but I've been over and 
+over it and can't find the problem.  Any help would be appreciated.
+
+Notes: I have both the Server 80 and Server 443 in the same file 
+(default).  
+
+Thanks again for any help!
+
+Andy</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10470_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10478">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10478" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">March  1, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@andry: You will need to copy the rest of the virtualhost to the SSL virtualhost (specifically the php location block)&gt;</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10478_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10482">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10482" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="andy" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/fdc3e2b401199c4b47d57eb694d1d571.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">andy</span>
+  
+  <span class="response-time">March  1, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Kamal - Thanks for 
+your help.  I *think* I've already done this, but could you check?  
+Here's my sites-available file: http://pastebin.com/EhwzJQSS
+
+Please let me know if you need anything else. Thanks again for your 
+help!</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10482_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10515">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10515" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="jgiroux" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/110e5b52f6c5d95b64653434cef61dae.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">jgiroux</span>
+  
+  <span class="response-time">March  3, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">hey team!  great 
+job on the article I was able to get it done exactly as it's written but
+ for some reason when I https:// into my site, all I see is an nginx 
+welcome message.  any idea what I'm doing wrong?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10515_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10540">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10540" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">March  3, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@andy: That looks fine! Let me know if it works properly. :]</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10540_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10541">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10541" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">March  3, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@jgiroux: Did you properly configure the <code>root</code> and <code>server_name</code> directives?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10541_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10576">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10576" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="andy" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/fdc3e2b401199c4b47d57eb694d1d571.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">andy</span>
+  
+  <span class="response-time">March  4, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Thanks Kamal, 
+however, there is no change to the behavior.  Hitting the home page 
+downloads the index.php file, but accessing any interior page works 
+fine.  Could there be a misconfiguration in the ngnix.conf file?  Any 
+help would be appreciated.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10576_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10588">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10588" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">March  4, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@andy: Hmm. Try restarting nginx, does that fix it? If not, can you post the output of <pre>sudo ls /etc/nginx/sites-enabled</pre> and the contents of the files in that directory?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10588_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10753">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10753" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="jgiroux" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/110e5b52f6c5d95b64653434cef61dae.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">jgiroux</span>
+  
+  <span class="response-time">March  9, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@Kamal turns out 
+the root line was the line I was missing.  It's now showing up as 
+expected (although my CDN is causing issues now too, go figure).  
+Thanks!</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10753_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_10773">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_10773" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="andy" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/fdc3e2b401199c4b47d57eb694d1d571.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">andy</span>
+  
+  <span class="response-time">March  9, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@Kamal - Thanks 
+again for your help!  Restarting nginx didn't help (I've even rebooted 
+the droplet several times in the past, no change).
+
+In /etc/nginx/sites-enabled I have the single file: <code> default </code> .
+
+Any other ideas?  I'm out of them myself!
+
+Thanks,
+
+Andy
+</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_10773_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_11125">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_11125" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="sonamagat" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/b687337655137fe7d0d79210517e5035.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">sonamagat</span>
+  
+  <span class="response-time">March 26, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Hi, i have a problem about 
+# Make site accessible from http://localhost/
+# server_name localhost;
+
+I uncomment these two lines and when i restart nginx, i have this comment:
+
+Restarting nginx: nginx: [emerg] unknown directive "Make" in /etc/nginx/sites-enabled/example:28
+nginx: configuration file /etc/nginx/nginx.conf test failed
+
+
+(Note: example:28 is    server_name localhost;)
+
+Somebody can help me? Thanks</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_11125_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_11126">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_11126" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="sonamagat" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/b687337655137fe7d0d79210517e5035.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">sonamagat</span>
+  
+  <span class="response-time">March 26, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">I'm sorry i have 
+problems to understand exactly when you say "..Additionally, make sure 
+that both of these lines are commented out in the line toward the 
+beginning of the file that says: # Make site accessible from 
+http://localhost/
+# server_name localhost;". So, my question exactly is: "#" yes or not 
+there?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_11126_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_11909">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_11909" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="mattias" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/d20b54a116e1cf59c099d2feb989c67b.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">mattias</span>
+  
+  <span class="response-time">April  2, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">I was wondering, why not just create the server.key passphrase-less from the beginning?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_11909_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_11939">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_11939" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="a.starr.b" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/c5187279a8111c09cb5960e47fdc03a8.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">a.starr.b</span>
+  
+  <span class="response-time">April  3, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@sonamagat
+
+The lines should be commented out. So, yes, that means that the "#" should be there at the beginning of the line.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_11939_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_12087">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_12087" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="fnando.vieira" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/cb5d9e9095cd41b636764a85e57ade4b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">fnando.vieira</span>
+  
+  <span class="response-time">April  9, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Ben Bishop: is Uncomplicated FireWall.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_12087_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_12798">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_12798" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="brandon.markwalder" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/4a4137db0be1814b512b101023c2e554.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">brandon.markwalder</span>
+  
+  <span class="response-time">May  5, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Will this tutorial work if nginx is installed on an Ubuntu 14.04 server?</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_12798_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_12799">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_12799" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Andrew SB" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/a6051c05ce7dca251d644a1404210973.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">Andrew SB</span>
+  
+  <span class="response-time">May  5, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@brandon: It should work with Ubuntu 14.04 The only difference should be that:
+
+<pre>root /usr/share/nginx/www;
+</pre>
+
+should now be:
+
+<pre>root /usr/share/nginx/html;
+</pre>
+
+Let us know how it goes!</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_12799_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_12867">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_12867" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="brandon.markwalder" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/4a4137db0be1814b512b101023c2e554.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">brandon.markwalder</span>
+  
+  <span class="response-time">May  7, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@Andrew SB, Thanks.
+  I actually ended up combing instructions from this tutorial and the 
+SLL Certificate on Apache for Ubuntu 14.04 tutorial.  
+
+'sudo mkdir /etc/nginx/ssl'
+
+'sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout 
+/etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt'
+
+Then added appropriate location block info to the https section of the 
+sites-enabled file.  I also locked down access to the certs.  Worked 
+like a charm.</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_12867_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_13143">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_13143" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="ziemek.wolski" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/d8959977d3366483c5496f44eda92fb4.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">ziemek.wolski</span>
+  
+  <span class="response-time">May 19, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Please update the information to include a check for heartbleed bug.
+http://blog.matthewdfuller.com/2014/04/how-to-fix-openssl-heart-bleed-bug-on.html
+</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_13143_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_13872">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_13872" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="damanka2001" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/f44092a9bd7b15db281f0eacf45fcaa9.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">damanka2001</span>
+  
+  <span class="response-time">June 11, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">Please help! I'm 
+testing a site I'm developing on a localhost, http://127.0.0.1/Senior/. I
+ don't know where to insert this address in the 
+.../site-available/example page.
+
+Anytime I try to restart nginx the following error message appears:
+
+Restarting nginx: nginx: [warn] server name "http://127.0.0.1/Senior/" 
+has suspicious symbols in /etc/nginx/sites-enabled/example:102
+nginx: [emerg] SSL_CTX_use_certificate_chain_file("/etc/nginx/cert.pem")
+ failed (SSL: error:02001002:system library:fopen:No such file or 
+directory error:20074002:BIO routines:FILE_CTRL:system lib 
+error:140DC002:SSL routines:SSL_CTX_use_certificate_chain_file:system 
+lib)
+nginx: configuration file /etc/nginx/nginx.conf test failed
+
+Thanks for your help.
+</div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_13872_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_13889">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_13889" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Andrew SB" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/a6051c05ce7dca251d644a1404210973.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">Andrew SB</span>
+  
+  <span class="response-time">June 12, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body legacy">@damanka2001: Your Nginx config should look something like:
+<pre>server {
+        listen 443;
+        server_name localhost;
+
+        root /usr/share/nginx/www;
+        index index.html index.htm;
+
+        location /Senior {
+            root /path/to/your/content;
+        }
+
+        ssl on;
+        ssl_certificate /etc/nginx/ssl/server.crt;
+        ssl_certificate_key /etc/nginx/ssl/server.key; 
+}
+</pre></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_13889_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_14869">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_14869" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="mimchiang" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/d346e9ac399d2bf1cf42e4a2e777db2d.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">mimchiang</span>
+  
+  <span class="response-time">July 11, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body "><p>Hi, can someone show 
+me to how to set up a third party SSL certificate for apache2/ubuntu 
+setup? I almost have it, except, when I visit https://mysite.com I get 
+"SSL Error, self-signed, untrusted, etc", probably from when I set up a 
+self-signed cert before. I followed steps 1-3, then went elsewhere to 
+get the mysite.ca-bundle and mysite.crt and copied them to 
+/etc/nginx/ssl/ folder, then continued steps 5-6 making appropriate 
+modifications to my nginx config. Any help would be much appreciated, 
+thanks!</p></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_14869_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_14877">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_14877" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="hawk" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/054d639f855db7c995fe6e605bae3cf3.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">hawk</span>
+  
+  <span class="response-time">July 11, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body "><p>The easy way to get a private key and corresponding CSR:<br><a href="https://www.sslpoint.com/generate-csr/" title="Generate CSR Online">https://www.sslpoint.com/generate-csr/</a></p>
+
+<p>I have also ordered twice with them - SSL certificate were issued really fast and their support is also excellent.</p>
+
+<p>With nginx, do not forget to append intermediate certificates to your server certificate - otherwise your browser will fetch an <strong>UNTRUSTED</strong> error message:</p>
+
+<pre><code>ssl_certificate /path/to/server.crt
+
+Order of certificates in server.crt:
+1 server certificate 
+2 intermediate certificate
+3 CA root certificate
+</code></pre></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_14877_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_14995">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_14995" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">July 14, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body "><p>@mimchiang: Can you pastebin your current nginx config?</p></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_14995_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_15890">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_15890" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="selcukv" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/77ba119960abff23861c7e080b33a8c2.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">selcukv</span>
+  
+  <span class="response-time">August  1, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body "><p>I stucked at Step 5 with "No such file.." error.</p>
+
+<p>I had installed VestaCP previously with nginx, maybe that's why.</p>
+
+<p>The only folders I have in nginx folder are: conf.d/ and ssl/</p>
+
+<p>What should I do?</p>
+
+<p>Thank you in advance.</p></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_15890_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_15936">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_15936" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">August  4, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body "><p>@selcukv: You can 
+create an SSL certificate using VestaCP by checking the "SSL Support" 
+box while adding your domain or editing an existing domain:</p>
+
+<p><a href="https://kmlnsr.me/Screenshot%20from%202014-08-04%2016%3A08%3A37-G03Thdw4pXU4LqXIWu8SKSnAz6PkjMtH.png">New domain (under Advanced Options)</a><br><a href="https://kmlnsr.me/Screenshot%20from%202014-08-04%2016%3A08%3A21-ofZA9ZXBKooqWYOPXmOytoCa9S1cFEpf.png">Existing domain</a></p></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_15936_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_16038">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_16038" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="halsaifm1" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/2c467f28d85a321a95214845cc3c3f60.png" height="80" width="80">
+  </div>
+
+  <span class="response-name">halsaifm1</span>
+  
+  <span class="response-time">August  7, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body "><p>im stuck at step five i copied <code>cp /etc/nginx/sites-available/default /etc/nginx/sites-available/example</code> and when i opend the example i couldnt find the #https</p>
+
+<pre><code>server {
+        listen   80;
+        root /usr/share/nginx/www;
+        index index.php index.html index.htm;
+        server_name alsaif.info;
+        location / {
+                try_files $uri $uri/ /index.html;
+        }
+        error_page 404 /404.html;
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+              root /usr/share/nginx/www;
+        }
+   # pass the PHP scripts to FastCGI server listening on /var/run/php5-fpm$
+        location ~ \.php$ {
+                try_files $uri =404;
+                fastcgi_pass unix:/var/run/php5-fpm.sock;
+                fastcgi_index index.php;
+                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_nam$
+                include fastcgi_params;
+        }
+}
+</code></pre></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_16038_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+      <li class="response   " id="comment_16071">
+  <div class="moderation-actions small comment-moderation">
+    <ul id="moderate_16071" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="response-avatar">
+    <img alt="Kamal Nasser" class="avatar avatar-small" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/215b6bc15b5cf772f9c4477a3ba0544b.jpeg" height="80" width="80">
+  </div>
+
+  <span class="response-name">Kamal Nasser</span>
+  
+  <span class="response-time">August  7, 2014</span>
+
+  <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+      <div class="response-body content-body "><p>@halsaifm1: Simply duplicate your current config and replace <code>listen 80;</code> with:</p>
+
+<pre><code class="nginx hljs ">        <span class="hljs-title">listen</span> <span class="hljs-number">443</span>;
+
+        <span class="hljs-title">ssl</span> <span class="hljs-built_in">on</span>;
+        <span class="hljs-title">ssl_certificate</span> /etc/nginx/ssl/server.crt;
+        <span class="hljs-title">ssl_certificate_key</span> /etc/nginx/ssl/server.key; 
+</code></pre>
+
+<p>Then proceed with the tutorial, skipping Step 5.</p></div>
+
+  <div class="content-actions">
+  </div>
+
+
+  <div class="moderation-actions comment-moderation icons">
+    <ul id="comment_16071_icons" class="">
+      
+
+
+
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+</li>
+
+  </ul>
+</div>
+
+
+  <div id="reply_anchor_tutorial_51"></div>
+
+    <div class="response no-avatar  response-form">
+  <div class="response-user-details">
+      <div class="flash notice log-in-notice"><a href="https://www.digitalocean.com/community/auth/digitalocean">Log In</a> to comment</div>
+  </div>
+
+  <div class="js-display-on-error flash error hidden"></div>
+  <form accept-charset="UTF-8" action="/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04/comments" class="content-form disabled-form" data-remote="true" id="new_comment" method="post"><div style="display:none"><input disabled="disabled" name="utf8" value="✓" type="hidden"></div>
+    <div style="height: auto;" class="meltdown_wrap"><div class="meltdown_topmargin"></div><div class="meltdown_bar"><div class="preview-header">Markdown Preview</div><ul class="meltdown_controls meltdown_controls_main"><li data-original-title="Bold" title="" class="meltdown_control-bold meltdown_control meltdown_controlbutton disabled"><span unselectable="on">B</span></li><li data-original-title="Italics" title="" class="meltdown_control-italics meltdown_control meltdown_controlbutton disabled"><span unselectable="on">I</span></li><li data-original-title="Header 1" title="" class="meltdown_control-h1 meltdown_control meltdown_controlbutton disabled"><span unselectable="on">H1</span></li><li data-original-title="Header 2" title="" class="meltdown_control-h2 meltdown_control meltdown_controlbutton disabled"><span unselectable="on">H2</span></li><li data-original-title="Header 3" title="" class="meltdown_control-h3 meltdown_control meltdown_controlbutton disabled"><span unselectable="on">H3</span></li><li data-original-title="Unordered List" title="" class="meltdown_control-ul meltdown_control meltdown_controlbutton disabled"><span unselectable="on">UL</span></li><li data-original-title="Ordered List" title="" class="meltdown_control-ol meltdown_control meltdown_controlbutton disabled"><span unselectable="on">OL</span></li><li data-original-title="Link" title="" class="meltdown_control-link meltdown_control meltdown_controlbutton disabled"><span unselectable="on">Link</span></li><li data-original-title="Code" title="" class="meltdown_control-code meltdown_control meltdown_controlbutton disabled"><span unselectable="on">Code</span></li><li data-original-title="Highlight" title="" class="meltdown_control-highlight meltdown_control meltdown_controlbutton disabled"><span unselectable="on">Highlight</span></li><li data-original-title="Table" title="" class="meltdown_control-table meltdown_control meltdown_controlbutton disabled"><span unselectable="on">Table</span></li></ul><ul class="meltdown_controls meltdown_controls_preview"><li data-original-title="Toggle Preview" title="" class="meltdown_control-preview meltdown_control meltdown_controlbutton disabled"><span>Preview</span></li></ul></div><div class="meltdown_editor-wrap"><div class="meltdown_editor-deco"><textarea style="overflow: hidden; word-wrap: break-word; resize: none; height: 120px;" disabled="disabled" class="js-comment-content meltdown_editor" data-markdown="true" id="comment_content" name="comment[content]" placeholder="Leave a comment..."></textarea></div></div><div class="meltdown_preview-wrap"><div class="meltdown_preview-wrap2"><div class="meltdown_preview-error-message">Could not load preview. <a href="#">Try again</a></div><div class="meltdown_preview-loading-message">Loading preview...</div><div class="meltdown_preview content-body"></div></div></div><div class="meltdown_bottommargin"></div></div>
+
+    <button disabled="disabled" type="submit" id="submit-comment" data-disable-with="Submitting...">
+      Submit Comment
+      <span class="icon-arrow-right"></span>
+    </button>
+</form></div>
+</div>
+    </div>
+
+    <div id="creative-commons">
+      <div class="inner">
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/88x31.png"></a><br>This work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+      </div>
+    </div>
+  </div>
+</div>
+      	</div>
+
+      	<footer id="footer">
+  <div class="wrapper">
+    <div id="column-main" class="footer-column">
+
+      <a class="cloud-icon" href="https://www.digitalocean.com/"></a>
+
+      <div id="copyright">
+
+        Copyright © 2014<br>
+        DigitalOcean ™ Inc.
+      </div>
+      <a href="http://nytm.org/made-in-nyc/" id="made-in-ny">Proudly Made in NY</a>
+
+      <div id="privacy">
+        <a href="https://www.digitalocean.com/legal/terms/">Terms, Privacy, &amp; Copyright</a>
+        <a href="https://www.digitalocean.com/security/">Security</a>
+      </div>
+
+    </div>
+
+    <div id="column-product" class="footer-column">
+      <h3>Product</h3>
+      <ul>
+        <li><a href="https://www.digitalocean.com/pricing/">Pricing</a></li>
+        <li><a href="https://www.digitalocean.com/features/control-panel/">Features</a></li>
+        <li><a href="https://www.digitalocean.com/customers/">Customers</a></li>
+        <li><a href="https://www.digitalocean.com/features/one-click-apps/">One-Click Apps</a></li>
+        <li><a href="https://developers.digitalocean.com/">API</a></li>
+      </ul>
+    </div>
+
+    <div id="column-company" class="footer-column">
+      <h3>Company</h3>
+      <ul>
+        <li><a href="https://www.digitalocean.com/company/about/">About Us</a></li>
+        <li><a href="https://www.digitalocean.com/company/blog/">Blog</a></li>
+        <li><a href="https://www.digitalocean.com/company/careers/">Jobs</a></li>
+        <li><a href="https://www.digitalocean.com/company/press/">Press</a></li>
+        <li><a href="https://www.digitalocean.com/company/logos-and-badges/">Logos &amp; Badges</a></li>
+        <li><a href="https://www.digitalocean.com/company/events/">Events</a></li>
+        <li><a href="https://www.digitalocean.com/company/contact/" target="_blank">Contact</a></li>
+      </ul>
+    </div>
+
+    <div id="column-help" class="footer-column">
+      <h3>Help</h3>
+      <ul>
+        <li><a href="https://www.digitalocean.com/help/">Knowledgebase</a></li>
+        <li><a href="https://www.digitalocean.com/help/getting-started/setting-up-your-server/">Getting Started</a></li>
+        <li><a href="https://digitalocean.uservoice.com/forums/136585-digitalocean" target="_blank">Feedback</a></li>
+        <li><a href="https://www.digitalocean.com/referral-program/">Referral Program</a></li>
+        <li><a href="https://status.digitalocean.com/" target="_blank">Network Status</a></li>
+        <li><a href="https://www.digitalocean.com/help/">FAQ</a></li>
+      </ul>
+    </div>
+
+    <div id="column-community" class="footer-column">
+      <h3>Community</h3>
+      <ul>
+        <li><a href="https://www.digitalocean.com/community">Dashboard</a></li>
+        <li><a href="https://www.digitalocean.com/community/overview">Overview</a></li>
+        <li><a href="https://www.digitalocean.com/community/tutorials">Tutorials</a></li>
+        <li><a href="https://www.digitalocean.com/community/questions">Questions</a></li>
+        <li><a href="https://www.digitalocean.com/community/projects">Projects</a></li>
+        <li><a href="https://www.digitalocean.com/community/tutorials/digitalocean-community-article-suggestions-and-ideas">Tutorial Suggestions</a></li>
+        <li><a href="https://www.digitalocean.com/community/get-paid-to-write">Get Paid to Write</a></li>
+      </ul>
+    </div>
+
+    <div id="column-connect" class="footer-column">
+      <h3>Connect</h3>
+      <ul>
+        <li class="twitter"><a href="https://twitter.com/digitalocean" target="_blank">Twitter</a></li>
+        <li class="facebook"><a href="https://www.facebook.com/DigitalOceanCloudHosting" target="_blank">Facebook</a></li>
+        <li class="linkedin"><a href="http://www.linkedin.com/company/digitalocean" target="_blank">LinkedIn</a></li>
+        <li class="google"><a href="https://plus.google.com/+Digitalocean/posts" target="_blank">Google+</a></li>
+        <li class="instagram"><a href="http://instagram.com/thedigitalocean" target="_blank">Instagram</a></li>
+        <li class="meetup"><a href="http://www.meetup.com/DigitalOcean_Community/" target="_blank">Meetup</a></li>
+      </ul>
+    </div>
+
+    <div id="droplet-count">
+      <span class="count">2,224,955</span> Droplets Launched
+    </div>
+  </div>
+</footer>
+
+      </div>
+    </div>
+
+    <script src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/application-68a9a038abde16abd3d5e0d7e9329050.js"></script>
+    
+    <script type="text/javascript" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/conversion.js">
+</script><img alt="" src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/a.gif" border="0" height="1" width="1">
+<noscript>
+<div style="display:hidden;position:absolute;top:-1000px;">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://www.googleadservices.com/pagead/conversion/1010666955/?value=0&amp;label=g5d3CM2C9QIQy5v24QM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<script src="How%20To%20Create%20a%20SSL%20Certificate%20on%20nginx%20for%20Ubuntu%2012.04%20%7C%20DigitalOcean_files/oct.js" type="text/javascript"></script>
+<script type="text/javascript">twttr.conversion.trackPid('l4etp');</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://analytics.twitter.com/i/adsct?txn_id=l4etp&p_id=Twitter" />
+<img height="1" width="1" style="display:none;" alt="" src="//t.co/i/adsct?txn_id=l4etp&p_id=Twitter" />
+</noscript>
+
+<script>
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.async=true;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
+<script type="text/javascript">
+  adroll_adv_id = "S4BPDI4QWNB57PEKEZSLIP";
+  adroll_pix_id = "4IDGVTPEAFC4TM2QKYNQ53";
+  (function () {
+  var oldonload = window.onload;
+  window.onload = function(){
+     __adroll_loaded=true;
+     var scr = document.createElement("script");
+     var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
+     scr.setAttribute('async', 'true');
+     scr.type = "text/javascript";
+     scr.src = host + "/j/roundtrip.js";
+     ((document.getElementsByTagName('head') || [null])[0] ||
+      document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
+     if(oldonload){oldonload()}};
+  }());
+</script>
+<script>
+  setTimeout(function(){var a=document.createElement("script");
+  var b=document.getElementsByTagName("script")[0];
+  a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0020/5850.js?"+Math.floor(new Date().getTime()/3600000);
+  a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+</script>
+  
+<textarea id="autosizejs" class="autosizejs" tabindex="-1" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px none; padding: 0px; box-sizing: content-box; word-wrap: break-word; height: 0px ! important; min-height: 0px ! important; overflow: hidden; transition: none 0s ease 0s ; font-family: 'proxima-nova',sans-serif; font-size: 18px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; word-spacing: 0px; text-indent: 0px; line-height: 22px; width: 743px;">Leave a comment...
+</textarea></body></html>

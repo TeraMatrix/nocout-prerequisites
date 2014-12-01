@@ -1,0 +1,2 @@
+var bi_ver = '130522208585321172', biSiteUrl = '', biUtmaPrefix = '', biStartTime=635447899754184230;
+(function () {var bi = document.createElement('script'); bi.type = 'text/javascript'; bi.async = true;bi.src = vaJsHost + vaJsDomain + '/Scripts/va.js?bi_ver=' + bi_ver;var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(bi, s);})();

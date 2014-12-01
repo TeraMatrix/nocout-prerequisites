@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+   <title> [Check_mk (english)] OMD HA Setups
+   </title>
+   <link rel="Index" href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/index.html">
+   <link rel="made" href="mailto:checkmk-en%40lists.mathias-kettner.de?Subject=Re%3A%20%5BCheck_mk%20%28english%29%5D%20OMD%20HA%20Setups&amp;In-Reply-To=%3C64B5C6E99325664285ACFEAF741D281403D35E65%40QEO40072.de.t-online.corp%3E">
+   <meta name="robots" content="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+   <link rel="Previous" href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/007768.html">
+   <link rel="Next" href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/007769.html">
+ </head>
+ <body bgcolor="#ffffff">
+   <h1>[Check_mk (english)] OMD HA Setups</h1>
+    <b>Gaber, Michael</b> 
+    <a href="mailto:checkmk-en%40lists.mathias-kettner.de?Subject=Re%3A%20%5BCheck_mk%20%28english%29%5D%20OMD%20HA%20Setups&amp;In-Reply-To=%3C64B5C6E99325664285ACFEAF741D281403D35E65%40QEO40072.de.t-online.corp%3E" title="[Check_mk (english)] OMD HA Setups">m.gaber at telekom.de
+       </a><br>
+    <i>Tue Nov 20 12:18:36 CET 2012</i>
+    <p></p><ul>
+        <li>Previous message: <a href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/007768.html">[Check_mk (english)] OMD HA Setups
+</a></li>
+        <li>Next message: <a href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/007769.html">[Check_mk (english)] [Bug]: WATO: Users &amp; Contacts: rejects email	addresses with a +
+</a></li>
+         <li> <b>Messages sorted by:</b> 
+              <a href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/date.html#7777">[ date ]</a>
+              <a href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/thread.html#7777">[ thread ]</a>
+              <a href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/subject.html#7777">[ subject ]</a>
+              <a href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/author.html#7777">[ author ]</a>
+         </li>
+       </ul>
+    <hr>  
+<!--beginarticle-->
+<pre>This would interest me as well, but i can give you my "solution":
+
+We are running two identical servers and installed the OMD on a shared NFS partition.
+Once a server fails we can manually just start the site on the other host.
+
+Monitoring the active server works either via a minimalist site that only checks the active host via the agent omd check or via a cronjob which sends out an email once the main server fails.
+
+Failover is manual but so far we had no problem with this setup
+
+Regards Michael
+
+-----Original Message-----
+From: <a href="http://lists.mathias-kettner.de/mailman/listinfo/checkmk-en">checkmk-en-bounces at lists.mathias-kettner.de</a> [mailto:<a href="http://lists.mathias-kettner.de/mailman/listinfo/checkmk-en">checkmk-en-bounces at lists.mathias-kettner.de</a>] On Behalf Of Flaherty, Patrick
+Sent: Monday, November 19, 2012 6:10 PM
+To: &lt;<a href="http://lists.mathias-kettner.de/mailman/listinfo/checkmk-en">checkmk-en at lists.mathias-kettner.de</a>&gt;
+Subject: [Check_mk (english)] OMD HA Setups
+
+Does anyone have any guidance for check_mk / OMD HA setups? I only have two nodes to work with, so active / passive seems reasonable. I was considering putting an OMD setup on a drbd partition and floating the running instance with heartbeat.
+
+Any better solutions out there?
+
+Patrick
+
+_______________________________________________
+checkmk-en mailing list
+<a href="http://lists.mathias-kettner.de/mailman/listinfo/checkmk-en">checkmk-en at lists.mathias-kettner.de</a>
+<a href="http://lists.mathias-kettner.de/mailman/listinfo/checkmk-en">http://lists.mathias-kettner.de/mailman/listinfo/checkmk-en</a>
+</pre>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <hr>
+    <p></p><ul>
+        <!--threads-->
+	<li>Previous message: <a href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/007768.html">[Check_mk (english)] OMD HA Setups
+</a></li>
+	<li>Next message: <a href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/007769.html">[Check_mk (english)] [Bug]: WATO: Users &amp; Contacts: rejects email	addresses with a +
+</a></li>
+         <li> <b>Messages sorted by:</b> 
+              <a href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/date.html#7777">[ date ]</a>
+              <a href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/thread.html#7777">[ thread ]</a>
+              <a href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/subject.html#7777">[ subject ]</a>
+              <a href="http://lists.mathias-kettner.de/pipermail/checkmk-en/2012-November/author.html#7777">[ author ]</a>
+         </li>
+       </ul>
+
+<hr>
+<a href="http://lists.mathias-kettner.de/mailman/listinfo/checkmk-en">More information about the checkmk-en
+mailing list</a><br>
+
+</body></html>

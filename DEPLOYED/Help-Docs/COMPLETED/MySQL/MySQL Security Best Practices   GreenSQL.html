@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)http://www.greensql.com/content/mysql-security-best-practices-hardening-mysql-tips -->
+<html lang="en" dir="ltr" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:og="http://ogp.me/ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:sioct="http://rdfs.org/sioc/types#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" class="js"><!--<![endif]--><head profile="http://www.w3.org/1999/xhtml/vocab"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+<link rel="shortlink" href="http://www.greensql.com/node/93">
+<meta property="og:site_name" content="GreenSQL">
+<meta property="og:type" content="article">
+<link rel="shortcut icon" href="./MySQL Security Best Practices   GreenSQL_files/favicon.ico" type="image/png">
+<meta property="og:url" content="http://www.greensql.com/content/mysql-security-best-practices-hardening-mysql-tips">
+<link rel="canonical" href="./MySQL Security Best Practices   GreenSQL_files/MySQL Security Best Practices   GreenSQL.html">
+<meta name="copyright" content="GreenSQL Database Security Vendor">
+<meta content="Articles" about="/content/mysql-security-best-practices-hardening-mysql-tips" property="dc:title">
+<meta property="og:title" content="MySQL Security Best Practices">
+<meta name="abstract" content="Database Security/Unified Database Security/Database Ac">
+<meta name="keywords" content="database, firewall,audit,pci,sox,security,database security, sql injection, sql server, sql server security, mysql, microsoft windows azure sql, amazon rds, postgresql, application security, database monitoring">
+<meta name="generator" content="GreenSQL CMS">
+        <title>MySQL Security Best Practices  | GreenSQL</title>
+
+                    <meta name="MobileOptimized" content="width">
+            <meta name="HandheldFriendly" content="true">
+            <meta name="viewport" content="width=device-width">
+        		
+        <meta http-equiv="cleartype" content="on">
+        <link href="./MySQL Security Best Practices   GreenSQL_files/css" rel="stylesheet" type="text/css">
+        <style>@import url("http://www.greensql.com/modules/system/system.base.css?nahx3j");
+@import url("http://www.greensql.com/modules/system/system.messages.css?nahx3j");
+@import url("http://www.greensql.com/modules/system/system.theme.css?nahx3j");</style>
+<style>@import url("http://www.greensql.com/sites/all/modules/date/date_api/date.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/modules/date/date_popup/themes/datepicker.1.7.css?nahx3j");
+@import url("http://www.greensql.com/modules/field/theme/field.css?nahx3j");
+@import url("http://www.greensql.com/modules/node/node.css?nahx3j");
+@import url("http://www.greensql.com/modules/search/search.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/modules/simpleads/simpleads.css?nahx3j");
+@import url("http://www.greensql.com/modules/user/user.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/modules/views/css/views.css?nahx3j");</style>
+<style>@import url("http://www.greensql.com/sites/all/modules/colorbox/styles/default/colorbox_style.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/modules/ctools/css/ctools.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/modules/megamenu/megamenu.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/modules/megamenu/megamenu-skins.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/modules/nice_menus/nice_menus.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/modules/nice_menus/nice_menus_default.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/modules/field_collection/field_collection.theme.css?nahx3j");</style>
+<style>@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/normalize.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/wireframes.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/layouts/fixed-width.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/tabs.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/pages.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/blocks.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/navigation.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/views-styles.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/nodes.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/comments.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/forms.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/fields.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/print.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/alexey.css?nahx3j");
+@import url("http://www.greensql.com/sites/all/themes/zen/zen-internals/css/gd.css?nahx3j");</style>
+        <script type="text/javascript" async="" src="./MySQL Security Best Practices   GreenSQL_files/bi.js"></script><script type="text/javascript" async="" src="./MySQL Security Best Practices   GreenSQL_files/BrightInfoVersion.aspx"></script><script type="text/javascript" async="" src="./MySQL Security Best Practices   GreenSQL_files/574546af-24a6-4a18-9787-73c22addeb28.js"></script><script type="text/javascript" async="" src="./MySQL Security Best Practices   GreenSQL_files/conversion_async.js"></script><script type="text/javascript" async="" src="./MySQL Security Best Practices   GreenSQL_files/ga.js"></script><script type="text/javascript" async="" src="./MySQL Security Best Practices   GreenSQL_files/munchkin.js"></script><script async="" src="./MySQL Security Best Practices   GreenSQL_files/gtm.js"></script><script src="./MySQL Security Best Practices   GreenSQL_files/jquery.js"></script><style type="text/css"></style>
+<script src="./MySQL Security Best Practices   GreenSQL_files/jquery.once.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/drupal.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/admin_devel.js"></script>
+<script src="http://www.greensql.com/sites/all/modules/simpleads/simpleads.js?nahx3j"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/jquery.colorbox-min.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/colorbox.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/colorbox_style.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/colorbox_load.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/colorbox_inline.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/megamenu.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/superfish.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/jquery.bgiframe.min.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/jquery.hoverIntent.minified.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/nice_menus.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/okt.min.js"></script>
+<script>jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"zen","theme_token":"ysNkD_H2Az4cxBWW8mmV3gK9mx1QRn3_GqQ_Y8smY8g","js":{"\/\/munchkin.marketo.net\/munchkin.js":1,"0":1,"sites\/all\/modules\/green_integration\/okto.js":1,"sites\/all\/modules\/green_custom\/js\/insightera.js":1,"1":1,"2":1,"misc\/jquery.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/admin_menu\/admin_devel\/admin_devel.js":1,"sites\/all\/modules\/simpleads\/simpleads.js":1,"sites\/all\/libraries\/colorbox\/jquery.colorbox-min.js":1,"sites\/all\/modules\/colorbox\/js\/colorbox.js":1,"sites\/all\/modules\/colorbox\/styles\/default\/colorbox_style.js":1,"sites\/all\/modules\/colorbox\/js\/colorbox_load.js":1,"sites\/all\/modules\/colorbox\/js\/colorbox_inline.js":1,"sites\/all\/modules\/megamenu\/megamenu.js":1,"sites\/all\/modules\/nice_menus\/superfish\/js\/superfish.js":1,"sites\/all\/modules\/nice_menus\/superfish\/js\/jquery.bgiframe.min.js":1,"sites\/all\/modules\/nice_menus\/superfish\/js\/jquery.hoverIntent.minified.js":1,"sites\/all\/modules\/nice_menus\/nice_menus.js":1,"https:\/\/okt.to\/okt.min.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"sites\/all\/modules\/date\/date_api\/date.css":1,"sites\/all\/modules\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"sites\/all\/modules\/simpleads\/simpleads.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/colorbox\/styles\/default\/colorbox_style.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/megamenu\/megamenu.css":1,"sites\/all\/modules\/megamenu\/megamenu-skins.css":1,"sites\/all\/modules\/nice_menus\/nice_menus.css":1,"sites\/all\/modules\/nice_menus\/nice_menus_default.css":1,"sites\/all\/modules\/field_collection\/field_collection.theme.css":1,"sites\/all\/themes\/zen\/system.menus.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/normalize.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/wireframes.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/layouts\/fixed-width.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/page-backgrounds.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/tabs.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/pages.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/blocks.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/navigation.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/views-styles.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/nodes.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/comments.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/forms.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/fields.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/print.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/alexey.css":1,"sites\/all\/themes\/zen\/zen-internals\/css\/gd.css":1}},"colorbox":{"opacity":"0.85","current":"{current} of {total}","previous":"\u00ab Prev","next":"Next \u00bb","close":"Close","maxWidth":"98%","maxHeight":"98%","fixed":true},"jcarousel":{"ajaxPath":"\/jcarousel\/ajax\/views"},"megamenu":{"timeout":"500","sizewait":"250","hoverwait":"400"},"nice_menus_options":{"delay":800,"speed":1}});</script>
+                    <!--[if lt IE 9]>
+            <script src="/sites/all/themes/zen/js/html5-respond.js"></script>
+            <![endif]-->
+        				
+    <style type="text/css">body .SnapABug_Button{cursor:pointer;cursor:hand;overflow:hidden;position:fixed;_position:absolute;display:block;bottom:0px;left:100%;_left:expression(eval(document.body.scrollLeft)+1439);z-index:2147000000;margin:0;padding:0;border-collapse:collapse;border-spacing:0;border:none;outline:none;font-size:0px;line-height:0px;} @media print{body .SnapABug_Button{display:none;}}</style><style id="SnapABug_Style" type="text/css">#SnapABug_WP, #SnapABug_WP div, #SnapABug_WP span, #SnapABug_WP iframe, #SnapABug_WP h1, #SnapABug_WP h2, #SnapABug_WP h3, #SnapABug_WP h4, #SnapABug_WP h5, #SnapABug_WP h6, #SnapABug_WP hr, #SnapABug_WP p, #SnapABug_WP a, #SnapABug_WP big, #SnapABug_WP em, #SnapABug_WP img, #SnapABug_WP q, #SnapABug_WP small, #SnapABug_WP strong, #SnapABug_WP b, #SnapABug_WP u, #SnapABug_WP i, #SnapABug_WP fieldset, #SnapABug_WP input, #SnapABug_WP input[type="submit"], #SnapABug_WP button, #SnapABug_WP textarea, #SnapABug_WP form, #SnapABug_WP label{ margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; float: none;max-width: none; max-height: none; letter-spacing: normal; -webkit-transform: none; -moz-transform: none; -ms-transform: none; -o-transform: none; transform: none; -webkit-transition-property: none; -moz-transition-property: none; -o-transition-property: none; transition: none;-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;font-feature-settings: normal; -webkit-font-feature-settings: normal; -moz-font-feature-settings: normal; -ms-font-feature-settings: normal; -o-font-feature-settings: normal;  } #SnapABug_WP *:before, #SnapABug_WP *:after{ display:none; } </style><script type="text/javascript" src="./MySQL Security Best Practices   GreenSQL_files/analytics.js"></script><link rel="stylesheet" type="text/css" href="./MySQL Security Best Practices   GreenSQL_files/bi-animate.css"><link rel="stylesheet" type="text/css" href="./MySQL Security Best Practices   GreenSQL_files/bi-new.css"><link rel="stylesheet" type="text/css" href="./MySQL Security Best Practices   GreenSQL_files/bi-custom.css"><script id="yui__dyn_0" type="text/javascript" src="./MySQL Security Best Practices   GreenSQL_files/ServiceGetConfig"></script></head>
+    <body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-93 node-type-article section-content">
+        
+  <!-- Google Tag Manager -->
+<noscript>&lt;iframe src="//www.googletagmanager.com/ns.html?id=GTM-KR5L"
+height="0" width="0" style="display:none;visibility:hidden"&gt;&lt;/iframe&gt;</noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KR5L');</script>
+<!-- End Google Tag Manager -->
+              <p id="skip-link">
+                <a href="http://www.greensql.com/content/mysql-security-best-practices-hardening-mysql-tips#main-menu" class="element-invisible element-focusable">Jump to navigation</a>
+            </p>
+                		  <header id="header" role="banner">
+<div class="inner-header">
+
+          <a href="http://www.greensql.com/" title="Home" rel="home" id="logo"><img src="./MySQL Security Best Practices   GreenSQL_files/logo1.png" alt="Home"></a>
+    
+    
+    
+      <div class="region region-header">
+    <div id="block-green-custom-green-front-social-lnks-top" class="block block-green-custom first odd">
+
+      
+  
+<a href="http://www.linkedin.com/company/greensql" class="linkedin-link"> </a>
+<a href="http://twitter.com/#!/greensql" class="twitter-link"> </a>
+<a href="http://blog.greensql.com/" class="w-link"> </a>
+<a href="http://www.youtube.com/user/GreenSQL" class="youtube-link"> </a>
+<a href="http://www.facebook.com/pages/GreenSQL/152022084849960" class="facebook-link last"> </a>
+</div><!-- /.block -->
+<div id="block-megamenu-main-menu" class="block block-megamenu even">
+
+      
+  <ul id="megamenu-main-menu" class="megamenu-menu columnar megamenu-skin-minimal"><li id="megamenu-mlid-405" class="megamenu-parent megamenu-parent-0 odd half-1 leaf-0 first menu-405  first"><h2 class="megamenu-parent-title"><a href="http://www.greensql.com/product/unified-database-security">Products</a></h2><ul class="megamenu-bin megamenu-slots-columnar" style="top: -9000px; left: 0px; width: 611px;"><li id="megamenu-mlid-625" class="megamenu-slot megamenu-slot-0 odd half-1 leaf-0 first  first"><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/product/unified-database-security">Products</a></h3><ul class="megamenu-items "><li id="megamenu-mlid-1472" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first"><a href="http://www.greensql.com/auto-discovery-sensitive-data">Auto-Discovery Sensitive Data</a></li>
+<li id="megamenu-mlid-1473" class="megamenu-item megamenu-item-1 even half-1 leaf-1 "><a href="http://www.greensql.com/database-access-control">Database Access Control</a></li>
+<li id="megamenu-mlid-1475" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 "><a href="http://www.greensql.com/database-activity-monitoring-dam">Database Activity Monitoring</a></li>
+<li id="megamenu-mlid-1471" class="megamenu-item megamenu-item-3 even half-1 leaf-3 "><a href="http://www.greensql.com/database-compliance">Database Compliance</a></li>
+<li id="megamenu-mlid-1477" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 "><a href="http://www.greensql.com/database-firewall">Database Firewall</a></li>
+<li id="megamenu-mlid-1476" class="megamenu-item megamenu-item-5 even half-2 leaf-5 "><a href="http://www.greensql.com/dynamic-data-masking">Dynamic Data Masking</a></li>
+<li id="megamenu-mlid-1474" class="megamenu-item megamenu-item-6 odd half-2 leaf-6 last  last"><a href="http://www.greensql.com/sql-injection-prevention">SQL Injection Prevention</a></li>
+</ul></li>
+<li id="megamenu-mlid-1478" class="megamenu-slot megamenu-slot-1 even half-1 leaf-1 "><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/product/greensql-amazon-web-services">Cloud </a></h3><ul class="megamenu-items "><li id="megamenu-mlid-1386" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first"><a href="http://www.greensql.com/product/greensql-amazon-web-services">GreenSQL for AWS</a></li>
+<li id="megamenu-mlid-1479" class="megamenu-item megamenu-item-1 even half-2 leaf-1 last  last"><a href="http://www.greensql.com/product/securing-windows-azure-sql">GreenSQL for SQL Azure</a></li>
+</ul></li>
+<li id="megamenu-mlid-626" class="megamenu-slot megamenu-slot-2 odd half-2 leaf-2 last  last"><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/database-compliance">Compliance</a></h3><ul class="megamenu-items "><li id="megamenu-mlid-1385" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first"><a href="http://www.greensql.com/article/greensql-pci">GreenSQL for PCI</a></li>
+<li id="megamenu-mlid-1335" class="megamenu-item megamenu-item-1 even half-1 leaf-1 "><a href="http://www.greensql.com/greensql-hipaa-compliance">GreenSQL For HIPAA</a></li>
+<li id="megamenu-mlid-1338" class="megamenu-item megamenu-item-2 odd half-2 leaf-2 last  last"><a href="http://www.greensql.com/greensql-sox">GreenSQL For SOX</a></li>
+</ul></li>
+</ul></li>
+<li id="megamenu-mlid-406" class="megamenu-parent megamenu-parent-1 even half-1 leaf-1 menu-406"><h2 class="megamenu-parent-title"><a href="http://www.greensql.com/resources">Resources</a></h2><ul class="megamenu-bin megamenu-slots-columnar" style="top: -9000px; left: 0px; width: 1428px;"><li id="megamenu-mlid-767" class="megamenu-slot megamenu-slot-0 odd half-1 leaf-0 first nochild  first"><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/blog/">Blog</a></h3></li>
+<li id="megamenu-mlid-416" class="megamenu-slot megamenu-slot-1 even half-1 leaf-1 nochild "><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/resources">Datasheets</a></h3></li>
+<li id="megamenu-mlid-1231" class="megamenu-slot megamenu-slot-2 odd half-1 leaf-2 nochild "><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/resource/case_studies">Case Studies</a></h3></li>
+<li id="megamenu-mlid-805" class="megamenu-slot megamenu-slot-3 even half-1 leaf-3 nochild "><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/content/articles">Articles &amp; Whitepapers</a></h3></li>
+<li id="megamenu-mlid-1239" class="megamenu-slot megamenu-slot-4 odd half-2 leaf-4 nochild "><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/content/best-practices">Database Security Best Practices</a></h3></li>
+<li id="megamenu-mlid-802" class="megamenu-slot megamenu-slot-5 even half-2 leaf-5 nochild "><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/content/webinars">Webinars</a></h3></li>
+<li id="megamenu-mlid-407" class="megamenu-slot megamenu-slot-6 odd half-2 leaf-6 last  last"><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/content/contact-greensql-support">Support</a></h3><ul class="megamenu-items "><li id="megamenu-mlid-1340" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first"><a href="http://www.greensql.com/user-center">User Center</a></li>
+<li id="megamenu-mlid-799" class="megamenu-item megamenu-item-1 even half-1 leaf-1 "><a href="http://www.greensql.com/content/technical-documents">Technical Documents</a></li>
+<li id="megamenu-mlid-1238" class="megamenu-item megamenu-item-2 odd half-2 leaf-2 last  last"><a href="http://www.greensql.com/content/installation-guides">Installation Guides</a></li>
+</ul></li>
+</ul></li>
+<li id="megamenu-mlid-409" class="megamenu-parent megamenu-parent-2 odd half-1 leaf-2 menu-409"><h2 class="megamenu-parent-title"><a href="http://www.greensql.com/buy-greensql-now">Download</a></h2></li>
+<li id="megamenu-mlid-410" class="megamenu-parent megamenu-parent-3 even half-2 leaf-3 menu-410"><h2 class="megamenu-parent-title"><a href="http://www.greensql.com/company/about-us">About Us</a></h2><ul class="megamenu-bin megamenu-slots-columnar" style="top: -9000px; left: 0px; width: 1428px;"><li id="megamenu-mlid-765" class="megamenu-slot megamenu-slot-0 odd half-1 leaf-0 first nochild  first"><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/company/about-us">Company</a></h3></li>
+<li id="megamenu-mlid-1228" class="megamenu-slot megamenu-slot-1 even half-1 leaf-1 nochild "><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/company-board-members">Board</a></h3></li>
+<li id="megamenu-mlid-806" class="megamenu-slot megamenu-slot-2 odd half-1 leaf-2 nochild "><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/company-management-team">Management</a></h3></li>
+<li id="megamenu-mlid-947" class="megamenu-slot megamenu-slot-3 even half-1 leaf-3 nochild "><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/company/investors">Investors</a></h3></li>
+<li id="megamenu-mlid-818" class="megamenu-slot megamenu-slot-4 odd half-2 leaf-4 "><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/pressroom">News &amp; Events</a></h3><ul class="megamenu-items "><li id="megamenu-mlid-1226" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first"><a href="http://www.greensql.com/greensql-named-cool-vendor">Cool Vendor</a></li>
+<li id="megamenu-mlid-819" class="megamenu-item megamenu-item-1 even half-1 leaf-1 "><a href="http://www.greensql.com/pressroom/news">Press Releases</a></li>
+<li id="megamenu-mlid-820" class="megamenu-item megamenu-item-2 odd half-1 leaf-2 "><a href="http://www.greensql.com/pressroom/events">Events</a></li>
+<li id="megamenu-mlid-831" class="megamenu-item megamenu-item-3 even half-2 leaf-3 "><a href="http://www.greensql.com/pressroom/relations">Analysts Relations</a></li>
+<li id="megamenu-mlid-1320" class="megamenu-item megamenu-item-4 odd half-2 leaf-4 last  last"><a href="http://www.greensql.com/greensql-gartners-magic-quadrant-data-masking-technology">Magic Quadrant</a></li>
+</ul></li>
+<li id="megamenu-mlid-1332" class="megamenu-slot megamenu-slot-5 even half-2 leaf-5 "><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/webform/partner-request-form">Partners</a></h3><ul class="megamenu-items "><li id="megamenu-mlid-1331" class="megamenu-item megamenu-item-0 odd half-1 leaf-0 first  first last"><a href="http://www.greensql.com/webform/partner-request-form">Partners Request Form</a></li>
+</ul></li>
+<li id="megamenu-mlid-411" class="megamenu-slot megamenu-slot-6 odd half-2 leaf-6 last nochild  last"><h3 class="megamenu-slot-title"><a href="http://www.greensql.com/webform/contact-us">Contact Us</a></h3></li>
+</ul></li>
+<li id="megamenu-mlid-1339" class="megamenu-parent megamenu-parent-4 odd half-2 leaf-4 last menu-1339  last"><h2 class="megamenu-parent-title"><a href="http://www.greensql.com/webform/contact-us">Request Pricing</a></h2></li>
+</ul>
+</div><!-- /.block -->
+<div id="block-block-1" class="block block-block last odd">
+
+      
+  <p>Need Help? Call us! +1-512-333-1394</p>
+
+</div><!-- /.block -->
+  </div><!-- /.region -->
+</div>
+</header>
+<div id="page">
+
+  <div id="main">
+    	
+    <div id="content" class="column" role="main">
+            <nav class="breadcrumb" role="navigation"><h2 class="element-invisible">You are here</h2><ol><li><a href="http://www.greensql.com/">Home</a> › </li><li><a href="http://www.greensql.com/content/articles" title="">ARTICLES</a> › </li></ol></nav>      <a id="main-content"></a>
+                    <h1 class="title" id="page-title">Articles</h1>
+                 
+                        
+
+
+<article class="node-93 node node-article node-promoted view-mode-full clearfix" about="/content/mysql-security-best-practices-hardening-mysql-tips" typeof="sioc:Item foaf:Document">
+
+        <header>
+                    <h2 property="dc:title" datatype="" class="node-title"><a href="./MySQL Security Best Practices   GreenSQL_files/MySQL Security Best Practices   GreenSQL.html">MySQL Security Best Practices </a></h2>
+            
+      
+          </header>
+  
+  <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <h2>&nbsp;</h2>
+<p><span style="font-size:12px;">By David Maman, GreenSQL CTO</span></p>
+<div><span style="font-size: 1.385em; line-height: 1.538em;">Introduction</span></div>
+<p>The MySQL database has become the world's most popular open source database because of its consistent fast performance, high reliability and ease of use. MySQL is used on every continent – yes, even in Antarctica! – by individuals, Web developers, as well as many of the world's largest and fastest-growing organizations such as industry leaders Yahoo!, Alcatel-Lucent, Google, Nokia, YouTube and others to save time and money powering their high-volume websites, business-critical systems, and packaged software.</p>
+<p>As most products do, MySQL comes "ready-to-work" out of the box. Usually, security is not a major consideration when installing this kind of product. Often, the most important issue is to get it up and running as quickly as possible so that the organization can benefit. This document is intended as a quick security manual to help you bring an installed MySQL database server into conformity with best security practices.</p>
+<h2>Syntax explanation</h2>
+<p>This paper contains code examples that can either be executed in the operation system console, sent to the database via the MySQL console or added to configuration files. Code snippets are denoted by a gray background. Please refer to the surrounding context for more precise instructions.</p>
+<p><span data-mce-mark="1" style="font-size: large;"><strong>&nbsp;GreenSQL</strong></span></p>
+<p>GreenSQL delivers Database Security Solution for the small and medium businesses (SMB) and the enterprise markets. The company is committed to protecting information by making database security affordable and easy to manage for every company. &nbsp;With an all-in-one approach to database security, the GreenSQL software-based platform offers Security, Caching, Auditing and Masking in a single package.</p>
+<div><span data-mce-mark="1" style="font-size: large;"><strong>&nbsp;1. Secure your server</strong></span></div>
+<p>Many known attacks are possible only once physical access to a machine has been acquired. For this reason, it is best to have the application server and the database server on different machines. If this is not possible, greater care must be taken; otherwise, by executing remote commands via an application server, an attacker may be able to harm your database even without permissions. For this reason, any service running on the same machine as the database should be granted the lowest possible permission that will still allow the service to operate.</p>
+<p>Do not forget to install the whole security package: Antivirus and Antispam, Firewall, and all of the security packages recommended by your operating system’s vendor. In addition, do not forget to spend 10 minutes thinking of your server's physical location – in the wrong location, your server can be stolen, flooded, or harmed by wild animals or running children. Consider performing some operating system hardening procedures, such as the following:</p>
+<p>Make sure to:</p>
+<ul><li>Install Antivirus and Antispam software</li>
+<li>Configure the operating system’s firewall</li>
+<li>Consider the safety of your server's physical location</li>
+<li>Install the services you intend the machine to run</li>
+<li>Harden the production server and services</li>
+<li>Disable unnecessary services</li>
+<li>Follow services vendors’ recommendations regarding patches and updates needed for the safe and secure operation of their services&nbsp;</li>
+</ul><h2>2. Disable or restrict remote access</h2>
+<p>Consider whether MySQL will be accessed from the network or only from its own server.</p>
+<p>If remote access is used, ensure that only defined hosts can access the server. This is typically done through TCP wrappers, iptables, or any other firewall software or hardware available on the market.</p>
+<p>To restrict MySQL from opening a network socket, the following parameter should be added in the<em>[mysqld]</em>&nbsp;section of&nbsp;<em>my.cnf</em>&nbsp;or&nbsp;<em>my.ini</em>:</p>
+<p><code>skip-networking</code></p>
+<p>The file is located in the&nbsp;<em>"C:\Program Files\MySQL\MySQL Server 5.1"</em>&nbsp;directory on the Windows operating system or&nbsp;<em>"/etc/my.cnf"</em>&nbsp;or&nbsp;<em>"/etc/mysql/my.cnf"</em>&nbsp;on Linux.</p>
+<p>This line disables the initiation of networking during MySQL startup. Please note that a local connection can still be established to the MySQL server.</p>
+<p>Another possible solution is to force MySQL to listen only to the localhost by adding the following line in the&nbsp;<em>[mysqld]</em>&nbsp;section of&nbsp;<em>my.cnf</em></p>
+<p><code>bind-address=127.0.0.1</code></p>
+<p>You may not be willing to disable network access to your database server if users in your organization connect to the server from their machines or the web server installed on a different machine. In that case, the following restrictive grant syntax should be considered:</p>
+<p><code>mysql&gt; GRANT SELECT, INSERT ON mydb.* TO 'someuser'@'somehost';</code></p>
+<h2>3. Disable the use of LOCAL INFILE</h2>
+<p>The next change is to disable the use of the&nbsp;<em>"LOAD DATA LOCAL INFILE"</em>&nbsp;command, which will help to prevent unauthorized reading from local files. This is especially important when new SQL Injection vulnerabilities in PHP applications are found.</p>
+<p>In addition, in certain cases, the&nbsp;<em>"LOCAL INFILE"</em>&nbsp;command can be used to gain access to other files on the operating system, for instance&nbsp;<em>"/etc/passwd"</em>, using the following command:</p>
+<p><code>mysql&gt; LOAD DATA LOCAL INFILE '/etc/passwd' INTO TABLE table1</code></p>
+<p>Or even simpler:</p>
+<p><code>mysql&gt; SELECT load_file("/etc/passwd")</code></p>
+<p>To disable the usage of the&nbsp;<em>"LOCAL INFILE"</em>&nbsp;command, the following parameter should be added in the&nbsp;<em>[mysqld]</em>&nbsp;section of the MySQL configuration file.</p>
+<p><code>set-variable=local-infile=0</code></p>
+<h2>4. Change root username and password</h2>
+<p>The default administrator username on the MySQL server is&nbsp;<strong>"root"</strong>. Hackers often attempt to gain access to its permissions. To make this task harder, rename&nbsp;<strong>"root"</strong>&nbsp;to something else and provide it with a long, complex alphanumeric password.</p>
+<p>To rename the administrator’s username, use the rename command in the MySQL console:</p>
+<p><code>mysql&gt; RENAME USER root TO new_user;</code></p>
+<p>The MySQL&nbsp;<em>"RENAME USER"</em>&nbsp;command first appeared in MySQL version 5.0.2. If you use an older version of MySQL, you can use other commands to rename a user:</p>
+<p><code>mysql&gt; use mysql;<br>mysql&gt; update user set user="new_user" where user="root";<br>mysql&gt; flush privileges;</code></p>
+<p>To change a user’s password, use the following command-line command:</p>
+<p><code>mysql&gt; SET PASSWORD FOR 'username'@'%hostname' = PASSWORD('newpass');</code></p>
+<p>It is also possible to change the password using the&nbsp;<em>"mysqladmin"</em>&nbsp;utility:</p>
+<p><code>shell&gt; mysqladmin -u username -p password newpass</code></p>
+<h2>5. Remove the "test" database</h2>
+<p>MySQL comes with a "test" database intended as a test space. It can be accessed by the anonymous user, and is therefore used by numerous attacks.</p>
+<p>To remove this database, use the drop command as follows:</p>
+<p><code>mysql&gt; drop database test;</code></p>
+<p>Or use the&nbsp;<em>"mysqladmin"</em>&nbsp;command:</p>
+<p><code>shell&gt; mysqladmin -u username -p drop test</code></p>
+<h2>6. Remove Anonymous and obsolete accounts</h2>
+<p>The MySQL database comes with some anonymous users with blank passwords. As a result, anyone can connect to the database To check whether this is the case, do the following:</p>
+<p><code>mysql&gt; select * from mysql.user where user="";</code></p>
+<p>In a secure system, no lines should be echoed back. Another way to do the same:</p>
+<p><code>mysql&gt; SHOW GRANTS FOR ''@'localhost';<br>mysql&gt; SHOW GRANTS FOR ''@'myhost';</code></p>
+<p>If the grants exist, then anybody can access the database and at least use the default database<em>"test"</em>. Check this with:</p>
+<p><code>shell&gt; mysql -u blablabla</code></p>
+<p>To remove the account, execute the following command:</p>
+<p><code>mysql&gt; DROP USER "";</code></p>
+<p>The MySQL&nbsp;<em>"DROP USER"</em>&nbsp;command is supported starting with MySQL version 5.0. If you use an older version of MySQL, you can remove the account as follows:</p>
+<p><code>mysql&gt; use mysql;<br>mysql&gt; DELETE FROM user WHERE user="";<br>mysql&gt; flush privileges;</code></p>
+<h2>7. Lower system privileges</h2>
+<p>A very common database security recommendation is to lower the permissions given to various parties. MySQL is no different. Typically, when developers work, they use the system's maximum permission and give less consideration to permission principles than we might expect. This practice can expose the database to significant risk.</p>
+<p>* Any new MySQL 5.x installation already installed using the correct security measures.</p>
+<p>To protect your database, make sure that the file directory in which the MySQL database is actually stored is owned by the user "mysql" and the group "mysql".</p>
+<p><code>shell&gt;ls -l /var/lib/mysql</code></p>
+<p>In addition, ensure that only the user "mysql" and "root" have access to the directory<em>/var/lib/mysql</em>.</p>
+<p>The mysql binaries, which reside under the /usr/bin/ directory, should be owned by "root" or the specific system "mysql" user. Other users should not have write access to these files.</p>
+<p><code>shell&gt;ls -l /usr/bin/my*</code></p>
+<h2>8. Lower database privileges</h2>
+<p>Operating system permissions were fixed in the preceding section. Now let’s talk about database permissions. In most cases, there is an administrator user (the renamed "root") and one or more actual users who coexist in the database. Usually, the "root" has nothing to do with the data in the database; instead, it is used to maintain the server and its tables, to give and revoke permissions, etc.</p>
+<p>On the other hand, some user ids are used to access the data, such as the user id assigned to the web server to execute "select\update\insert\delete" queries and to execute stored procedures. In most cases, no other users are necessary; however, only you, as a system administrator can really know your application’s needs.</p>
+<p>Only administrator accounts need to be granted the SUPER / PROCESS /FILE privileges and access to the mysql database. Usually, it is a good idea to lower the administrator’s permissions for accessing the data.</p>
+<p>Review the privileges of the rest of the users and ensure that these are set appropriately. This can be done using the following steps.</p>
+<p><code>mysql&gt; use mysql;</code></p>
+<p>[Identify users]</p>
+<p><code>mysql&gt; select * from users;</code></p>
+<p>[List grants of all users]</p>
+<p><code>mysql&gt; show grants for ‘root’@’localhost’;</code></p>
+<p>The above statement has to be executed for each user ! Note that only users who really need root privileges should be granted them.</p>
+<p>Another interesting privilege is "SHOW DATABASES". By default, the command can be used by everyone having access to the MySQL prompt. They can use it to gather information (e.g., getting database names) before attacking the database by, for instance, stealing the data. To prevent this, it is recommended that you follow the procedures described below.</p>
+<ul><li>Add " --skip-show-database" to the startup script of MySQL or add it to the MySQL configuration file</li>
+<li>Grant the SHOW DATABASES privilege only to the users you want to use this command</li>
+</ul><p>To disable the usage of the "SHOW DATABASES" command, the following parameter should be added in the [mysqld] section of the /etc/my.cnf:</p>
+<p><code>[mysqld]<br>skip-show-database</code></p>
+<h2>9. Enable Logging</h2>
+<p>If your database server does not execute many queries, it is recommended that you enable transaction logging, by adding the following line to [mysqld] section of the /etc/my.cnf file:</p>
+<p><code>[mysqld]<br>log =/var/log/mylogfile</code></p>
+<p>This is not recommended for heavy production MySQL servers because it causes high overhead on the server.</p>
+<p>In addition, verify that only the "root" and "mysql" ids have access to these logfiles (at least write access).</p>
+<p><strong>Error log</strong></p>
+<p>Ensure only "root" and "mysql" have access to the logfile "hostname.err". The file is stored in the mysql data directory. This file contains very sensitive information such as passwords, addresses, table names, stored procedure names and code parts. It can be used for information gathering, and in some cases, can provide the attacker with the information needed to exploit the database, the machine on which the database is installed, or the data inside it.</p>
+<p><strong>MySQL log</strong></p>
+<p>Ensure only "root" and "mysql" have access to the logfile "*logfileXY". The file is stored in the mysql data directory.</p>
+<h2>10. Change the root directory</h2>
+<p>A chroot on Unix operating systems is an operation that changes the apparent disk root directory for the current running process and its children. A program that is re-rooted to another directory cannot access or name files outside that directory, and the directory is called a "chroot jail" or (less commonly) a "chroot prison".</p>
+<p>By using the chroot environment, the write access of the MYSQL processes (and child processes) can be limited, increasing the security of the server.</p>
+<p>Ensure that a dedicated directory exists for the chrooted environment. This should be something like:<code>/chroot/mysql</code>In addition, to make the use of the database administrative tools convenient, the following parameter should be changed in the [client] section of MySQL configuration file:</p>
+<p><code>[client]<br>socket = /chroot/mysql/tmp/mysql.sock</code></p>
+<p>Thanks to that line of code, there will be no need to supply the mysql, mysqladmin, mysqldump etc. commands with the --socket=/chroot/mysql/tmp/mysql.sock parameter every time these tools are run.</p>
+<h2>11. Remove History</h2>
+<p>During the installation procedures, there is a lot of sensitive information that can assist an intruder to assault a database. This information is stored in the server’s history and can be very helpful if something goes wrong during the installation. By analyzing the history files, administrators can figure out what has gone wrong and probably fix things up. However, these files are not needed after installation is complete.</p>
+<p>We should remove the content of the MySQL history file (~/.mysql_history), where all executed SQL commands are stored (especially passwords, which are stored as plain text):</p>
+<p><code>cat /dev/null &gt; ~/.mysql_history</code></p>
+<h2>12. Patch your systems</h2>
+<p>Consult you operation system’s vendor for security and performance updates: use windows update on windows, apt-get or yum on (Debian) systems, Red Hat update Agent on Red hat and so on.</p>
+<p>Windows :&nbsp;<a href="http://www.windowsupdate.com/" target="_blank" title="http://www.windowsupdate.com/">http://www.windowsupdate.com/</a></p>
+<p>Redhat :&nbsp;<a href="http://www.redhat.com/docs/manuals/RHNetwork/ref-guide/3.6/ch-up2date.html" target="_blank" title="http://www.redhat.com/docs/manuals/RHNetwork/ref-guide/3.6/ch-up2date.html">http://www.redhat.com/docs/manuals/RHNetwork/ref-guide/3.6/ch-up2date.html</a></p>
+<p>Debian:&nbsp;<a href="http://www.cyberciti.biz/faq/rhel-centos-fedora-linux-yum-command-howto/" target="_blank" title="http://www.cyberciti.biz/faq/rhel-centos-fedora-linux-yum-command-howto/">http://www.cyberciti.biz/faq/rhel-centos-fedora-linux-yum-command-howto/</a>&nbsp;or<a href="https://help.ubuntu.com/8.04/serverguide/C/apt-get.html" target="_blank" title="https://help.ubuntu.com/8.04/serverguide/C/apt-get.html">https://help.ubuntu.com/8.04/serverguide/C/apt-get.html</a></p>
+<p>MacOS:&nbsp;<a href="http://support.apple.com/kb/HT1338" target="_blank" title="http://support.apple.com/kb/HT1338">http://support.apple.com/kb/HT1338</a></p>
+<p>&nbsp;</p>
+<p>If you are using any kind of virtualization platform, consult your platform vendor for security issues, patches and recommendations.</p>
+ </div></div></div>
+  
+  
+</article><!-- /.node -->
+<!-- block__no_wrapper -->
+<!-- region__no_wrapper -->
+          </div><!-- /#content -->
+
+    <div id="navigation">
+
+      
+      
+    </div><!-- /#navigation -->
+
+    
+          <aside class="sidebars">
+                  <section class="region region-sidebar-second column sidebar">
+    <div id="block-nodeblock-187" class="block block-nodeblock first odd">
+
+      
+  <div id="node-187" class="node node-simple-block view-mode-full clearfix" about="/block/request-demo-ad" typeof="sioc:Item foaf:Document">
+
+  
+      
+  
+  <div class="content">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p style="text-align: center;">&nbsp;</p>
+<p><a href="http://www.greensql.com/node/120"><img alt="" class="media-image" height="180" width="279" typeof="foaf:Image" src="./MySQL Security Best Practices   GreenSQL_files/article_resquestDEMO.png"></a></p>
+ </div></div></div>  </div>
+
+  
+  
+</div>
+
+</div><!-- /.block -->
+<div id="block-nodeblock-20" class="block block-nodeblock even">
+
+        <h2 class="block-title link-tabs-block-block">Related Info</h2>
+    
+  <div id="node-20" class="node node-link-tabs-block view-mode-full clearfix" about="/content/related-info" typeof="sioc:Item foaf:Document">
+
+  
+      
+  
+  <div class="content">
+    <div class="field-collection-container clearfix"><div class="field field-name-field-link-tabs field-type-field-collection field-label-hidden"><div class="field-items"><div class="field-item even"><div class="field-collection-view clearfix view-mode-full"><div class="entity entity-field-collection-item field-collection-item-field-link-tabs clearfix" about="/field-collection/field-link-tabs/166" typeof="">
+  <div class="content">
+    <div class="field field-name-field-icon field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./MySQL Security Best Practices   GreenSQL_files/2_0.png" width="29" height="32"></div></div></div><div class="field field-name-field-hover-icon field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./MySQL Security Best Practices   GreenSQL_files/2_0.png" width="29" height="32"></div></div></div><div class="field field-name-field-list-link field-type-link-field field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://www.greensql.com/article/greensql-pci">GreenSQL for PCI-DSS </a></div></div></div>  </div>
+</div>
+</div></div><div class="field-item odd"><div class="field-collection-view clearfix view-mode-full"><div class="entity entity-field-collection-item field-collection-item-field-link-tabs clearfix" about="/field-collection/field-link-tabs/135" typeof="">
+  <div class="content">
+    <div class="field field-name-field-icon field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./MySQL Security Best Practices   GreenSQL_files/1_4.png" width="29" height="32"></div></div></div><div class="field field-name-field-hover-icon field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./MySQL Security Best Practices   GreenSQL_files/webinar_icon.png" width="27" height="32"></div></div></div><div class="field field-name-field-list-link field-type-link-field field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://www.greensql.com/content/webinars" target="_blank">Webinars</a></div></div></div>  </div>
+</div>
+</div></div><div class="field-item even"><div class="field-collection-view clearfix view-mode-full field-collection-view-final"><div class="entity entity-field-collection-item field-collection-item-field-link-tabs clearfix" about="/field-collection/field-link-tabs/23" typeof="">
+  <div class="content">
+    <div class="field field-name-field-icon field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./MySQL Security Best Practices   GreenSQL_files/2_17.png" width="29" height="32"></div></div></div><div class="field field-name-field-hover-icon field-type-image field-label-hidden"><div class="field-items"><div class="field-item even"><img typeof="foaf:Image" src="./MySQL Security Best Practices   GreenSQL_files/pdf logo bw_0.jpg" width="31" height="32"></div></div></div><div class="field field-name-field-list-link field-type-link-field field-label-hidden"><div class="field-items"><div class="field-item even"><a href="http://www.greensql.com/resources" target="_blank">Product Datasheets</a></div></div></div>  </div>
+</div>
+</div></div></div></div></div>  </div>
+
+  
+  
+</div>
+
+</div><!-- /.block -->
+<div id="block-nodeblock-21" class="block block-nodeblock last odd">
+
+        <h2 class="block-title simple-block-block">                                  Why GreenSQL? </h2>
+    
+  <div id="node-21" class="node node-simple-block view-mode-full clearfix" about="/content/why-greensql" typeof="sioc:Item foaf:Document">
+
+  
+      
+  
+  <div class="content">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"> <p>&nbsp; &nbsp; &nbsp;&nbsp;<img alt="" class="media-image" height="480" width="206" typeof="foaf:Image" src="./MySQL Security Best Practices   GreenSQL_files/sidebar_image_0.png"></p>
+ </div></div></div>  </div>
+
+  
+  
+</div>
+
+</div><!-- /.block -->
+  </section><!-- region__sidebar -->
+      </aside><!-- /.sidebars -->
+    
+  </div><!-- /#main -->
+
+</div><!-- /#page -->
+
+  <footer id="footer" class="region region-footer">
+  <div class="inner-footer">
+    <div id="block-menu-block-1" class="block block-menu-block first odd" role="navigation">
+
+      
+  <div class="menu-block-wrapper menu-block-1 menu-name-menu-big-footer-menu parent-mlid-0 menu-level-1">
+  <ul class="menu"><li class="first expanded menu-mlid-419"><a href="http://www.greensql.com/product/unified-database-security" title="">PRODUCTS</a><ul class="menu"><li class="first leaf menu-mlid-425"><a href="http://www.greensql.com/product/database-security" title="">Database Security</a></li>
+<li class="leaf menu-mlid-429"><a href="http://www.greensql.com/product/database-activity-monitoring" title="">Database Activity Monitoring</a></li>
+<li class="leaf menu-mlid-426"><a href="http://www.greensql.com/product/dynamic-data-masking" title="">Dynamic Data Masking</a></li>
+<li class="last leaf menu-mlid-427"><a href="http://www.greensql.com/product/unified-database-security" title="">Unified Database Security</a></li>
+</ul></li>
+<li class="expanded menu-mlid-939"><a href="http://www.greensql.com/company/about-us" title="">ABOUT US</a><ul class="menu"><li class="first leaf menu-mlid-432"><a href="http://www.greensql.com/company/about-us" title="">Company Info</a></li>
+<li class="leaf menu-mlid-968"><a href="http://www.greensql.com/company-awards" title="">Awards</a></li>
+<li class="leaf menu-mlid-434"><a href="http://www.greensql.com/blog" title="">Blog</a></li>
+<li class="last leaf menu-mlid-971"><a href="http://www.greensql.com/company/investors" title="">Investors</a></li>
+</ul></li>
+<li class="expanded menu-mlid-422"><a href="http://www.greensql.com/webform/contact-us" title="">SUPPORT</a><ul class="menu"><li class="first leaf menu-mlid-969"><a href="http://www.greensql.com/faq-page" title="">FAQ</a></li>
+<li class="leaf menu-mlid-970"><a href="http://www.greensql.com/resources" title="">Resources</a></li>
+<li class="leaf menu-mlid-938"><a href="http://greendev.cpo.co.il/content/create-ticket" title="">Create A Ticket</a></li>
+<li class="last leaf menu-mlid-1114"><a href="http://www.greensql.com/content/contact-greensql-support" title="">Contact Support</a></li>
+</ul></li>
+<li class="last expanded active-trail menu-mlid-423"><a href="http://www.greensql.com/content/articles" title="" class="active-trail">ARTICLES</a><ul class="menu"><li class="first leaf menu-mlid-1245"><a href="http://www.greensql.com/article/microsoft-sql-server-2012-compliance-and-security-best-practices" title="">NEW! Microsoft SQL Server 2012... </a></li>
+<li class="leaf menu-mlid-1237"><a href="http://www.greensql.com/article/separation-duties-divide-and-conquer-database-security" title="">Separation of Duties...</a></li>
+<li class="leaf menu-mlid-940"><a href="http://www.greensql.com/content/understanding-and-selecting-database-security-platform-white-paper-securosis" title="">Selecting a Database Security Platform...</a></li>
+<li class="leaf active-trail active menu-mlid-941"><a href="./MySQL Security Best Practices   GreenSQL_files/MySQL Security Best Practices   GreenSQL.html" title="" class="active-trail active">Hardening MySQL Tips...</a></li>
+<li class="leaf menu-mlid-943"><a href="http://www.greensql.com/content/10-must-do-sql-server-2012-security-tasks" title="">10 Must-Do MSSQL Security Tasks...</a></li>
+<li class="last leaf menu-mlid-944"><a href="http://www.greensql.com/content/sql-server-security-best-practices" title="">SQL Server Security Best Practices </a></li>
+</ul></li>
+</ul></div>
+
+</div><!-- /.block -->
+<div id="block-green-custom-green-front-download-btn" class="block block-green-custom even">
+
+      
+  <a href="http://www.greensql.com/webform/request-a-demo"><span class="bigtxt">Request a Demo</span><span class="smalltxt"></span></a>
+</div><!-- /.block -->
+<div id="block-menu-menu-bottom-footer-menu" class="block block-menu odd" role="navigation">
+
+      
+  <ul class="menu"><li class="first leaf"><a href="http://greensql.com/webform/contact-us" title="">Contact Us</a></li>
+<li class="leaf"><a href="http://www.greensql.com/webform/contact-us" title="">Feedback</a></li>
+<li class="leaf"><a href="http://www.greensql.com/webform/contact-us" title="">Help</a></li>
+<li class="leaf"><a href="http://www.greensql.com/content/privacy-policy" title="">Privacy Policy</a></li>
+<li class="last leaf"><span title="" class="nolink">All rights reserved</span></li>
+</ul>
+</div><!-- /.block -->
+<div id="block-green-custom-green-front-social-lnks-bottom" class="block block-green-custom last even">
+
+      
+  
+<a href="http://www.linkedin.com/company/greensql" class="linkedin-link"> </a>
+<a href="http://twitter.com/#!/greensql" class="twitter-link"> </a>
+<a href="http://blog.greensql.com/" class="w-link"> </a>
+<a href="http://www.youtube.com/user/GreenSQL" class="youtube-link"> </a>
+<a href="http://www.facebook.com/pages/GreenSQL/152022084849960" class="facebook-link last"> </a>
+</div><!-- /.block -->
+  </div>
+  </footer><!-- region__footer -->
+		<script src="./MySQL Security Best Practices   GreenSQL_files/munchkin(1).js"></script>
+<script>mktoMunchkin("526-KZA-618");
+</script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/okto.js"></script>
+<script src="./MySQL Security Best Practices   GreenSQL_files/insightera.js"></script><script src="./MySQL Security Best Practices   GreenSQL_files/djs" type="text/javascript"></script><script type="text/javascript" id="">var heaven={createCookie:function(a,b,c,d){if(c){var e=new Date;e.setTime(e.getTime()+c);c="; expires\x3d"+e.toGMTString()}else c="";document.cookie=a+"\x3d"+b+c+"; path\x3d/"+(d?"; domain\x3d"+d:"")},readCookie:function(a){a+="\x3d";for(var b=document.cookie.split(";"),c=0;c<b.length;c++){for(var d=b[c];" "==d.charAt(0);)d=d.substring(1,d.length);if(0==d.indexOf(a))return d.substring(a.length,d.length)}},eraseCookie:function(a,b){b||(b="");heaven.createCookie(a,"",-1,b)},addParameter:function(a){if("object"!=
+typeof a)this.trace("addParameter: args not provided or not an object");else{if(a.param){if("object"==typeof a.param){for(var b="",c=0;c<a.param.length;c++)b+="\x26"+a.param[c];a.param=b.replace(/&/,"")}a.url||(a.url=location.pathname+location.search);b=!1;-1!=a.url.indexOf("?")&&(b=!0);c="";-1!=a.url.indexOf("#")&&(c=a.url.substr(a.url.indexOf("#")),a.url=a.url.substr(0,a.url.indexOf("#")));return a.url+(b?"\x26":"?")+a.param+c}this.trace("addParameter: param not provided")}},setPageReferralCookie:function(a){var b=
+this;(function(a,b,e){a.addEventListener?a.addEventListener(b,e,!1):a.attachEvent&&a.attachEvent("on"+b,e)})(document,"mousedown",function(){b.createCookie("__utm_ref",location.href,15E3,a)})},getParamValue:function(a){if(a.param){if(a.url||(a.url=location.pathname+location.search),a.url=a.url.replace(/.*\?/,"?"),"?"==a.url.charAt(0))for(var b=a.url.substr(1).split("\x26"),c,d,e=0;e<b.length;e++)if(c=b[e].split("\x3d")[0],d=b[e].split("\x3d")[1],c==a.param)return"undefined"==typeof a.bool?d:!0}else this.trace("getParamValue: args.param is not defined or not an array")}};
+heaven.setPageReferralCookie("greensql.com");heaven.ref=heaven.readCookie("__utm_ref");heaven.domain_name=".greensql.com";0<=document.domain.indexOf("cpo.co.il")&&(heaven.domain_name=".cpo.co.il");var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-11734025-4"]);_gaq.push(["_setDomainName",heaven.domain_name]);_gaq.push(["_addIgnoredRef","plimus.com"]);_gaq.push(["_setSiteSpeedSampleRate",100]);"string"==typeof heaven.ref&&heaven.ref.match(/greensql.com\//)&&_gaq.push(["_addIgnoredRef","greensql.com"]);
+_gaq.push(function(){var a;switch(!0){case -1!=location.href.indexOf("/down/email"):"001"!=heaven.getParamValue({param:"guuid"})&&(a=heaven.addParameter({param:"GA_lead\x3d1"}),_gaq.push(["_set","page",a])),_gaq.push(["_setCustomVar",2,"visitor_type","lead",1])}_gaq.push(["_trackPageview"])});
+(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script>
+<script>document.write('<div style=\'position: fixed; bottom: 0%; right: 0%;\'><a href="#" onclick="return SnapABug.startLink();"><img src="https://snapabug.appspot.com/statusImage?w=8e0af02d-ccdd-4bed-84ef-fb66da5f3c62" alt="Contact us" border="0"></a></div>');</script><div style="position: fixed; bottom: 0%; right: 0%;"><a href="http://www.greensql.com/content/mysql-security-best-practices-hardening-mysql-tips#" onclick="return SnapABug.startLink();"><img src="./MySQL Security Best Practices   GreenSQL_files/statusImage" alt="Contact us" border="0"></a></div>
+<script>  (function() {
+    var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+    se.src = '//commondatastorage.googleapis.com/code.snapengage.com/js/574546af-24a6-4a18-9787-73c22addeb28.js';
+    var done = false;
+    se.onload = se.onreadystatechange = function() {
+      if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
+        done = true;
+        // Place your SnapEngage JS API code below
+        SnapABug.setWidgetId('8e0af02d-ccdd-4bed-84ef-fb66da5f3c62');
+        //SnapABug.openProactiveChat(true, true); // Example: open the proactive chat on load
+      }
+    };
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+  })();</script>
+						<!-- BrightInfo Bottom part -->
+<script type="text/javascript">
+var vaJsHost = (("https:" == document.location.protocol) ? "https://" : "http://");
+var vaJsDomain = "app.brightinfo.com"; var _biq = _biq || [];_biq.push("greensql-63-1");
+
+(function () { var bi = document.createElement('script'); bi.type = 'text/javascript';
+bi.async = true;bi.src = vaJsHost + vaJsDomain + "/BrightInfoVersion.aspx";
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(bi, s); })();
+</script>
+<!-- BrightInfo end of Bottom part -->		    
+
+<div id="cboxOverlay" style="display: none;"></div><div id="colorbox" class="" style="display: none;"><div id="cboxWrapper"><div><div id="cboxTopLeft" style="float: left;"></div><div id="cboxTopCenter" style="float: left;"></div><div id="cboxTopRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxMiddleLeft" style="float: left;"></div><div id="cboxContent" style="float: left;"><div id="cboxTitle" style="float: left;"></div><div id="cboxCurrent" style="float: left;"></div><div id="cboxNext" style="float: left;"></div><div id="cboxPrevious" style="float: left;"></div><div id="cboxSlideshow" style="float: left;"></div><div id="cboxClose" style="float: left;"></div></div><div id="cboxMiddleRight" style="float: left;"></div></div><div style="clear: left;"><div id="cboxBottomLeft" style="float: left;"></div><div id="cboxBottomCenter" style="float: left;"></div><div id="cboxBottomRight" style="float: left;"></div></div></div><div style="position: absolute; width: 9999px; visibility: hidden; display: none;"></div></div><div id="SnapABug_Button" class="SnapABug_Button"><img id="SnapABug_bImg" style="position: relative; bottom: -4px;" src="./MySQL Security Best Practices   GreenSQL_files/statusImage(1)" alt="Help" border="0" onmouseover="SnapABug.buttonOver();" onmouseout="SnapABug.buttonOut();"></div><div id="SnapABug_W" style="position: fixed; display: none; top: 0%; left: 0px; width: 100%; height: 100%; text-align: left; z-index: 2147483644; margin: 0px; padding: 0px; border-collapse: collapse; border-spacing: 0px; border: none; list-style: none; font-size: 100%; font-weight: normal; outline: none; background-image: url(http://commondatastorage.googleapis.com/code.snapengage.com/wbg/blank.gif); background-repeat: repeat;"><div id="SnapABug_O" style="position:absolute;width:100%;height:100%;top:0px;left:0px;text-align:left;z-index:auto;-moz-opacity:0.5;opacity:.50;filter:alpha(opacity=50);background-color:;"></div></div><div id="SnapABug_WP" style="position: fixed; display: none; z-index: 2147483645; overflow: hidden; margin: 0px; padding: 0px; border-collapse: collapse; border-spacing: 0px; border: none; list-style: none; outline: none;"><div id="SnapABug_P" style="position:absolute;left:0px;top:0px;margin:0;padding:0;border:none;text-align:left;z-index:1;overflow:hidden;background-color:transparent;"></div><div id="SnapABug_IP" style="position:absolute;left:0px;top:0px;z-index:0;"></div><div id="SnapABug_DB" style="position:absolute;left:0px;top:0px;margin:0;border:0;padding:0;z-index:1;cursor:move;background-image:url(&#39;http://commondatastorage.googleapis.com/code.snapengage.com/wbg/blank.gif&#39;);background-repeat:repeat;"></div><div id="SnapABug_Snd" style="width:0px;height:0px;font-size:0px;margin:0;padding:0;background-color:transparent;"></div></div><div id="SnapABug_Applet" style="position: fixed; display: none; top: 0%; left: 0px; width: 100%; height: 2px; text-align: left; z-index: 2147483646;"></div><div id="bi-widget-Standard" class="bi-wrap bi-ltr bi-left bi-Vtop bi-darkgreen bi-Arial bi-light bi-icons bi-standard bi-custom bi-custom-color bi-custom-font" style="left: 24.5px; width: 200px; visibility: visible;"><div class="bi-min" style="display: none;"><div class="bi-min-arrow"></div><div class="bi-min-bg"><div class="bi-min-text">RECOMMENDED CONTENT</div></div></div><div class="bi-panel"><div class="bi-header"><div class="bi-favicon bi-showtrue"><img onerror="jQueryBI(this).parent().hide();" src="./MySQL Security Best Practices   GreenSQL_files/favicon.ico"></div><div class="bi-title">RECOMMENDED CONTENT</div><div class="bi-cell bi-minimize-wrap"><div class="bi-minimize"></div></div></div><div class="bi-content"><div class="bi-promo-container" id="bi-promo-container0"><div class="bi-promo " data-index="0" isnew="false" exposed="1" style="height: auto;"><a href="http://www.greensql.com/article/microsoft-sql-server-2012-compliance-and-security-best-practices" oinw="false" target="_blank" style="font-size: 125.71428571428571%;"><div class="bi-promo-icon-wrap"><div class="bi-promo-icon bi-article" title="Article" "=""></div><img src="" class="bi-promo-thumbnail" style="display: none;"></div><div class="bi-promo-text-wrap"><div class="bi-promo-type">Article</div><div class="bi-promo-title">NEW! Microsoft SQL Server 2012 Compliance and Sec…</div></div></a><div class="bi-promo-content">An overview of best practices for securing Microsoft SQL Server while complying with regulatory standards, including updates for the 2012 version: administrative and operational tasks, operative inst...</div></div><div class="bi-promo-sep"></div><div class="bi-promo " data-index="1" isnew="false" exposed="1" style="height: auto;"><a href="http://www.greensql.com/content/sql-server-security-best-practices" oinw="false" target="_blank" style="font-size: 125.71428571428571%;"><div class="bi-promo-icon-wrap"><div class="bi-promo-icon bi-article" title="Article" "=""></div><img src="" class="bi-promo-thumbnail" style="display: none;"></div><div class="bi-promo-text-wrap"><div class="bi-promo-type">Article</div><div class="bi-promo-title">Microsoft SQL Server Security Best Practices</div></div></a><div class="bi-promo-content">This article contains administrative and operational tasks that should be taken in account from a security perspective when using Microsoft SQL Server. The article covers operative instructions and e...</div></div><div class="bi-promo-sep"></div><div class="bi-promo " data-index="2" isnew="false" exposed="1" style="height: auto;"><a href="http://www.greensql.com/article/protect-yourself-sqli-attacks-create-backdoor-web-server-using-mysql" oinw="false" target="_blank" style="font-size: 125.71428571428571%;"><div class="bi-promo-icon-wrap"><div class="bi-promo-icon bi-article" title="Article" "=""></div><img src="" class="bi-promo-thumbnail" style="display: none;"></div><div class="bi-promo-text-wrap"><div class="bi-promo-type">Article</div><div class="bi-promo-title">Protect Yourself from SQL Injection Attacks (MySQL)</div></div></a><div class="bi-promo-content">MySQL Database is a great product used by thousand of websites. Various web applications use MySQL as their default database. Some of these applications are written with security in mind, and some ar...</div></div></div><div class="bi-promo-container" id="bi-promo-container1" style="display: none;"><div class="bi-promo " data-index="3" isnew="false" style="height: auto;"><a href="http://www.greensql.com/article/microsoft-sql-azure-database-security-best-practices" oinw="false" target="_blank" style="font-size: 125.71428571428571%;"><div class="bi-promo-icon-wrap"><div class="bi-promo-icon bi-article" title="Article" "=""></div><img src="" class="bi-promo-thumbnail" style="display: none;"></div><div class="bi-promo-text-wrap"><div class="bi-promo-type">Article</div><div class="bi-promo-title">Microsoft SQL Azure Database Security Best Practices</div></div></a><div class="bi-promo-content">Cloud computing provides the opportunity for companies to host their databases in the cloud, or simply use ready-made cloud-based databases. While these cloud-based databases include good security ca...</div></div><div class="bi-promo-sep"></div><div class="bi-promo " data-index="4" isnew="false" style="height: auto;"><a href="http://www.greensql.com/?width=500&height=500&inline=true#video-157" oinw="false" target="_blank" style="font-size: 125.71428571428571%;"><div class="bi-promo-icon-wrap"><div class="bi-promo-icon bi-video" title="Webinar" "=""></div><img src="" class="bi-promo-thumbnail" style="display: none;"></div><div class="bi-promo-text-wrap"><div class="bi-promo-type">Webinar</div><div class="bi-promo-title">Dynamic Data Masking - Ensuring Data Privacy in Real Time</div></div></a><div class="bi-promo-content">Jan 2013
+
+Topics:
+What is Real-Time Dynamic Data Masking?
+How to dramatically reduce the risk of a data breach?
+How to better comply with regulations?
+How to enforce real-time dynamic data masking?
+H...</div></div></div></div><div class="bi-footer"><div class="bi-controls"><span class="bi-pager-left"></span><span index="0" class="bi-pager-dot bi-active"></span><span index="1" class="bi-pager-dot"></span><span class="bi-pager-right"></span></div><div class="bi-pwred bi-showtrue"><a href="http://www.brightinfo.com/standard-brightbox-bar/?utm_source=greensql-63-1&utm_medium=referral&utm_campaign=PoweredBy" target="_blank">Powered By BrightInfo</a></div></div></div><div class="bi-bubble" parent="Standard" style="z-index: 21474836402; top: 50px; left: 228px; display: block;"><div class="bi-bubble-body">See personal content offers here</div><div class="bi-bubble-arrow bi-right"></div></div></div><div id="bi-widget-Image" class="bi-wrap bi-left bi-darkgreen bi-Arial bi-light bi-icons bi-image bi-custom bi-custom-color bi-custom-font" style="top: 150px; left: 519px;"><div class="bi-panel"><div class="bi-close"></div><div class="bi-promo"><a href="http://www.greensql.com/article/microsoft-sql-server-2012-compliance-and-security-best-practices" oinw="false" target="_blank"><img class="bi-img" src="./MySQL Security Best Practices   GreenSQL_files/bi_SQLsecurityCompliance_400x400_v2.jpg"></a></div></div><div class="bi-overlay"></div></div><div id="bi-widget-Gate" class="bi-wrap bi-ltr bi-left bi-Vtop bi-darkgreen bi-Arial bi-light bi-icons bi-gate bi-custom bi-custom-color bi-custom-font" style="top: 176px; left: 520px;"><div class="bi-min" style="display: none;"><div class="bi-min-arrow"></div><div class="bi-min-bg"><div class="bi-min-text">Just a few details...</div></div></div><div class="bi-panel"><div class="bi-header"><div class="bi-favicon bi-showtrue"><img onerror="jQueryBI(this).parent().hide();" src="./MySQL Security Best Practices   GreenSQL_files/favicon.ico"></div><div class="bi-title">Just a few details...</div><div class="bi-close"></div></div><div class="bi-body-title">Fill out your details to get</div><div class="bi-body-promo-title"></div><div class="bi-content"><form id="bi-form" action="http://www.greensql.com/content/index.html" method="get" novalidate="novalidate" class="bi-dform-form"><label for="bi-email" class="bi-dform-label">Email</label><input type="text" name="bi-email" id="bi-email" placeholder="- Enter Email -" class="bi-dform-text"><input type="submit" class="bi-dform-submit" value="Send"></form></div><div class="bi-footer"><div class="bi-controls"></div><div class="bi-pwred bi-showtrue"><a href="http://www.brightinfo.com/standard-brightbox-bar/?utm_source=greensql-63-1&utm_medium=referral&utm_campaign=PoweredBy" target="_blank">Powered By BrightInfo</a></div></div></div><div class="bi-overlay"></div></div></body></html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html class="wf-freightsanspro-n7-active wf-proximanova-n4-active wf-proximanova-n6-active wf-proximanova-n7-active wf-active" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <script src="Setting%20up%20MySQL%20replication%20without%20the%20downtime_files/ga.js" async="" type="text/javascript"></script><script src="Setting%20up%20MySQL%20replication%20without%20the%20downtime_files/analytics.js" async=""></script><script>var _sf_startpt=(new Date()).getTime()</script>
+  <title>Setting up MySQL replication without the downtime</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="https://dtu1xr3i3b2a1.cloudfront.net/cargo/favicon-21f6b9978f356b4fb56cb18b7ed5df0b.ico">
+  <meta name="generator" content="Svbtle.com">
+  <meta name="description" content="I clearly don’t need to expound on the benefits of master-slave replication for your MySQL database. It’s simply a good idea; one nicety I looked forward to was the ability to run backups from the slave without impacting the... | Bryan Kennedy | Tinkerer. Head of UX @ Dropcam">
+  <link rel="canonical" href="http://plusbryan.com/mysql-replication-without-downtime">
+  <meta name="og:url" content="http://plusbryan.com/mysql-replication-without-downtime">
+  <meta property="twitter:card" content="summary">
+  <meta property="twitter:site" content="@svbtle">
+  <meta property="twitter:title" content="Setting up MySQL replication without the downtime">
+  <meta property="twitter:description" content="I clearly don’t need to expound on the benefits of master-slave replication for your MySQL database. It’s simply a good idea; one nicety I looked forward to was the ability to run backups from the slave without impacting the... | Bryan Kennedy | Tinkerer. Head of UX @ Dropcam">
+  <meta property="twitter:creator" content="@plusbryan">
+  <meta property="twitter:image:src" content="https://d2l2xugcou6irs.cloudfront.net/svbtle_logo.png">
+  <meta property="twitter:domain" content="http://plusbryan.com">
+  <meta property="og:title" content="Setting up MySQL replication without the downtime • Bryan Kennedy">
+  <meta property="og:type" content="article">
+  <meta property="og:description" content="I clearly don’t need to expound on the benefits of master-slave replication for your MySQL database. It’s simply a good idea; one nicety I looked forward to was the ability to run backups from the slave without impacting the... | Bryan Kennedy | Tinkerer. Head of UX @ Dropcam">
+  <meta property="og:image" content="https://d2l2xugcou6irs.cloudfront.net/svbtle_logo.png">
+  <meta property="og:site_name" content="Bryan Kennedy on Svbtle">
+  <meta property="fb:app_id" content="346346195413177">
+  
+  <link rel="alternate" type="application/rss+xml" href="http://plusbryan.com/feed">
+  <link data-turbolinks-track="true" href="Setting%20up%20MySQL%20replication%20without%20the%20downtime_files/build.css" media="all" rel="stylesheet">
+  <script src="Setting%20up%20MySQL%20replication%20without%20the%20downtime_files/zvl0xsj.js"></script>
+  <style type="text/css">.tk-proxima-nova{font-family:"proxima-nova",sans-serif;}.tk-freight-sans-pro{font-family:"freight-sans-pro",sans-serif;}</style><link href="Setting%20up%20MySQL%20replication%20without%20the%20downtime_files/d.css" rel="stylesheet"><script>try{Typekit.load();}catch(e){}</script>
+  <script data-turbolinks-track="true" src="Setting%20up%20MySQL%20replication%20without%20the%20downtime_files/build.js"></script><style type="text/css"></style>
+ <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-41994323-1');
+  ga('send', 'pageview');
+  // Create a new tracker for the user on analytics.js and send the pageview
+  ga('create', 'UA-297667-12', {'name': 'userTracker'});
+  ga('userTracker.send', 'pageview');
+  // Backwards compatibility--create an old ga.js for the user
+  var _gaq = _gaq || [];
+  _gaq.push( ['_setAccount', 'UA-41994323-1'],['_setDomainName', 'none'],['_setAllowLinker', true],['_trackPageview'],['b._setAccount', 'UA-297667-12'],['b._setDomainName', 'plusbryan.com'],['b._setAllowLinker', true],['b._trackPageview']);
+  (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();
+  </script>
+<style type="text/css">/* Pretty printing styles. Used with prettify.js. */
+
+/* SPAN elements with the classes below are added by prettyprint. */
+.pln { color: #000 }  /* plain text */
+
+@media screen {
+  .str { color: #080 }  /* string content */
+  .kwd { color: #008 }  /* a keyword */
+  .com { color: #800 }  /* a comment */
+  .typ { color: #606 }  /* a type name */
+  .lit { color: #066 }  /* a literal value */
+  /* punctuation, lisp open bracket, lisp close bracket */
+  .pun, .opn, .clo { color: #660 }
+  .tag { color: #008 }  /* a markup tag name */
+  .atn { color: #606 }  /* a markup attribute name */
+  .atv { color: #080 }  /* a markup attribute value */
+  .dec, .var { color: #606 }  /* a declaration; a variable name */
+  .fun { color: red }  /* a function name */
+}
+
+/* Use higher contrast and text-weight for printable form. */
+@media print, projection {
+  .str { color: #060 }
+  .kwd { color: #006; font-weight: bold }
+  .com { color: #600; font-style: italic }
+  .typ { color: #404; font-weight: bold }
+  .lit { color: #044 }
+  .pun, .opn, .clo { color: #440 }
+  .tag { color: #006; font-weight: bold }
+  .atn { color: #404 }
+  .atv { color: #060 }
+}
+
+/* Put a border around prettyprinted code snippets. */
+pre.prettyprint { padding: 0px;}
+
+/* Specify class=linenums on a pre to get line numbering */
+ol.linenums { margin-top: 0; margin-bottom: 0 } /* IE indents via margin-left */
+li.L0,
+li.L1,
+li.L2,
+li.L3,
+li.L5,
+li.L6,
+li.L7,
+li.L8 { list-style-type: decimal }
+/* Alternate shading for lines */
+li.L1,
+li.L3,
+li.L5,
+li.L7,
+li.L9 { background: #f8f8f8 }
+</style></head>
+<body class="overlord blog loaded">
+<style scoped="">
+figure#user_logo a,
+figure#user_foot a,
+figure.avatar a,
+nav#overlord.user_top figure#logo_top a,
+figure.kudo.complete div.filling {
+  background-image: url('https://d1jcp5e5r52ocf.cloudfront.net/drill.png')
+}
+
+figure.kudo.activated div.filling,
+figure.kudo.complete div.filling {
+  background-color: #4B4065;
+}
+
+figure.kudo.activated a,
+figure.kudo.complete a {
+  border-color: #4B4065;
+}
+
+blockquote,
+a blockquote,
+div#readnext:hover span.flank_title,
+div#foot_more:hover a,
+div#foot_userbar a#bottom_tagline span:hover,
+article.linked h1.article_title a:hover,
+a.continue_button:hover,
+article p a:hover,
+ul#lightning_drop,
+section#subscribe div.input_box,
+section#subscribe div.input_box input,
+figure#user_logo,
+figure#user_foot,
+ul#user_links li a:hover,
+ul#foot_links li a:hover,
+a.buttonize:hover,
+button.buttonize:hover,
+a.buttonize.outline:hover,
+button.buttonize.outline:hover,
+nav.pagination span.next a:hover,
+nav.pagination span.prev a:hover,
+section#readnext:hover p span,
+nav#overlord.user_top figure#logo_top {
+  border-color: #4B4065;
+}
+
+figure.avatar,
+nav#overlord.user_top figure#logo_top a,
+ul#user_links li a:hover,
+ul#foot_links li a:hover,
+a.buttonize:hover,
+button.buttonize:hover,
+a.buttonize.outline:hover,
+button.buttonize.outline:hover,
+nav.pagination span.next a:hover,
+nav.pagination span.prev a:hover,
+figure#user_logo a,
+figure#user_foot a  {
+	background-color: #4B4065;
+}
+
+h6.separator_title.read_first,
+header#user_top h2 a,
+footer#blog_foot h5 a,
+article.post h1 a:hover,
+div.preview strong,
+nav#overlord h2#nav_title.user_top a,
+section#readnext:hover h3,
+section#readnext:hover p span {
+  color: #4B4065;
+}
+
+@keyframes titlePulse
+  {
+  0% {
+    color: #000000;
+  }
+  50% {
+    color: #4B4065;
+  }
+  100% {
+    color: #000000;
+  }
+}
+
+@-moz-keyframes titlePulse
+  {
+  0% {
+    color: #000000;
+  }
+  50% {
+    color: #4B4065;
+  }
+  100% {
+    color: #000000;
+  }
+}
+
+@-webkit-keyframes titlePulse
+  {
+  0% {
+    color: #000000;
+  }
+  50% {
+    color: #4B4065;
+  }
+  100% {
+    color: #000000;
+  }
+}
+
+</style>
+<figure id="loading">&nbsp;</figure>
+<nav id="overlord" class="user_top">
+  <figure id="logo_top" class="">
+    <a href="http://plusbryan.com/">Svbtle</a>
+  </figure>
+  <h2 id="nav_title" class="user_top"><a href="http://plusbryan.com/">Bryan Kennedy</a></h2>
+  <figure id="hamburger">
+    <a href="#menu" id="hamburger_button">Menu</a>
+  </figure>
+  <ul id="dropdown" class="onblog">
+    <li class="dropdown_message">
+     <a href="https://svbtle.com/">Bryan Kennedy is writing on the <span class="logoize">Svbtle</span> network.</a>
+    </li>
+    <li><a href="https://twitter.com/plusbryan">@plusbryan</a></li>
+    <li><a href="http://sincerely.com/" target="_blank">sincerely.com</a></li>
+    <li><a href="http://plusbryan.com/feed">rss feed</a></li>
+    <li style="margin: 0; padding: 0;"><hr class="overlord_nav"></li>
+    <li><a href="https://svbtle.com/about">about svbtle</a></li>
+    <li><a href="https://svbtle.com/signup">sign up</a></li>
+  </ul>
+</nav>
+<div id="whiteout"></div>
+<section id="container" class="blog user_post">
+  <article id="ToFxQi31VrzMLupzrZHA" class="post  oldx">
+	<time datetime="2013-01-24" class="article_time">January 24, 2013</time>
+  <h1 class="article_title">
+    <a href="http://plusbryan.com/mysql-replication-without-downtime">Setting up MySQL replication without the downtime</a>
+  </h1>
+	<p>I clearly don’t need to expound on the benefits of master-slave 
+replication for your MySQL database. It’s simply a good idea; one nicety
+ I looked forward to was the ability to run backups from the slave 
+without impacting the performance of our production database. But the 
+benefits abound.</p>
+
+<p><a href="http://www.clusterdb.com/mysql-cluster/get-mysql-replication-up-and-running-in-5-minutes/">Most</a> <a href="http://www.howtoforge.com/mysql_database_replication">tutorials</a>
+ on master-slave replication use a read lock to accomplish a consistent 
+copy during initial setup. Barbaric! With our users sending thousands of
+ cards and gifts at all hours of the night, I wanted to find a way to 
+accomplish the migration without any downtime.</p>
+
+<p>@pQd via ServerFault <a href="http://serverfault.com/questions/220322/how-to-setup-mysql-replication-with-minimal-downtime">suggests</a>
+ enabling bin-logging and taking a non-locking dump with the binlog 
+position included. In effect, you’re creating a copy of the db marked 
+with a timestamp, which allows the slave to catch up once you’ve 
+migrated the data over. This seems like the best way to set up a MySQL 
+slave with no downtime, so I figured I’d document the step-by-step here,
+ in case it proves helpful for others.</p>
+
+<p>First, you’ll need to configure the master’s <em>/etc/mysql/my.cnf</em> by adding these lines in the [mysqld] section:</p>
+
+<pre><code class="prettyprint"><span class="pln">server</span><span class="pun">-</span><span class="pln">id</span><span class="pun">=</span><span class="lit">1</span><span class="pln">
+binlog</span><span class="pun">-</span><span class="pln">format   </span><span class="pun">=</span><span class="pln"> mixed
+log</span><span class="pun">-</span><span class="pln">bin</span><span class="pun">=</span><span class="pln">mysql</span><span class="pun">-</span><span class="pln">bin
+datadir</span><span class="pun">=</span><span class="str">/var/</span><span class="pln">lib</span><span class="pun">/</span><span class="pln">mysql
+innodb_flush_log_at_trx_commit</span><span class="pun">=</span><span class="lit">1</span><span class="pln">
+sync_binlog</span><span class="pun">=</span><span class="lit">1</span></code></pre>
+
+<p>Restart the master mysql server and create a replication user that your slave server will use to connect to the master:</p>
+
+<pre><code class="prettyprint"><span class="pln">CREATE USER replicant@</span><span class="pun">&lt;&lt;</span><span class="pln">slave</span><span class="pun">-</span><span class="pln">server</span><span class="pun">-</span><span class="pln">ip</span><span class="pun">&gt;&gt;;</span><span class="pln">
+GRANT REPLICATION SLAVE ON </span><span class="pun">*.*</span><span class="pln"> TO replicant@</span><span class="pun">&lt;&lt;</span><span class="pln">slave</span><span class="pun">-</span><span class="pln">server</span><span class="pun">-</span><span class="pln">ip</span><span class="pun">&gt;&gt;</span><span class="pln"> IDENTIFIED BY </span><span class="str">'&lt;&lt;choose-a-good-password&gt;&gt;'</span><span class="pun">;</span></code></pre>
+
+<p><strong>Note:</strong> Mysql allows for passwords up to 32 characters for replication users.</p>
+
+<p>Next, create the backup file with the binlog position. It will affect
+ the performance of your database server, but won’t lock your tables:</p>
+
+<pre><code class="prettyprint"><span class="pln">mysqldump </span><span class="pun">--</span><span class="pln">skip</span><span class="pun">-</span><span class="kwd">lock</span><span class="pun">-</span><span class="pln">tables </span><span class="pun">--</span><span class="pln">single</span><span class="pun">-</span><span class="pln">transaction </span><span class="pun">--</span><span class="pln">flush</span><span class="pun">-</span><span class="pln">logs </span><span class="pun">--</span><span class="pln">hex</span><span class="pun">-</span><span class="pln">blob </span><span class="pun">--</span><span class="pln">master</span><span class="pun">-</span><span class="pln">data</span><span class="pun">=</span><span class="lit">2</span><span class="pln"> </span><span class="pun">-</span><span class="pln">A  </span><span class="pun">&gt;</span><span class="pln"> </span><span class="pun">~/</span><span class="kwd">dump</span><span class="pun">.</span><span class="pln">sql</span></code></pre>
+
+<p>Now, examine the head of the file and jot down the values for <em>MASTER_LOG_FILE</em> and <em>MASTER_LOG_POS</em>. You will need them later:</p>
+
+<pre><code class="prettyprint"><span class="pln">head </span><span class="kwd">dump</span><span class="pun">.</span><span class="pln">sql </span><span class="pun">-</span><span class="pln">n80 </span><span class="pun">|</span><span class="pln"> grep </span><span class="str">"MASTER_LOG_POS"</span></code></pre>
+
+<p>Because this file for me was huge, I gzip'ed it before transferring it to the slave, but that’s optional:</p>
+
+<pre><code class="prettyprint"><span class="pln">gzip </span><span class="pun">~/</span><span class="kwd">dump</span><span class="pun">.</span><span class="pln">sql</span></code></pre>
+
+<p>Now we need to transfer the dump file to our slave server (if you didn’t gzip first, remove the <em>.gz</em> bit):</p>
+
+<pre><code class="prettyprint"><span class="pln">scp </span><span class="pun">~</span><span class="str">/dump.sql.gz mysql-user@&lt;&lt;slave-server-ip&gt;&gt;:~/</span></code></pre>
+
+<p>While that’s running, you should log into your slave server, and edit your <em>/etc/mysql/my.cnf</em> file to add the following lines:</p>
+
+<pre><code class="prettyprint"><span class="pln">server</span><span class="pun">-</span><span class="pln">id               </span><span class="pun">=</span><span class="pln"> </span><span class="lit">101</span><span class="pln">
+binlog</span><span class="pun">-</span><span class="pln">format       </span><span class="pun">=</span><span class="pln"> mixed
+log_bin                 </span><span class="pun">=</span><span class="pln"> mysql</span><span class="pun">-</span><span class="pln">bin
+relay</span><span class="pun">-</span><span class="pln">log               </span><span class="pun">=</span><span class="pln"> mysql</span><span class="pun">-</span><span class="pln">relay</span><span class="pun">-</span><span class="pln">bin
+log</span><span class="pun">-</span><span class="pln">slave</span><span class="pun">-</span><span class="pln">updates </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pln">
+read</span><span class="pun">-</span><span class="pln">only               </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span></code></pre>
+
+<p>Restart the mysql slave, and then import your dump file:</p>
+
+<pre><code class="prettyprint"><span class="pln">gunzip </span><span class="pun">~</span><span class="str">/dump.sql.gz
+mysql -u root -p &lt; ~/</span><span class="kwd">dump</span><span class="pun">.</span><span class="pln">sql</span></code></pre>
+
+<p>Log into your mysql console on your slave server and run the following commands to set up and start replication:</p>
+
+<pre><code class="prettyprint"><span class="pln">CHANGE MASTER TO MASTER_HOST</span><span class="pun">=</span><span class="str">'&lt;&lt;master-server-ip&gt;&gt;'</span><span class="pun">,</span><span class="pln">MASTER_USER</span><span class="pun">=</span><span class="str">'replicant'</span><span class="pun">,</span><span class="pln">MASTER_PASSWORD</span><span class="pun">=</span><span class="str">'&lt;&lt;slave-server-password&gt;&gt;'</span><span class="pun">,</span><span class="pln"> MASTER_LOG_FILE</span><span class="pun">=</span><span class="str">'&lt;&lt;value from above&gt;&gt;'</span><span class="pun">,</span><span class="pln"> MASTER_LOG_POS</span><span class="pun">=&lt;&lt;</span><span class="pln">value </span><span class="kwd">from</span><span class="pln"> above</span><span class="pun">&gt;&gt;;</span><span class="pln">
+START SLAVE</span><span class="pun">;</span></code></pre>
+
+<p>To check the progress of your slave:</p>
+
+<pre><code class="prettyprint"><span class="pln">SHOW SLAVE STATUS \G</span></code></pre>
+
+<p>If all is well, <em>Last_Error</em> will be blank, and <em>Slave_IO_State</em> will report “Waiting for master to send event”. Look for <em>Seconds_Behind_Master</em>
+ which indicates how far behind it is. It took me a few hours to 
+accomplish all of the above, but the slave caught up in a matter of 
+minutes. YMMV.</p>
+
+<p>And now you have a newly minted mysql slave server without experiencing any downtime!</p>
+
+<p><strong>A parting tip:</strong> Sometimes errors occur in 
+replication. For example, if you accidentally change a row of data on 
+your slave. If this happens, fix the data,  then run:</p>
+
+<pre><code class="prettyprint"><span class="pln"> STOP SLAVE</span><span class="pun">;</span><span class="pln">SET GLOBAL SQL_SLAVE_SKIP_COUNTER </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">START SLAVE</span><span class="pun">;</span></code></pre>
+
+<p><strong>Update:</strong> In following my own post when setting up 
+another slave, I ran into an issue with authentication. The slave status
+ showed an error of 1045 (credential error) even though I was able to 
+directly connect using the replicant credentials. It turns out that 
+MySQL allows passwords up to 32 characters in length for master-slave 
+replication.</p>
+
+  <figure class="postend kudo able clearfix" id="kudo_ToFxQi31VrzMLupzrZHA">
+    <a href="#kudo">
+      <div class="filling">&nbsp;</div>
+    </a>
+    <div class="num">1,803</div>
+    <div class="txt">Kudos</div>
+  </figure>
+  <figure class="side kudo able clearfix" id="kudo_side_ToFxQi31VrzMLupzrZHA">
+    <a href="#kudo">
+      <div class="filling">&nbsp;</div>
+    </a>
+    <div class="num">1,803</div>
+    <div class="txt">Kudos</div>
+  </figure>
+</article>
+
+</section>
+<section id="readnext">
+  <a href="http://plusbryan.com/its-just-wood">
+    <h4 class="readnext_header">Read this next</h4>
+    <h3 class="readnext_title">It’s just wood</h3>
+    <p class="readnext_content">A few months back, I decided to start a 
+vegetable garden. I have fond memories of gardening with my folks when I
+ was a young boy, and I figured a garden would be a good outlet from my 
+day to day life in tech. Looking up and down the... <span class="continue_btn">Continue&nbsp;→</span></p>
+  </a>
+</section>
+<footer id="blog_foot" class="cf">
+  <ul id="foot_links">
+    <li><a href="https://twitter.com/plusbryan">@plusbryan</a></li>
+    <li><a href="http://sincerely.com/">sincerely.com</a></li>
+  </ul>
+  <figure id="user_foot"><a href="http://plusbryan.com/">Svbtle</a></figure>
+  <h5><a href="http://plusbryan.com/">Bryan Kennedy</a></h5>
+</footer>
+<footer id="foot">
+  <figure id="logo_foot"><a href="https://svbtle.com/">Svbtle</a></figure>
+</footer><div id="lights">&nbsp;</div>
+<script>
+  var _sf_async_config = { uid: 1721, domain: 'svbtle.com'};
+  (function() {
+    function loadChartbeat() {
+      window._sf_endpt = (new Date()).getTime();
+      var e = document.createElement('script');
+      e.setAttribute('language', 'javascript');
+      e.setAttribute('type', 'text/javascript');
+      e.setAttribute('src','//static.chartbeat.com/js/chartbeat.js');
+      document.body.appendChild(e);
+    };
+    var oldonload = window.onload;
+    window.onload = (typeof window.onload != 'function') ?
+      loadChartbeat : function() { oldonload(); loadChartbeat(); };
+  })();
+</script>
+
+<script src="Setting%20up%20MySQL%20replication%20without%20the%20downtime_files/chartbeat.js" type="text/javascript" language="javascript"></script></body></html>
