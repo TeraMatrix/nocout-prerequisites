@@ -1,0 +1,12 @@
+machine-packages/0-2-pre-machine:
+total 3064
+drwxrwxrwx  10 praj  staff     340 Aug 13 04:46 .
+drwxrwxrwx   6 praj  staff     204 Aug 13 17:47 ..
+-rwxrwxrwx   1 praj  staff  230888 May 28  2014 audit-2.2-4.el6_5.x86_64.rpm
+-rwxrwxrwx   1 praj  staff   61796 May 28  2014 audit-libs-2.2-4.el6_5.x86_64.rpm
+-rwxrwxrwx   1 praj  staff   60800 May 28  2014 audit-libs-python-2.2-4.el6_5.x86_64.rpm
+-rwxrwxrwx   1 praj  staff  128448 Dec  9  2013 libcgroup-0.40.rc1-5.el6_5.1.x86_64.rpm
+-rwxrwxrwx   1 praj  staff   82976 Aug 13 03:07 libsemanage-python-2.0.43-4.2.el6.x86_64.rpm
+-rwxrwxrwx   1 praj  staff  351672 Aug 13 03:07 policycoreutils-python-2.0.83-19.39.el6.x86_64.rpm
+-rwxrwxrwx   1 praj  staff  409460 Aug 13 03:07 setools-libs-3.3.7-4.el6.x86_64.rpm
+-rwxrwxrwx   1 praj  staff  226876 Aug 13 03:07 setools-libs-python-3.3.7-4.el6.x86_64.rpm

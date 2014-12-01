@@ -1,0 +1,10 @@
+Peeyushs-MacBook-Pro:setup-packages praj$ ls -la 4-graphviz-pre/
+total 2848
+drwxr-xr-x   8 praj  staff     272 Aug 16 18:04 .
+drwxrwxr-x  16 praj  staff     544 Aug 13 18:18 ..
+-rwxrwxr-x   1 praj  staff   10856 Aug  9 10:25 ann-1.1.1-4.el6.x86_64.rpm
+-rwxrwxr-x   1 praj  staff  341784 Aug  9 10:25 ann-devel-1.1.1-4.el6.x86_64.rpm
+-rwxrwxr-x   1 praj  staff   36916 Aug  9 10:25 ann-libs-1.1.1-4.el6.x86_64.rpm
+-rwxrwxr-x   1 praj  staff  207548 Aug  9 10:25 gts-0.7.6-19.20111025.el6.x86_64.rpm
+-rwxrwxr-x   1 praj  staff   24624 Aug  9 10:25 gts-devel-0.7.6-19.20111025.el6.x86_64.rpm
+-rwxrwxrwx   1 praj  staff  821628 Aug 16 18:03 netpbm-10.47.05-11.el6.x86_64.rpm

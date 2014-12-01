@@ -1,0 +1,18 @@
+
+
+
+$:> mysql -uroot -P 3200 -h 
+
+
+Start Mysql Server:
+
+$:> mysqld --defaults-file=/apps/mysql/my.cnf
+
+Stop MySQL
+
+$:> sudo ps -A | grep mysql
+
+ 55440 pts/0    00:00:00 mysqld_safe
+ 57005 pts/0    00:00:11 mysqld
+
+$:> udo kill -9 55440 57005

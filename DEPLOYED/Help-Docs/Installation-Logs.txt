@@ -1,0 +1,2 @@
+1. sudo yum install nginx-1.0.15-5.el6.x86_64.rpm GeoIP-1.5.1-5.el6.x86_64.rpm #;;(Installed correctly)
+2. sudo yum install xorg-x11-server-Xvfb-1.13.0-23.1.el6.centos.x86_64.rpm #;;(Installed correctly) 

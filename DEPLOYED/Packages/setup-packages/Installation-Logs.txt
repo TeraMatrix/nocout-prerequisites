@@ -1,0 +1,7 @@
+1. sudo yum install nginx-1.0.15-5.el6.x86_64.rpm GeoIP-1.5.1-5.el6.x86_64.rpm #;;(Installed correctly)
+2. sudo yum install xorg-x11-server-Xvfb-1.13.0-23.1.el6.centos.x86_64.rpm #;;(Installed correctly)
+3. sudo yum install ann-libs-1.1.1-4.el6.x86_64.rpm ann-1.1.1-4.el6.x86_64.rpm ann-devel-1.1.1-4.el6.x86_64.rpm #;;(Installed correctly)
+4. sudo yum install gts-0.7.6-19.20111025.el6.x86_64.rpm gts-devel-0.7.6-19.20111025.el6.x86_64.rpm #;;(Installed correctly)
+5. graphviz-2.38.0-1.el6.x86_64.rpm graphviz-libs-2.38.0-1.el6.x86_64.rpm graphviz-plugins-core-2.38.0-1.el6.x86_64.rpm graphviz-plugins-gd-2.38.0-1.el6.x86_64.rpm graphviz-gd-2.38.0-1.el6.x86_64.rpm graphviz-devel-2.38.0-1.el6.x86_64.rpm graphviz-graphs-2.38.0-1.el6.noarch.rpm graphviz-doc-2.38.0-1.el6.noarch.rpm #;;(Installed correctly)
+6.  sudo yum install 4-graphviz/graphviz-lang-php-2.38.0-1.el6.x86_64.rpm 8-PHP/*.rpm #;;(Installed Correctly)
+7. sudo yum install perl-Crypt-DES-2.05-9.el6.x86_64.rpm perl-Digest-HMAC-1.01-22.el6.noarch.rpm perl-Digest-SHA-5.47-136.el6.x86_64.rpm  perl-Net-SNMP-5.2.0-4.el6.noarch.rpm #;;(Installed Correctly)

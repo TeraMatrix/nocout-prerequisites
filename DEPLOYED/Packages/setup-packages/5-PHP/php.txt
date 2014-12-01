@@ -1,0 +1,19 @@
+ 264 -rw-r--r--  1 praj  staff   131608 Aug  9 10:25 gd-last-2.1.0-2.el6.remi.x86_64.rpm
+ 192 -rw-r--r--  1 praj  staff    97932 Aug  9 10:25 libmcrypt-2.5.8-9.el6.x86_64.rpm
+5240 -rwxr-xr-x  1 praj  staff  2678968 Aug  9 10:25 php-5.5.15-1.el6.remi.x86_64.rpm
+5024 -rwxr-xr-x  1 praj  staff  2571308 Aug  9 10:25 php-cli-5.5.15-1.el6.remi.x86_64.rpm
+2072 -rwxr-xr-x  1 praj  staff  1059280 Aug  9 10:25 php-common-5.5.15-1.el6.remi.x86_64.rpm
+5008 -rwxr-xr-x  1 praj  staff  2562116 Aug  9 10:25 php-devel-5.5.15-1.el6.remi.x86_64.rpm
+ 144 -rwxr-xr-x  1 praj  staff    71164 Aug  9 10:25 php-gd-5.5.15-1.el6.remi.x86_64.rpm
+1920 -rwxr-xr-x  1 praj  staff   981636 Aug  9 10:25 php-mbstring-5.5.15-1.el6.remi.x86_64.rpm
+  88 -rwxr-xr-x  1 praj  staff    41488 Aug  9 10:25 php-mcrypt-5.5.15-1.el6.remi.x86_64.rpm
+ 224 -rw-r--r--  1 praj  staff   112656 Aug  9 10:25 php-pdo-5.5.15-1.el6.remi.x86_64.rpm
+ 752 -rwxr-xr-x  1 praj  staff   381664 Aug  9 10:25 php-pear-1.9.4-28.el6.remi.noarch.rpm
+ 752 -rw-r--r--  1 praj  staff   383856 Aug  9 10:25 php-pear-1.9.5-2.el6.remi.noarch.rpm
+  96 -rwxr-xr-x  1 praj  staff    47420 Aug  9 10:25 php-pecl-jsonc-1.3.5-1.el6.remi.5.5.x86_64.rpm
+  96 -rw-r--r--  1 praj  staff    48248 Aug  9 10:25 php-pecl-jsonc-1.3.6-1.el6.remi.5.5.1.x86_64.rpm
+  56 -rw-r--r--  1 praj  staff    25128 Aug  9 10:25 php-pecl-jsonc-devel-1.3.6-1.el6.remi.5.5.1.x86_64.rpm
+ 544 -rwxr-xr-x  1 praj  staff   275444 Aug  9 10:25 php-pecl-zip-1.12.4-1.el6.remi.5.5.x86_64.rpm
+ 112 -rw-r--r--  1 praj  staff    56108 Aug  9 10:25 php-process-5.5.15-1.el6.remi.x86_64.rpm
+ 416 -rw-r--r--  1 praj  staff   211112 Aug  9 10:25 php-xml-5.5.15-1.el6.remi.x86_64.rpm
+ 320 -rw-r--r--  1 praj  staff   163840 Aug  9 10:25 t1lib-5.1.2-6.el6_2.1.x86_64.rpm
